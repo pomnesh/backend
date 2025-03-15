@@ -14,20 +14,6 @@ public enum AttachmentType
     AudioMessage = 3,
     [Display(Name = "Document")]
     Document = 4,
-    [Display(Name = "Link")]  // I think it's useless for this project
-    Link = 5,
-    [Display(Name = "Market")]
-    Market = 6,
-    [Display(Name = "Document")]
-    MarketAlbum = 7,
-    [Display(Name = "Wall")]
-    Wall = 8,
-    [Display(Name = "WallReply")]
-    WallReply = 9,
-    [Display(Name = "Sticker")]
-    Sticker = 10,
-    [Display(Name = "GiftItem")]
-    GiftItem = 11,
-    [Display(Name = "Call")]
-    Call = 12
+    
+    // implement new types in the future
 }
