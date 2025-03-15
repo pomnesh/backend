@@ -4,13 +4,13 @@ namespace Pomnesh.Application.Dto;
 
 public class AttachmentCreateDto
 {
-    public AttachmentType Type;
+    public AttachmentType Type {get;set;}
 
-    public long FileId;
+    public long FileId {get;set;}
 
-    public long OwnerId;
+    public long OwnerId {get;set;}
 
-    public string? OriginalLink;
+    public string? OriginalLink {get;set;}
 
-    public long ContextId;
+    public long ContextId {get;set;}
 }

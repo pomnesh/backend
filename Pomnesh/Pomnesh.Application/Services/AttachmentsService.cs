@@ -2,9 +2,9 @@ using Pomnesh.Application.Dto;
 using Pomnesh.Domain.Entity;
 using Pomnesh.Infrastructure.Interfaces;
 
-namespace Pomnesh.Application.Handlers;
+namespace Pomnesh.Application.Services;
 
-public class AttachmentsHandler(IBaseRepository<Attachment> attachmentRepository)
+public class AttachmentsService(IBaseRepository<Attachment> attachmentRepository)
 {
     public async Task Create(AttachmentCreateDto data)
     {

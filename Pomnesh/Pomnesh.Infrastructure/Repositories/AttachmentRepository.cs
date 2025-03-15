@@ -16,7 +16,7 @@ public class AttachmentRepository : IBaseRepository<Attachment>
 
     public async Task AddAsync(Attachment attachment)
     {
-        var sql = "INSERT INTO Attachments (Type, FileId, OwnerId, OriginalLink, ContextId) VALUES (@Type, @FileId, @OwnerId, @OriginalLink, @ContextId))";
+        var sql = "INSERT INTO Attachments (Type, FileId, OwnerId, OriginalLink, ContextId) VALUES (@Type, @FileId, @OwnerId, @OriginalLink, @ContextId)";
         using (var connection = _context.CreateConnection())
         {
             await connection.ExecuteAsync(sql, attachment);
