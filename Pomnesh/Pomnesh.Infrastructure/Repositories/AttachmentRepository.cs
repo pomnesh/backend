@@ -1,33 +1,25 @@
+using System.Data;
+using Dapper;
+using Microsoft.Data.SqlClient;
 using Pomnesh.Domain.Entity;
 using Pomnesh.Infrastructure.Interfaces;
 
 namespace Pomnesh.Infrastructure.Repositories;
 
-public class AttachmentRepository(ApplicationDbContext db) : IBaseRepository<Attachment>
+public class AttachmentRepository : IBaseRepository<Attachment>
 {
-    public async Task<long> Create(Attachment entity)
+    private readonly DapperContext _context;
+    public AttachmentRepository(DapperContext context)
     {
-        await db.Attachments.AddAsync(entity);
-        await db.SaveChangesAsync();
-        return entity.Id;
-    }
-    
-    public async Task Delete(Attachment entity)
-    {
-        db.Attachments.Remove(entity);
-        await db.SaveChangesAsync();
-    }
-    
-    public async Task<Attachment> Update(Attachment entity)
-    {
-        db.Attachments.Update(entity);
-        await db.SaveChangesAsync();
-
-        return entity;
+        _context = context;
     }
 
-    public async Task<Attachment?> GetById(long id)
+    public async Task AddAsync(Attachment attachment)
     {
-        return await db.Attachments.FindAsync(id);
+        var sql = "INSERT INTO Attachments (Type, FileId, OwnerId, OriginalLink, ContextId) VALUES (@Type, @FileId, @OwnerId, @OriginalLink, @ContextId))";
+        using (var connection = _context.CreateConnection())
+        {
+            await connection.ExecuteAsync(sql, attachment);
+        }
     }
 }

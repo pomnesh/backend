@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pomnesh.Domain", "Pomnesh.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pomnesh.Infrastructure", "Pomnesh.Infrastructure\Pomnesh.Infrastructure.csproj", "{BE42FE62-CA36-4CA7-B9D9-4BE0ADF355A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pomnesh.Application", "Pomnesh.Application\Pomnesh.Application.csproj", "{E0AB8A9C-E0AB-4B55-83EE-883AE052D91E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{BE42FE62-CA36-4CA7-B9D9-4BE0ADF355A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE42FE62-CA36-4CA7-B9D9-4BE0ADF355A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE42FE62-CA36-4CA7-B9D9-4BE0ADF355A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0AB8A9C-E0AB-4B55-83EE-883AE052D91E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0AB8A9C-E0AB-4B55-83EE-883AE052D91E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0AB8A9C-E0AB-4B55-83EE-883AE052D91E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0AB8A9C-E0AB-4B55-83EE-883AE052D91E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -2,9 +2,9 @@ namespace Pomnesh.Infrastructure.Interfaces;
 
 public interface IBaseRepository<T>
 {
-    Task<long> Create(T entity);
+    Task AddAsync(T entity);
 
-    Task Delete(T entity);
-
-    Task<T> Update(T entity);
+    // Task DeleteById(long id);
+    //
+    // Task<T> Update(T entity);
 }
