@@ -5,10 +5,11 @@ namespace Pomnesh.Infrastructure.Repositories;
 
 public class AttachmentRepository(ApplicationDbContext db) : IBaseRepository<Attachment>
 {
-    public async Task Create(Attachment entity)
+    public async Task<long> Create(Attachment entity)
     {
         await db.Attachments.AddAsync(entity);
         await db.SaveChangesAsync();
+        return entity.Id;
     }
     
     public async Task Delete(Attachment entity)

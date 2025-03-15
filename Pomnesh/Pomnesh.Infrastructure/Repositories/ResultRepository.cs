@@ -5,10 +5,11 @@ namespace Pomnesh.Infrastructure.Repositories;
 
 public class ResultRepository(ApplicationDbContext db) : IBaseRepository<Result>
 {
-    public async Task Create(Result entity)
+    public async Task<long> Create(Result entity)
     {
         await db.Results.AddAsync(entity);
         await db.SaveChangesAsync();
+        return entity.Id;
     }
 
     public async Task Delete(Result entity)

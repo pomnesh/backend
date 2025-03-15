@@ -5,10 +5,11 @@ namespace Pomnesh.Infrastructure.Repositories;
 
 public class UserRepository(ApplicationDbContext db) : IBaseRepository<User>
 {
-    public async Task Create(User entity)
+    public async Task<long> Create(User entity)
     {
         await db.Users.AddAsync(entity);
         await db.SaveChangesAsync();
+        return entity.Id;
     }
 
     public async Task Delete(User entity)
