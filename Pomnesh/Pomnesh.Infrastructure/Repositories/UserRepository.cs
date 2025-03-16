@@ -1,33 +1,33 @@
+using Dapper;
 using Pomnesh.Domain.Entity;
 using Pomnesh.Infrastructure.Interfaces;
 
 namespace Pomnesh.Infrastructure.Repositories;
-//
-// public class UserRepository(ApplicationDbContext db) : IBaseRepository<User>
-// {
-//     public async Task<long> Create(User entity)
-//     {
-//         await db.Users.AddAsync(entity);
-//         await db.SaveChangesAsync();
-//         return entity.Id;
-//     }
-//
-//     public async Task Delete(User entity)
-//     {
-//         db.Users.Remove(entity);
-//         await db.SaveChangesAsync();
-//     }
-//     
-//     public async Task<User> Update(User entity)
-//     {
-//         db.Users.Update(entity);
-//         await db.SaveChangesAsync();
-//
-//         return entity;
-//     }
-//     
-//     public async Task<User?> GetById(long id)
-//     {
-//         return await db.Users.FindAsync(id);
-//     }
-// }
+
+
+public class UserRepository : IBaseRepository<User>
+{
+    private readonly DapperContext _context;
+    public UserRepository(DapperContext context)
+    {
+        _context = context;
+    }
+
+    public async Task AddAsync(User user)
+    {
+        var sql = "INSERT INTO Users (VkId, VkToken) VALUES (@VkId, @VkToken)";
+        using (var connection = _context.CreateConnection())
+        {
+            await connection.ExecuteAsync(sql, user);
+        }
+    }
+
+    public async Task<User?> GetById(long id)
+    {
+        var sql = "SELECT * FROM Users WHERE Id = @id";
+        using (var connection = _context.CreateConnection())
+        {
+            return await connection.QueryFirstOrDefaultAsync<User>(sql, new { id });
+        }
+    }
+}
