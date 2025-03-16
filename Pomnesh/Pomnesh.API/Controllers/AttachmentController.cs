@@ -25,8 +25,7 @@ public class AttachmentController(AttachmentsService service) : ControllerBase
         var result = await _service.Get(id);
         if (result == null)
             return NotFound(new { message = $"Attachment with ID {id} not found." });
-        
+
         return new JsonResult(new { data = result }) { StatusCode = 200 };
-        
     }
 }

@@ -15,8 +15,16 @@ public class Program
         // Add services to the container.
         builder.Services.AddAuthorization();
         builder.Services.AddSingleton<DapperContext>();
+        
+        // Database repos
         builder.Services.AddScoped<IBaseRepository<Attachment>, AttachmentRepository>();
+        builder.Services.AddScoped<IBaseRepository<Context>, ContextRepository>();
+        
+        // Backend services
         builder.Services.AddScoped<AttachmentsService>();
+        builder.Services.AddScoped<ContextsService>();
+        
+        
         builder.Services.AddControllers();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
