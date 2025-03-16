@@ -6,6 +6,8 @@ obj/
 .idea/
 *.sln.iml
 
+Pomnesh/Pomnesh.API
+
 # Visual Studio Code Specific
 .vscode/
 
