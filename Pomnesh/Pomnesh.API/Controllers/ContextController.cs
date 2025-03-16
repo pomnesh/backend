@@ -12,14 +12,14 @@ public class ContextController(ContextsService service) : ControllerBase
     private readonly ContextsService _service = service;
 
     [HttpPost("Context")]
-    public async Task<IActionResult> CreateAttachment(ContextCreateDto model)
+    public async Task<IActionResult> CreateContext(ContextCreateDto model)
     {
         await _service.Create(model);
         return Ok();
     }
     
     [HttpGet("Context/{id}")]
-    public async Task<ActionResult<Context?>> GetAttachment(long id)
+    public async Task<ActionResult<Context?>> GetContext(long id)
     {
         var result = await _service.Get(id);
         if (result == null)

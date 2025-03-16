@@ -19,10 +19,12 @@ public class Program
         // Database repos
         builder.Services.AddScoped<IBaseRepository<Attachment>, AttachmentRepository>();
         builder.Services.AddScoped<IBaseRepository<Context>, ContextRepository>();
+        builder.Services.AddScoped<IBaseRepository<Recollection>, RecollectionRepository>();
         
         // Backend services
         builder.Services.AddScoped<AttachmentsService>();
         builder.Services.AddScoped<ContextsService>();
+        builder.Services.AddScoped<RecollectionsService>();
         
         
         builder.Services.AddControllers();
