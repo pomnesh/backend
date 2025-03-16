@@ -22,4 +22,13 @@ public class AttachmentRepository : IBaseRepository<Attachment>
             await connection.ExecuteAsync(sql, attachment);
         }
     }
+
+    public async Task<Attachment?> GetById(long id)
+    {
+        var sql = "SELECT * FROM Attachments WHERE Id = @id";
+        using (var connection = _context.CreateConnection())
+        {
+            return await connection.QueryFirstOrDefaultAsync<Attachment>(sql, new { id });
+        }
+    }
 }

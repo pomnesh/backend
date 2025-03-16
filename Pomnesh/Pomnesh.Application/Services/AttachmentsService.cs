@@ -19,4 +19,10 @@ public class AttachmentsService(IBaseRepository<Attachment> attachmentRepository
 
         await attachmentRepository.AddAsync(attachment);
     }
+
+    public async Task<Attachment?> Get(long id)
+    {
+        var result = await attachmentRepository.GetById(id);
+        return result;
+    }
 }
