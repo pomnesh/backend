@@ -12,12 +12,16 @@ public class RecollectionRepository : IBaseRepository<Recollection>
         _context = context;
     }
 
-    public async Task AddAsync(Recollection recollection)
+    public async Task<int> AddAsync(Recollection recollection)
     {
-        var sql = "INSERT INTO Recollections (UserId, DownloadLink) VALUES (@UserId, @DownloadLink)";
+        var sql = @"
+            INSERT INTO Recollections (UserId, DownloadLink) 
+            VALUES (@UserId, @DownloadLink)
+            RETURNING Id;
+        ";
         using (var connection = _context.CreateConnection())
         {
-            await connection.ExecuteAsync(sql, recollection);
+            return await connection.ExecuteScalarAsync<int>(sql, recollection);
         }
     }
 

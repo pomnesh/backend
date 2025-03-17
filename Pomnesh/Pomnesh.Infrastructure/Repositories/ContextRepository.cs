@@ -12,12 +12,16 @@ public class ContextRepository : IBaseRepository<Context>
         _context = context;
     }
 
-    public async Task AddAsync(Context context)
+    public async Task<int> AddAsync(Context context)
     {
-        var sql = "INSERT INTO Contexts (MessageId, MessageText, MessageDate) VALUES (@MessageId, @MessageText, @MessageDate)";
+        var sql = @"
+            INSERT INTO Contexts (MessageId, MessageText, MessageDate)
+            VALUES (@MessageId, @MessageText, @MessageDate)
+            RETURNING Id;
+        ";
         using (var connection = _context.CreateConnection())
         {
-            await connection.ExecuteAsync(sql, context);
+            return await connection.ExecuteScalarAsync<int>(sql, context);
         }
     }
 

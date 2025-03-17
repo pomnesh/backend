@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.Services;
 using Pomnesh.Domain.Entity;
@@ -14,8 +15,10 @@ public class ContextController(ContextsService service) : ControllerBase
     [HttpPost("Context")]
     public async Task<IActionResult> CreateContext(ContextCreateDto model)
     {
-        await _service.Create(model);
-        return Ok();
+        int newId = await _service.Create(model);
+        
+        var response = new BaseApiResponse<int>{Payload=newId};
+        return new JsonResult(response) { StatusCode = 201 };
     }
     
     [HttpGet("Context/{id}")]
@@ -24,7 +27,8 @@ public class ContextController(ContextsService service) : ControllerBase
         var result = await _service.Get(id);
         if (result == null)
             return NotFound(new { message = $"Context with ID {id} not found." });
-
-        return new JsonResult(new { data = result }) { StatusCode = 200 };
+        
+        var response = new BaseApiResponse<Context>{Payload = result};
+        return new JsonResult(response) { StatusCode = 200 };
     }
 }

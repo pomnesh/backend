@@ -13,12 +13,16 @@ public class UserRepository : IBaseRepository<User>
         _context = context;
     }
 
-    public async Task AddAsync(User user)
+    public async Task<int> AddAsync(User user)
     {
-        var sql = "INSERT INTO Users (VkId, VkToken) VALUES (@VkId, @VkToken)";
+        var sql = @"
+            INSERT INTO Users (VkId, VkToken)
+            VALUES (@VkId, @VkToken)
+            RETURNING Id;
+        ";
         using (var connection = _context.CreateConnection())
         {
-            await connection.ExecuteAsync(sql, user);
+            return await connection.ExecuteAsync(sql, user);
         }
     }
 

@@ -6,7 +6,7 @@ namespace Pomnesh.Application.Services;
 
 public class RecollectionsService(IBaseRepository<Recollection> recollectionRepository)
 {
-    public async Task Create(RecollectionCreateDto data)
+    public async Task<int> Create(RecollectionCreateDto data)
     {
         var recollection = new Recollection
         {
@@ -14,7 +14,7 @@ public class RecollectionsService(IBaseRepository<Recollection> recollectionRepo
             DownloadLink = data.DownloadLink
         };
 
-        await recollectionRepository.AddAsync(recollection);
+        return await recollectionRepository.AddAsync(recollection);
     }
 
     public async Task<Recollection?> Get(long id)

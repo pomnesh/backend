@@ -6,7 +6,7 @@ namespace Pomnesh.Application.Services;
 
 public class ContextsService(IBaseRepository<Context> contextRepository)
 {
-    public async Task Create(ContextCreateDto data)
+    public async Task<int> Create(ContextCreateDto data)
     {
         var context = new Context
         {
@@ -16,7 +16,7 @@ public class ContextsService(IBaseRepository<Context> contextRepository)
             MessageDate = data.MessageDate,
         };
 
-        await contextRepository.AddAsync(context);
+        return await contextRepository.AddAsync(context);
     }
 
     public async Task<Context?> Get(long id)

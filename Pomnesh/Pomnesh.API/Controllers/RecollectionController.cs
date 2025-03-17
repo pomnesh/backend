@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.Services;
 using Pomnesh.Domain.Entity;
@@ -14,8 +15,9 @@ public class RecollectionController(RecollectionsService service) : ControllerBa
     [HttpPost("Recollection")]
     public async Task<IActionResult> CreateRecollection(RecollectionCreateDto model)
     {
-        await _service.Create(model);
-        return Ok();
+        int newId = await _service.Create(model);
+        var response = new BaseApiResponse<int>{Payload=newId};
+        return new JsonResult(response) { StatusCode = 201 };
     }
     
     [HttpGet("Recollection/{id}")]
@@ -25,6 +27,7 @@ public class RecollectionController(RecollectionsService service) : ControllerBa
         if (result == null)
             return NotFound(new { message = $"Recollection with ID {id} not found." });
 
-        return new JsonResult(new { data = result }) { StatusCode = 200 };
+        var response = new BaseApiResponse<Recollection>{Payload = result};
+        return new JsonResult(response) { StatusCode = 200 };
     }
 }

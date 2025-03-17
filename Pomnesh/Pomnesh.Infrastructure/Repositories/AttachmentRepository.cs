@@ -14,12 +14,15 @@ public class AttachmentRepository : IBaseRepository<Attachment>
         _context = context;
     }
 
-    public async Task AddAsync(Attachment attachment)
+    public async Task<int> AddAsync(Attachment attachment)
     {
-        var sql = "INSERT INTO Attachments (Type, FileId, OwnerId, OriginalLink, ContextId) VALUES (@Type, @FileId, @OwnerId, @OriginalLink, @ContextId)";
+        var sql = @"
+        INSERT INTO Attachments (Type, FileId, OwnerId, OriginalLink, ContextId) 
+        VALUES (@Type, @FileId, @OwnerId, @OriginalLink, @ContextId)
+        RETURNING Id;";
         using (var connection = _context.CreateConnection())
         {
-            await connection.ExecuteAsync(sql, attachment);
+            return await connection.ExecuteScalarAsync<int>(sql, attachment);
         }
     }
 

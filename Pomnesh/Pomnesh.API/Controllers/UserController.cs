@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.Services;
 using Pomnesh.Domain.Entity;
@@ -14,7 +15,9 @@ public class UserController(UsersService service) : ControllerBase
     [HttpPost("User")]
     public async Task<IActionResult> CreateUser(UserCreateDto model)
     {
-        await _service.Create(model);
+        int newId = await _service.Create(model);
+        var response = new BaseApiResponse<int>{Payload=newId};
+        return new JsonResult(response) { StatusCode = 201 };
         return Ok();
     }
     
@@ -24,7 +27,8 @@ public class UserController(UsersService service) : ControllerBase
         var result = await _service.Get(id);
         if (result == null)
             return NotFound(new { message = $"User with ID {id} not found." });
-
-        return new JsonResult(new { data = result }) { StatusCode = 200 };
+        
+        var response = new BaseApiResponse<User>{Payload = result};
+        return new JsonResult(response) { StatusCode = 200 };
     }
 }

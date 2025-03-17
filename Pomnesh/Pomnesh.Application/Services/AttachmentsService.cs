@@ -6,7 +6,7 @@ namespace Pomnesh.Application.Services;
 
 public class AttachmentsService(IBaseRepository<Attachment> attachmentRepository)
 {
-    public async Task Create(AttachmentCreateDto data)
+    public async Task<int> Create(AttachmentCreateDto data)
     {
         var attachment = new Attachment
         {
@@ -17,7 +17,7 @@ public class AttachmentsService(IBaseRepository<Attachment> attachmentRepository
             ContextId = data.ContextId
         };
 
-        await attachmentRepository.AddAsync(attachment);
+        return await attachmentRepository.AddAsync(attachment);
     }
 
     public async Task<Attachment?> Get(long id)

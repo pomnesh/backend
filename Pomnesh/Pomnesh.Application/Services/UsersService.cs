@@ -6,7 +6,7 @@ namespace Pomnesh.Application.Services;
 
 public class UsersService(IBaseRepository<User> usersRepository)
 {
-    public async Task Create(UserCreateDto data)
+    public async Task<int> Create(UserCreateDto data)
     {
         var user = new User
         {
@@ -14,7 +14,7 @@ public class UsersService(IBaseRepository<User> usersRepository)
             VkToken = data.VkToken
         };
 
-        await usersRepository.AddAsync(user);
+        return await usersRepository.AddAsync(user);
     }
 
     public async Task<User?> Get(long id)
