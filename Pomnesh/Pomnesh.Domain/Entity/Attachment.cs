@@ -17,5 +17,5 @@ public class Attachment
     public long ContextId { get; set; }
 
     // Navigation property
-    public Context Context { get; set; } = null!;
+    public ChatContext ChatContext { get; set; } = null!;
 }

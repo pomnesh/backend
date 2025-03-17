@@ -18,13 +18,13 @@ public class Program
         
         // Database repos
         builder.Services.AddScoped<IBaseRepository<Attachment>, AttachmentRepository>();
-        builder.Services.AddScoped<IBaseRepository<Context>, ContextRepository>();
+        builder.Services.AddScoped<IBaseRepository<ChatContext>, ChatContextRepository>();
         builder.Services.AddScoped<IBaseRepository<Recollection>, RecollectionRepository>();
         builder.Services.AddScoped<IBaseRepository<User>, UserRepository>();
         
         // Backend services
         builder.Services.AddScoped<AttachmentsService>();
-        builder.Services.AddScoped<ContextsService>();
+        builder.Services.AddScoped<ChatContextsService>();
         builder.Services.AddScoped<RecollectionsService>();
         builder.Services.AddScoped<UsersService>();
         

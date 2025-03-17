@@ -1,6 +1,6 @@
 namespace Pomnesh.Domain.Entity;
 
-public class Context
+public class ChatContext
 {
     public long Id { get; set; }
     
