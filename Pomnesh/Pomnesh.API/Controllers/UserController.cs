@@ -17,8 +17,7 @@ public class UserController(UsersService service) : ControllerBase
     {
         int newId = await _service.Create(model);
         var response = new BaseApiResponse<int>{Payload=newId};
-        return new JsonResult(response) { StatusCode = 201 };
-        return Ok();
+        return CreatedAtAction(nameof(GetUserInfo), new { id = newId }, response);
     }
     
     [HttpGet("User/{id}")]

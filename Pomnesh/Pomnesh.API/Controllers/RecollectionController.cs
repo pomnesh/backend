@@ -17,7 +17,7 @@ public class RecollectionController(RecollectionsService service) : ControllerBa
     {
         int newId = await _service.Create(model);
         var response = new BaseApiResponse<int>{Payload=newId};
-        return new JsonResult(response) { StatusCode = 201 };
+        return CreatedAtAction(nameof(GetRecollection), new { id = newId }, response);
     }
     
     [HttpGet("Recollection/{id}")]

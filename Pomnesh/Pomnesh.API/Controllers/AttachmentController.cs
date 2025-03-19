@@ -7,23 +7,23 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pomnesh.API.Controllers;
 
-[Route("api/v1/")]
+[Route("api/v1/Attachment")]
 [ApiController]
 public class AttachmentController(AttachmentsService service) : ControllerBase
 {
     private readonly AttachmentsService _service = service;
 
-    [HttpPost("Attachment")]
+    [HttpPost]
     public async Task<IActionResult> CreateAttachment(AttachmentCreateDto model)
     {
         int newId = await _service.Create(model);
         Console.WriteLine(model.OwnerId);
         
         var response = new BaseApiResponse<int>{Payload=newId};
-        return new JsonResult(response) { StatusCode = 201 };
+        return CreatedAtAction(nameof(GetAttachment), new { id = newId }, response);
     }
     
-    [HttpGet("Attachment/{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<Attachment?>> GetAttachment(long id)
     {
         var result = await _service.Get(id);

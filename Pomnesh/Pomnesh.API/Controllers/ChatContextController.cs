@@ -18,7 +18,7 @@ public class ChatContextController(ChatContextsService service) : ControllerBase
         int newId = await _service.Create(model);
         
         var response = new BaseApiResponse<int>{Payload=newId};
-        return new JsonResult(response) { StatusCode = 201 };
+        return CreatedAtAction(nameof(GetContext), new { id = newId }, response);
     }
     
     [HttpGet("ChatContext/{id}")]
