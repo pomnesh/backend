@@ -6,13 +6,13 @@ using Pomnesh.Domain.Entity;
 
 namespace Pomnesh.API.Controllers;
 
-[Route("api/v1/")]
+[Route("api/v1/User")]
 [ApiController]
 public class UserController(UsersService service) : ControllerBase
 {
     private readonly UsersService _service = service;
 
-    [HttpPost("User")]
+    [HttpPost]
     public async Task<IActionResult> CreateUser(UserCreateDto model)
     {
         int newId = await _service.Create(model);
@@ -20,7 +20,7 @@ public class UserController(UsersService service) : ControllerBase
         return CreatedAtAction(nameof(GetUserInfo), new { id = newId }, response);
     }
     
-    [HttpGet("User/{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<User?>> GetUserInfo(long id)
     {
         var result = await _service.Get(id);

@@ -6,13 +6,13 @@ using Pomnesh.Domain.Entity;
 
 namespace Pomnesh.API.Controllers;
 
-[Route("api/v1/")]
+[Route("api/v1/Recollection")]
 [ApiController]
 public class RecollectionController(RecollectionsService service) : ControllerBase
 {
     private readonly RecollectionsService _service = service;
 
-    [HttpPost("Recollection")]
+    [HttpPost]
     public async Task<IActionResult> CreateRecollection(RecollectionCreateDto model)
     {
         int newId = await _service.Create(model);
@@ -20,7 +20,7 @@ public class RecollectionController(RecollectionsService service) : ControllerBa
         return CreatedAtAction(nameof(GetRecollection), new { id = newId }, response);
     }
     
-    [HttpGet("Recollection/{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<Recollection?>> GetRecollection(long id)
     {
         var result = await _service.Get(id);

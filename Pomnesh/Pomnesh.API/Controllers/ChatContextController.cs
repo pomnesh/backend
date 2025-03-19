@@ -6,13 +6,13 @@ using Pomnesh.Domain.Entity;
 
 namespace Pomnesh.API.Controllers;
 
-[Route("api/v1/")]
+[Route("api/v1/ChatContext")]
 [ApiController]
 public class ChatContextController(ChatContextsService service) : ControllerBase
 {
     private readonly ChatContextsService _service = service;
 
-    [HttpPost("ChatContext")]
+    [HttpPost]
     public async Task<IActionResult> CreateContext(ChatContextCreateDto model)
     {
         int newId = await _service.Create(model);
@@ -21,7 +21,7 @@ public class ChatContextController(ChatContextsService service) : ControllerBase
         return CreatedAtAction(nameof(GetContext), new { id = newId }, response);
     }
     
-    [HttpGet("ChatContext/{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<ChatContext?>> GetContext(long id)
     {
         var result = await _service.Get(id);
