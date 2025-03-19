@@ -14,7 +14,7 @@ public class AttachmentController(AttachmentsService service) : ControllerBase
     private readonly AttachmentsService _service = service;
 
     [HttpPost]
-    public async Task<IActionResult> CreateAttachment(AttachmentCreateDto model)
+    public async Task<IActionResult> CreateAttachment([FromBody] AttachmentCreateDto model)
     {
         int newId = await _service.Create(model);
         Console.WriteLine(model.OwnerId);

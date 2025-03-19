@@ -13,7 +13,7 @@ public class ChatContextController(ChatContextsService service) : ControllerBase
     private readonly ChatContextsService _service = service;
 
     [HttpPost]
-    public async Task<IActionResult> CreateContext(ChatContextCreateDto model)
+    public async Task<IActionResult> CreateContext([FromBody] ChatContextCreateDto model)
     {
         int newId = await _service.Create(model);
         

@@ -13,7 +13,7 @@ public class UserController(UsersService service) : ControllerBase
     private readonly UsersService _service = service;
 
     [HttpPost]
-    public async Task<IActionResult> CreateUser(UserCreateDto model)
+    public async Task<IActionResult> CreateUser([FromBody] UserCreateDto model)
     {
         int newId = await _service.Create(model);
         var response = new BaseApiResponse<int>{Payload=newId};
