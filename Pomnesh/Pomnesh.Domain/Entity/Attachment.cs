@@ -15,7 +15,4 @@ public class Attachment
     public string? OriginalLink { get; set; }
     
     public long ContextId { get; set; }
-
-    // Navigation property
-    public ChatContext ChatContext { get; set; } = null!;
 }

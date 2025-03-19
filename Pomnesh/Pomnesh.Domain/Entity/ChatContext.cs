@@ -9,8 +9,4 @@ public class ChatContext
     public string? MessageText { get; set; }
     
     public DateTime MessageDate { get; set; }
-    
-    // Optional: Navigation property for reverse relationship
-    public ICollection<Attachment> Attachments { get; set; } = new List<Attachment>();
-    
 }
