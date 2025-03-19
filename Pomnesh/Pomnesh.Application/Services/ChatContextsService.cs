@@ -16,7 +16,7 @@ public class ChatContextsService(IBaseRepository<ChatContext> contextRepository)
             MessageDate = data.MessageDate,
         };
 
-        return await contextRepository.AddAsync(context);
+        return await contextRepository.Add(context);
     }
 
     public async Task<ChatContext?> Get(long id)

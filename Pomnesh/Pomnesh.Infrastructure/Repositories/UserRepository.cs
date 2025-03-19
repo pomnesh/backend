@@ -13,7 +13,7 @@ public class UserRepository : IBaseRepository<User>
         _context = context;
     }
 
-    public async Task<int> AddAsync(User user)
+    public async Task<int> Add(User user)
     {
         var sql = @"
             INSERT INTO Users (VkId, VkToken)

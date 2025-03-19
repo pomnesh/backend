@@ -14,7 +14,7 @@ public class AttachmentRepository : IBaseRepository<Attachment>
         _context = context;
     }
 
-    public async Task<int> AddAsync(Attachment attachment)
+    public async Task<int> Add(Attachment attachment)
     {
         var sql = @"
         INSERT INTO Attachments (Type, FileId, OwnerId, OriginalLink, ContextId) 

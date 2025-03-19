@@ -14,7 +14,7 @@ public class RecollectionsService(IBaseRepository<Recollection> recollectionRepo
             DownloadLink = data.DownloadLink
         };
 
-        return await recollectionRepository.AddAsync(recollection);
+        return await recollectionRepository.Add(recollection);
     }
 
     public async Task<Recollection?> Get(long id)

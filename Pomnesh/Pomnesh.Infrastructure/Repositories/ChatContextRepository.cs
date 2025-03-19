@@ -12,7 +12,7 @@ public class ChatContextRepository : IBaseRepository<ChatContext>
         _context = context;
     }
 
-    public async Task<int> AddAsync(ChatContext chatContext)
+    public async Task<int> Add(ChatContext chatContext)
     {
         var sql = @"
             INSERT INTO ChatContexts (MessageId, MessageText, MessageDate)

@@ -12,7 +12,7 @@ public class RecollectionRepository : IBaseRepository<Recollection>
         _context = context;
     }
 
-    public async Task<int> AddAsync(Recollection recollection)
+    public async Task<int> Add(Recollection recollection)
     {
         var sql = @"
             INSERT INTO Recollections (UserId, DownloadLink) 

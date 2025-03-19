@@ -14,7 +14,7 @@ public class UsersService(IBaseRepository<User> usersRepository)
             VkToken = data.VkToken
         };
 
-        return await usersRepository.AddAsync(user);
+        return await usersRepository.Add(user);
     }
 
     public async Task<User?> Get(long id)

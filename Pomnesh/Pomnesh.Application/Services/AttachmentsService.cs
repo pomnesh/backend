@@ -17,7 +17,7 @@ public class AttachmentsService(IBaseRepository<Attachment> attachmentRepository
             ContextId = data.ContextId
         };
 
-        return await attachmentRepository.AddAsync(attachment);
+        return await attachmentRepository.Add(attachment);
     }
 
     public async Task<Attachment?> Get(long id)
