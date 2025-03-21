@@ -16,18 +16,18 @@ public class UserController(UsersService service) : ControllerBase
     public async Task<IActionResult> CreateUser([FromBody] UserCreateDto model)
     {
         int newId = await _service.Create(model);
-        var response = new BaseApiResponse<int>{Payload=newId};
+        var response = new BaseApiResponse<int> { Payload = newId };
         return CreatedAtAction(nameof(GetUserInfo), new { id = newId }, response);
     }
-    
+
     [HttpGet("{id}")]
     public async Task<ActionResult<User?>> GetUserInfo(long id)
     {
         var result = await _service.Get(id);
         if (result == null)
             return NotFound(new { message = $"User with ID {id} not found." });
-        
-        var response = new BaseApiResponse<User>{Payload = result};
+
+        var response = new BaseApiResponse<User> { Payload = result };
         return new JsonResult(response) { StatusCode = 200 };
     }
 }

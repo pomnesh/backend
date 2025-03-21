@@ -3,7 +3,6 @@ using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.Services;
 using Pomnesh.Domain.Entity;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pomnesh.API.Controllers;
 
@@ -18,19 +17,19 @@ public class AttachmentController(AttachmentsService service) : ControllerBase
     {
         int newId = await _service.Create(model);
         Console.WriteLine(model.OwnerId);
-        
-        var response = new BaseApiResponse<int>{Payload=newId};
+
+        var response = new BaseApiResponse<int> { Payload = newId };
         return CreatedAtAction(nameof(GetAttachment), new { id = newId }, response);
     }
-    
+
     [HttpGet("{id}")]
     public async Task<ActionResult<Attachment?>> GetAttachment(long id)
     {
         var result = await _service.Get(id);
         if (result == null)
             return NotFound(new { message = $"Attachment with ID {id} not found." });
-        
-        var response = new BaseApiResponse<Attachment>{Payload = result};
+
+        var response = new BaseApiResponse<Attachment> { Payload = result };
         return new JsonResult(response) { StatusCode = 200 };
     }
 }

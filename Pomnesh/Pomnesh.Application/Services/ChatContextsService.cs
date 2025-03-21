@@ -11,7 +11,7 @@ public class ChatContextsService(IBaseRepository<ChatContext> contextRepository)
         var context = new ChatContext
         {
             MessageId = data.MessageId,
-            
+
             MessageText = data.MessageText,
             MessageDate = data.MessageDate,
         };

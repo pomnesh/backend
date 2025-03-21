@@ -14,6 +14,6 @@ public enum AttachmentType
     AudioMessage = 3,
     [Display(Name = "Document")]
     Document = 4,
-    
+
     // implement new types in the future
 }

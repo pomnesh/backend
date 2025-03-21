@@ -16,19 +16,19 @@ public class ChatContextController(ChatContextsService service) : ControllerBase
     public async Task<IActionResult> CreateContext([FromBody] ChatContextCreateDto model)
     {
         int newId = await _service.Create(model);
-        
-        var response = new BaseApiResponse<int>{Payload=newId};
+
+        var response = new BaseApiResponse<int> { Payload = newId };
         return CreatedAtAction(nameof(GetContext), new { id = newId }, response);
     }
-    
+
     [HttpGet("{id}")]
     public async Task<ActionResult<ChatContext?>> GetContext(long id)
     {
         var result = await _service.Get(id);
         if (result == null)
             return NotFound(new { message = $"Context with ID {id} not found." });
-        
-        var response = new BaseApiResponse<ChatContext>{Payload = result};
+
+        var response = new BaseApiResponse<ChatContext> { Payload = result };
         return new JsonResult(response) { StatusCode = 200 };
     }
 }
