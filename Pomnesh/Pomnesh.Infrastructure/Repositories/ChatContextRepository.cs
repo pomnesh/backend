@@ -27,7 +27,7 @@ public class ChatContextRepository : IBaseRepository<ChatContext>
 
     public async Task<ChatContext?> GetById(long id)
     {
-        var sql = "SELECT * FROM ChatContexts WHERE Id = @id";
+        var sql = "SELECT Id, MessageId, MessageText, MessageDate  FROM ChatContexts WHERE Id = @id";
         using (var connection = _context.CreateConnection())
         {
             return await connection.QueryFirstOrDefaultAsync<ChatContext>(sql, new { id });

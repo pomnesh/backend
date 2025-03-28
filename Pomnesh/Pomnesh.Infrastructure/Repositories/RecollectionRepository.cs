@@ -27,7 +27,7 @@ public class RecollectionRepository : IBaseRepository<Recollection>
 
     public async Task<Recollection?> GetById(long id)
     {
-        var sql = "SELECT * FROM Recollections WHERE Id = @id";
+        var sql = "SELECT Id, UserId, CreatedAt, DownloadLink  FROM Recollections WHERE Id = @id";
         using (var connection = _context.CreateConnection())
         {
             return await connection.QueryFirstOrDefaultAsync<Recollection>(sql, new { id });

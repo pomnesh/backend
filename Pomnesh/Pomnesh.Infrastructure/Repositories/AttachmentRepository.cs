@@ -28,7 +28,7 @@ public class AttachmentRepository : IBaseRepository<Attachment>
 
     public async Task<Attachment?> GetById(long id)
     {
-        var sql = "SELECT * FROM Attachments WHERE Id = @id";
+        var sql = "SELECT Id, Type, FileId, OwnerId, OriginalLink, ContextId  FROM Attachments WHERE Id = @id";
         using (var connection = _context.CreateConnection())
         {
             return await connection.QueryFirstOrDefaultAsync<Attachment>(sql, new { id });

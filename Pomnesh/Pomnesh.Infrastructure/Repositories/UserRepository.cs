@@ -28,7 +28,7 @@ public class UserRepository : IBaseRepository<User>
 
     public async Task<User?> GetById(long id)
     {
-        var sql = "SELECT * FROM Users WHERE Id = @id";
+        var sql = "SELECT Id, VkId, VkToken FROM Users WHERE Id = @id";
         using (var connection = _context.CreateConnection())
         {
             return await connection.QueryFirstOrDefaultAsync<User>(sql, new { id });
