@@ -27,8 +27,7 @@ public class Program
         builder.Services.AddScoped<ChatContextsService>();
         builder.Services.AddScoped<RecollectionsService>();
         builder.Services.AddScoped<UsersService>();
-
-
+        
         builder.Services.AddControllers();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -42,7 +41,6 @@ public class Program
         {
             app.UseSwagger();
             app.UseSwaggerUI();
-
         }
 
         app.UseHttpsRedirection();
