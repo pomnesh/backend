@@ -23,13 +23,14 @@ public class AttachmentController(AttachmentsService service) : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Attachment?>> GetAttachment(long id)
+    public async Task<IActionResult> GetAttachment(long id)
     {
         var result = await _service.Get(id);
         if (result == null)
             return NotFound(new { message = $"Attachment with ID {id} not found." });
 
         var response = new BaseApiResponse<Attachment> { Payload = result };
-        return new JsonResult(response) { StatusCode = 200 };
+        return Ok(response);
     }
 }
+

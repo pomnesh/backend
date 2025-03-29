@@ -22,7 +22,7 @@ public class ChatContextController(ChatContextsService service) : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ChatContext?>> GetContext(long id)
+    public async Task<IActionResult> GetContext(long id)
     {
         var result = await _service.Get(id);
         if (result == null)

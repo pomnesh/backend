@@ -21,7 +21,7 @@ public class RecollectionController(RecollectionsService service) : ControllerBa
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Recollection?>> GetRecollection(long id)
+    public async Task<IActionResult> GetRecollection(long id)
     {
         var result = await _service.Get(id);
         if (result == null)
