@@ -8,9 +8,9 @@ namespace Pomnesh.API.Controllers;
 
 [Route("api/v1/ChatContext")]
 [ApiController]
-public class ChatContextController(ChatContextsService service) : ControllerBase
+public class ChatContextController(ChatContextService service) : ControllerBase
 {
-    private readonly ChatContextsService _service = service;
+    private readonly ChatContextService _service = service;
 
     [HttpPost]
     public async Task<IActionResult> CreateContext([FromBody] ChatContextCreateDto model)

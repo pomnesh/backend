@@ -8,9 +8,9 @@ namespace Pomnesh.API.Controllers;
 
 [Route("api/v1/User")]
 [ApiController]
-public class UserController(UsersService service) : ControllerBase
+public class UserController(UserService service) : ControllerBase
 {
-    private readonly UsersService _service = service;
+    private readonly UserService _service = service;
 
     [HttpPost]
     public async Task<IActionResult> CreateUser([FromBody] UserCreateDto model)

@@ -23,10 +23,10 @@ public class Program
         builder.Services.AddScoped<IBaseRepository<User>, UserRepository>();
 
         // Backend services
-        builder.Services.AddScoped<AttachmentsService>();
-        builder.Services.AddScoped<ChatContextsService>();
-        builder.Services.AddScoped<RecollectionsService>();
-        builder.Services.AddScoped<UsersService>();
+        builder.Services.AddScoped<AttachmentService>();
+        builder.Services.AddScoped<ChatContextService>();
+        builder.Services.AddScoped<RecollectionService>();
+        builder.Services.AddScoped<UserService>();
         
         builder.Services.AddControllers();
 

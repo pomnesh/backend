@@ -8,9 +8,9 @@ namespace Pomnesh.API.Controllers;
 
 [Route("api/v1/Attachment")]
 [ApiController]
-public class AttachmentController(AttachmentsService service) : ControllerBase
+public class AttachmentController(AttachmentService service) : ControllerBase
 {
-    private readonly AttachmentsService _service = service;
+    private readonly AttachmentService _service = service;
 
     [HttpPost]
     public async Task<IActionResult> CreateAttachment([FromBody] AttachmentCreateDto model)

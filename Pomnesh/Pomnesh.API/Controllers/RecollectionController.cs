@@ -8,9 +8,9 @@ namespace Pomnesh.API.Controllers;
 
 [Route("api/v1/Recollection")]
 [ApiController]
-public class RecollectionController(RecollectionsService service) : ControllerBase
+public class RecollectionController(RecollectionService service) : ControllerBase
 {
-    private readonly RecollectionsService _service = service;
+    private readonly RecollectionService _service = service;
 
     [HttpPost]
     public async Task<IActionResult> CreateRecollection([FromBody] RecollectionCreateDto model)
