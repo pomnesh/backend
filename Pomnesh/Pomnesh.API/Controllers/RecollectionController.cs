@@ -28,6 +28,6 @@ public class RecollectionController(RecollectionService service) : ControllerBas
             return NotFound(new { message = $"Recollection with ID {id} not found." });
 
         var response = new BaseApiResponse<Recollection> { Payload = result };
-        return new JsonResult(response) { StatusCode = 200 };
+        return Ok(response);
     }
 }

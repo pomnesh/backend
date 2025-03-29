@@ -29,6 +29,6 @@ public class ChatContextController(ChatContextService service) : ControllerBase
             return NotFound(new { message = $"Context with ID {id} not found." });
 
         var response = new BaseApiResponse<ChatContext> { Payload = result };
-        return new JsonResult(response) { StatusCode = 200 };
+        return Ok(response);
     }
 }

@@ -28,6 +28,6 @@ public class UserController(UserService service) : ControllerBase
             return NotFound(new { message = $"User with ID {id} not found." });
 
         var response = new BaseApiResponse<User> { Payload = result };
-        return new JsonResult(response) { StatusCode = 200 };
+        return Ok(response);
     }
 }
