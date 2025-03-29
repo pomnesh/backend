@@ -5,17 +5,22 @@ using Npgsql;
 
 namespace Pomnesh.Infrastructure;
 
-public class DapperContext
+public class DapperContext : IDisposable
 {
     private readonly IConfiguration _configuration;
-    private readonly string _connectionString;
+    private readonly NpgsqlDataSource _dataSource;
 
     public DapperContext(IConfiguration configuration)
     {
         _configuration = configuration;
-        _connectionString = _configuration.GetConnectionString("DefaultConnection");
+        var connectionString = _configuration.GetConnectionString("DefaultConnection");
+        _dataSource = NpgsqlDataSource.Create(connectionString);
     }
 
-    public IDbConnection CreateConnection() => new NpgsqlConnection(_connectionString);
+    public IDbConnection CreateConnection() => _dataSource.CreateConnection();
 
+    public void Dispose()
+    {
+        _dataSource?.Dispose();
+    }
 }
