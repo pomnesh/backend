@@ -3,6 +3,9 @@ using Pomnesh.Domain.Entity;
 using Pomnesh.Infrastructure;
 using Pomnesh.Infrastructure.Interfaces;
 using Pomnesh.Infrastructure.Repositories;
+using FluentMigrator.Runner;
+using Pomnesh.Infrastructure.Migrations;
+using MigrationRunner = Pomnesh.Infrastructure.Migrations.MigrationRunner;
 
 namespace Pomnesh.API;
 
@@ -28,6 +31,16 @@ public class Program
         builder.Services.AddScoped<RecollectionService>();
         builder.Services.AddScoped<UserService>();
         
+        // Migrations
+        builder.Services.AddFluentMigratorCore()
+            .ConfigureRunner(rb => rb
+                .AddPostgres() 
+                .WithGlobalConnectionString(builder.Configuration.GetConnectionString("DefaultConnection"))
+                .ScanIn(typeof(MigrationRunner).Assembly).For.Migrations());
+        
+        
+        builder.Services.AddScoped<MigrationRunner>();
+        
         builder.Services.AddControllers();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -47,7 +60,14 @@ public class Program
 
         app.UseAuthorization();
         app.MapControllers();
-
+        
+        // Run Migrations on Startup
+        using (var scope = app.Services.CreateScope())
+        {
+            var migrationRunner = scope.ServiceProvider.GetRequiredService<MigrationRunner>();
+            migrationRunner.Run();
+        }
+        
         app.Run();
     }
 }
