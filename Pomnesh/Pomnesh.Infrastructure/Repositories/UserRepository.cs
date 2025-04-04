@@ -16,9 +16,9 @@ public class UserRepository : IBaseRepository<User>
     public async Task<int> Add(User user)
     {
         var sql = @"
-            INSERT INTO Users (VkId, VkToken)
+            INSERT INTO ""Users"" (""VkId"", ""VkToken"")
             VALUES (@VkId, @VkToken)
-            RETURNING Id;
+            RETURNING ""Id"";
         ";
         using (var connection = _context.CreateConnection())
         {
@@ -28,7 +28,7 @@ public class UserRepository : IBaseRepository<User>
 
     public async Task<User?> GetById(long id)
     {
-        var sql = "SELECT Id, VkId, VkToken FROM Users WHERE Id = @id";
+        var sql = @"SELECT ""Id"", ""VkId"", ""VkToken"" FROM ""Users"" WHERE ""Id"" = @id";
         using (var connection = _context.CreateConnection())
         {
             return await connection.QueryFirstOrDefaultAsync<User>(sql, new { id });
@@ -37,7 +37,7 @@ public class UserRepository : IBaseRepository<User>
     
     public async  Task<IEnumerable<User>> GetAll()
     {
-        var sql = "SELECT Id, VkId, VkToken FROM Users";
+        var sql = @"SELECT ""Id"", ""VkId"", ""VkToken"" FROM ""Users""";
         using (var connection = _context.CreateConnection())
         {
             return await connection.QueryAsync<User>(sql);

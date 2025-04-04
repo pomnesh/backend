@@ -17,9 +17,9 @@ public class AttachmentRepository : IBaseRepository<Attachment>
     public async Task<int> Add(Attachment attachment)
     {
         var sql = @"
-        INSERT INTO Attachments (Type, FileId, OwnerId, OriginalLink, ContextId) 
+        INSERT INTO ""Attachments"" (""Type"", ""FileId"", ""OwnerId"", ""OriginalLink"", ""ContextId"") 
         VALUES (@Type, @FileId, @OwnerId, @OriginalLink, @ContextId)
-        RETURNING Id;";
+        RETURNING ""Id""";
         using (var connection = _context.CreateConnection())
         {
             return await connection.ExecuteScalarAsync<int>(sql, attachment);
@@ -28,7 +28,7 @@ public class AttachmentRepository : IBaseRepository<Attachment>
 
     public async Task<Attachment?> GetById(long id)
     {
-        var sql = "SELECT \"Id\", \"Type\", \"FileId\", \"OwnerId\", \"OriginalLink\", \"ContextId\"  FROM public.\"Attachments\" WHERE Id = @id";
+        var sql = @"SELECT ""Id"", ""Type"", ""FileId"", ""OwnerId"", ""OriginalLink"", ""ContextId""  FROM ""Attachments"" WHERE ""Id"" = @id";
         using (var connection = _context.CreateConnection())
         {
             return await connection.QueryFirstOrDefaultAsync<Attachment>(sql, new { id });
@@ -37,7 +37,7 @@ public class AttachmentRepository : IBaseRepository<Attachment>
 
     public async Task<IEnumerable<Attachment>> GetAll()
     {
-        var sql = "SELECT \"Id\", \"Type\", \"FileId\", \"OwnerId\", \"OriginalLink\", \"ContextId\" FROM public.\"Attachments\"";
+        var sql = @"SELECT ""Id"", ""Type"", ""FileId"", ""OwnerId"", ""OriginalLink"", ""ContextId"" FROM ""Attachments""";
         using (var connection = _context.CreateConnection())
         {
             var a = await connection.QueryAsync<Attachment>(sql);

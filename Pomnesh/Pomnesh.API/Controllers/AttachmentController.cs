@@ -8,14 +8,20 @@ namespace Pomnesh.API.Controllers;
 
 [Route("api/v1/Attachment")]
 [ApiController]
-public class AttachmentController(AttachmentService service) : ControllerBase
+public class AttachmentController(AttachmentService attachmentService, ChatContextService chatContextService) : ControllerBase
 {
-    private readonly AttachmentService _service = service;
+    private readonly AttachmentService _attachmentService = attachmentService;
+    private readonly ChatContextService _chatContextService = chatContextService;
 
     [HttpPost]
     public async Task<IActionResult> CreateAttachment([FromBody] AttachmentCreateDto model)
     {
-        int newId = await _service.Create(model);
+        // Check if ChatContext exist.
+        var chatContext = await _chatContextService.Get(model.ContextId);
+        if (chatContext == null)
+            return NotFound(new { message = $"ChatContext with ID {model.ContextId} not found." });
+        
+        int newId = await _attachmentService.Create(model);
         Console.WriteLine(model.OwnerId);
 
         var response = new BaseApiResponse<int> { Payload = newId };
@@ -25,11 +31,11 @@ public class AttachmentController(AttachmentService service) : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetAttachment(long id)
     {
-        var result = await _service.Get(id);
+        var result = await _attachmentService.Get(id);
         if (result == null)
             return NotFound(new { message = $"Attachment with ID {id} not found." });
         
-        var AttachmentResponse = new AttachmentResponseDto
+        var attachmentResponse = new AttachmentResponseDto
         {
             Id = result.Id,
             Type = (AttachmentTypeDto)result.Type,
@@ -37,18 +43,17 @@ public class AttachmentController(AttachmentService service) : ControllerBase
             OwnerId = result.OwnerId,
             OriginalLink = result.OriginalLink,
             ContextId = result.ContextId
-            
         };
-        var response = new BaseApiResponse<AttachmentResponseDto> { Payload = AttachmentResponse };
+        var response = new BaseApiResponse<AttachmentResponseDto> { Payload = attachmentResponse };
         return Ok(response);
     }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AttachmentResponseDto>>> GetAll()
     {
-        var result = await _service.GetAll();
+        var result = await _attachmentService.GetAll();
         
-        List<AttachmentResponseDto> AttachmentResponse = new List<AttachmentResponseDto>();
+        List<AttachmentResponseDto> attachmentResponse = new List<AttachmentResponseDto>();
         foreach (var attachment in result)
         {
             var responseDto = new AttachmentResponseDto
@@ -61,11 +66,11 @@ public class AttachmentController(AttachmentService service) : ControllerBase
                 ContextId = attachment.ContextId
             
             };
-            AttachmentResponse.Add(responseDto);
+            attachmentResponse.Add(responseDto);
         }
         
 
-        var response = new BaseApiResponse<IEnumerable<AttachmentResponseDto>> { Payload = AttachmentResponse };
+        var response = new BaseApiResponse<IEnumerable<AttachmentResponseDto>> { Payload = attachmentResponse };
         return Ok(response);
     }
 }

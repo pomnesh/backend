@@ -15,10 +15,9 @@ public class ChatContextRepository : IBaseRepository<ChatContext>
     public async Task<int> Add(ChatContext chatContext)
     {
         var sql = @"
-            INSERT INTO ChatContexts (MessageId, MessageText, MessageDate)
-            VALUES (@MessageId, @MessageText, @MessageDate)
-            RETURNING Id;
-        ";
+        INSERT INTO ""ChatContexts"" (""MessageId"", ""MessageText"", ""MessageDate"")
+        VALUES (@MessageId, @MessageText, @MessageDate)
+        RETURNING ""Id"";";
         using (var connection = _context.CreateConnection())
         {
             return await connection.ExecuteScalarAsync<int>(sql, chatContext);
@@ -27,7 +26,7 @@ public class ChatContextRepository : IBaseRepository<ChatContext>
 
     public async Task<ChatContext?> GetById(long id)
     {
-        var sql = "SELECT Id, MessageId, MessageText, MessageDate FROM ChatContexts WHERE Id = @id";
+        var sql = @"SELECT ""Id"", ""MessageId"", ""MessageText"", ""MessageDate"" FROM ""ChatContexts"" WHERE ""Id"" = @id";
         using (var connection = _context.CreateConnection())
         {
             return await connection.QueryFirstOrDefaultAsync<ChatContext>(sql, new { id });
@@ -36,7 +35,7 @@ public class ChatContextRepository : IBaseRepository<ChatContext>
     
     public async Task<IEnumerable<ChatContext>> GetAll()
     {
-        var sql = "SELECT Id, MessageId, MessageText, MessageDate FROM ChatContexts";
+        var sql = @"SELECT ""Id"", ""MessageId"", ""MessageText"", ""MessageDate"" FROM ""ChatContexts""";
         using (var connection = _context.CreateConnection())
         {
             return await connection.QueryAsync<ChatContext>(sql);

@@ -15,9 +15,9 @@ public class RecollectionRepository : IBaseRepository<Recollection>
     public async Task<int> Add(Recollection recollection)
     {
         var sql = @"
-            INSERT INTO Recollections (UserId, DownloadLink) 
+            INSERT INTO ""Recollections"" (""UserId"", ""DownloadLink"") 
             VALUES (@UserId, @DownloadLink)
-            RETURNING Id;
+            RETURNING ""Id"";
         ";
         using (var connection = _context.CreateConnection())
         {
@@ -27,7 +27,7 @@ public class RecollectionRepository : IBaseRepository<Recollection>
 
     public async Task<Recollection?> GetById(long id)
     {
-        var sql = "SELECT Id, UserId, CreatedAt, DownloadLink  FROM Recollections WHERE Id = @id";
+        var sql = @"SELECT ""Id"", ""UserId"", ""CreatedAt"", ""DownloadLink""  FROM ""Recollections"" WHERE ""Id"" = @id";
         using (var connection = _context.CreateConnection())
         {
             return await connection.QueryFirstOrDefaultAsync<Recollection>(sql, new { id });
@@ -36,7 +36,7 @@ public class RecollectionRepository : IBaseRepository<Recollection>
     
     public async Task<IEnumerable<Recollection>> GetAll()
     {
-        var sql = "SELECT Id, UserId, CreatedAt, DownloadLink FROM Recollections FROM Recollections";
+        var sql = @"SELECT ""Id"", ""UserId"", ""CreatedAt"", ""DownloadLink"" FROM ""Recollections"";";
         using (var connection = _context.CreateConnection())
         {
             return await connection.QueryAsync<Recollection>(sql);

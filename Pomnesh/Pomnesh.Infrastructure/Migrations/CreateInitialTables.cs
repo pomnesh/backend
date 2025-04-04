@@ -23,7 +23,7 @@ public class CreateInitialTables : Migration
         Create.Table("Recollections")
             .WithColumn("Id").AsInt64().PrimaryKey().Identity()
             .WithColumn("UserId").AsInt64().NotNullable().ForeignKey("Users", "Id")
-            .WithColumn("CreatedAt").AsDateTime().NotNullable()
+            .WithColumn("CreatedAt").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)
             .WithColumn("DownloadLink").AsString().NotNullable();
 
         Create.Table("Attachments")
