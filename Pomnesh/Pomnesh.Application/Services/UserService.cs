@@ -23,4 +23,10 @@ public class UserService(IBaseRepository<User> usersRepository) : IBaseService<U
         var result = await usersRepository.GetById(id);
         return result;
     }
+    
+    public async Task<IEnumerable<User>> GetAll()
+    {
+        var result = await usersRepository.GetAll();
+        return result;
+    }
 }

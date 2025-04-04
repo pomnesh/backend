@@ -23,4 +23,10 @@ public class RecollectionService(IBaseRepository<Recollection> recollectionRepos
         var result = await recollectionRepository.GetById(id);
         return result;
     }
+    
+    public async Task<IEnumerable<Recollection>> GetAll()
+    {
+        var result = await recollectionRepository.GetAll();
+        return result;
+    }
 }

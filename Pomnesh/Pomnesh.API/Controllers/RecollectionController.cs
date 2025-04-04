@@ -30,4 +30,13 @@ public class RecollectionController(RecollectionService service) : ControllerBas
         var response = new BaseApiResponse<Recollection> { Payload = result };
         return Ok(response);
     }
+    
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _service.GetAll();
+
+        var response = new BaseApiResponse<IEnumerable<Recollection>> { Payload = result };
+        return Ok(response);
+    }
 }

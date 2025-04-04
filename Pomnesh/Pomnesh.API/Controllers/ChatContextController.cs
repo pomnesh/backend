@@ -31,4 +31,13 @@ public class ChatContextController(ChatContextService service) : ControllerBase
         var response = new BaseApiResponse<ChatContext> { Payload = result };
         return Ok(response);
     }
+    
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _service.GetAll();
+
+        var response = new BaseApiResponse<IEnumerable<ChatContext>> { Payload = result };
+        return Ok(response);
+    }
 }

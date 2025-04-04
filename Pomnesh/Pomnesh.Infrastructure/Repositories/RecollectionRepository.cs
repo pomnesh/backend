@@ -33,4 +33,13 @@ public class RecollectionRepository : IBaseRepository<Recollection>
             return await connection.QueryFirstOrDefaultAsync<Recollection>(sql, new { id });
         }
     }
+    
+    public async Task<IEnumerable<Recollection>> GetAll()
+    {
+        var sql = "SELECT Id, UserId, CreatedAt, DownloadLink FROM Recollections FROM Recollections";
+        using (var connection = _context.CreateConnection())
+        {
+            return await connection.QueryAsync<Recollection>(sql);
+        }
+    }
 }

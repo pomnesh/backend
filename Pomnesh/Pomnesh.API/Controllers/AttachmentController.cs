@@ -32,5 +32,14 @@ public class AttachmentController(AttachmentService service) : ControllerBase
         var response = new BaseApiResponse<Attachment> { Payload = result };
         return Ok(response);
     }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Attachment>>> GetAll()
+    {
+        var result = await _service.GetAll();
+
+        var response = new BaseApiResponse<IEnumerable<Attachment>> { Payload = result };
+        return Ok(response);
+    }
 }
 

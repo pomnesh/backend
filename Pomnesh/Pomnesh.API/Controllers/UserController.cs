@@ -30,4 +30,13 @@ public class UserController(UserService service) : ControllerBase
         var response = new BaseApiResponse<User> { Payload = result };
         return Ok(response);
     }
+    
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _service.GetAll();
+
+        var response = new BaseApiResponse<IEnumerable<User>> { Payload = result };
+        return Ok(response);
+    }
 }

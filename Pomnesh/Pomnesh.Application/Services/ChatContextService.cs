@@ -24,4 +24,10 @@ public class ChatContextService(IBaseRepository<ChatContext> contextRepository) 
         var result = await contextRepository.GetById(id);
         return result;
     }
+    
+    public async Task<IEnumerable<ChatContext>> GetAll()
+    {
+        var result = await contextRepository.GetAll();
+        return result;
+    }
 }

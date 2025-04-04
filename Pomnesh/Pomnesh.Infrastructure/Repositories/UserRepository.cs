@@ -34,4 +34,13 @@ public class UserRepository : IBaseRepository<User>
             return await connection.QueryFirstOrDefaultAsync<User>(sql, new { id });
         }
     }
+    
+    public async  Task<IEnumerable<User>> GetAll()
+    {
+        var sql = "SELECT Id, VkId, VkToken FROM Users";
+        using (var connection = _context.CreateConnection())
+        {
+            return await connection.QueryAsync<User>(sql);
+        }
+    }
 }

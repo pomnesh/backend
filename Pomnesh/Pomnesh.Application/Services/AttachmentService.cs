@@ -26,4 +26,10 @@ public class AttachmentService(IBaseRepository<Attachment> attachmentRepository)
         var result = await attachmentRepository.GetById(id);
         return result;
     }
-}
+
+    public async Task<IEnumerable<Attachment>> GetAll()
+    {
+        var result = await attachmentRepository.GetAll();
+        return result;
+    }
+} 
