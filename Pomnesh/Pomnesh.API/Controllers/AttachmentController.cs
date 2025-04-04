@@ -22,7 +22,6 @@ public class AttachmentController(AttachmentService attachmentService, ChatConte
             return NotFound(new { message = $"ChatContext with ID {model.ContextId} not found." });
         
         int newId = await _attachmentService.Create(model);
-        Console.WriteLine(model.OwnerId);
 
         var response = new BaseApiResponse<int> { Payload = newId };
         return CreatedAtAction(nameof(GetAttachment), new { id = newId }, response);
