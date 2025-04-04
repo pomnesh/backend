@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Pomnesh.API.Dto;
 using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.Services;
-using Pomnesh.Domain.Entity;
 
 namespace Pomnesh.API.Controllers;
 
@@ -27,7 +27,15 @@ public class RecollectionController(RecollectionService service) : ControllerBas
         if (result == null)
             return NotFound(new { message = $"Recollection with ID {id} not found." });
 
-        var response = new BaseApiResponse<Recollection> { Payload = result };
+        var recollectionResponse = new RecollectionResponseDto
+        {
+            Id = result.Id,
+            UserId = result.UserId,
+            CreatedAt = result.CreatedAt,
+            DownloadLink = result.DownloadLink
+        };
+        
+        var response = new BaseApiResponse<RecollectionResponseDto> { Payload = recollectionResponse };
         return Ok(response);
     }
     
@@ -35,8 +43,20 @@ public class RecollectionController(RecollectionService service) : ControllerBas
     public async Task<IActionResult> GetAll()
     {
         var result = await _service.GetAll();
-
-        var response = new BaseApiResponse<IEnumerable<Recollection>> { Payload = result };
+        List<RecollectionResponseDto> recollectionResponse = new List<RecollectionResponseDto>();
+        foreach (var recollection in result)
+        {
+            var responseDto = new RecollectionResponseDto
+            {
+                Id = recollection.Id,
+                UserId = recollection.UserId,
+                CreatedAt = recollection.CreatedAt,
+                DownloadLink = recollection.DownloadLink
+            };
+            recollectionResponse.Add(responseDto);
+        }
+        
+        var response = new BaseApiResponse<IEnumerable<RecollectionResponseDto>> { Payload = recollectionResponse };
         return Ok(response);
     }
 }

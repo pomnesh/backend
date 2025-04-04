@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using Pomnesh.API.Dto;
 using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.Services;
-using Pomnesh.Domain.Entity;
 
 namespace Pomnesh.API.Controllers;
 
@@ -28,17 +28,44 @@ public class AttachmentController(AttachmentService service) : ControllerBase
         var result = await _service.Get(id);
         if (result == null)
             return NotFound(new { message = $"Attachment with ID {id} not found." });
-
-        var response = new BaseApiResponse<Attachment> { Payload = result };
+        
+        var AttachmentResponse = new AttachmentResponseDto
+        {
+            Id = result.Id,
+            Type = (AttachmentTypeDto)result.Type,
+            FileId = result.FileId,
+            OwnerId = result.OwnerId,
+            OriginalLink = result.OriginalLink,
+            ContextId = result.ContextId
+            
+        };
+        var response = new BaseApiResponse<AttachmentResponseDto> { Payload = AttachmentResponse };
         return Ok(response);
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Attachment>>> GetAll()
+    public async Task<ActionResult<IEnumerable<AttachmentResponseDto>>> GetAll()
     {
         var result = await _service.GetAll();
+        
+        List<AttachmentResponseDto> AttachmentResponse = new List<AttachmentResponseDto>();
+        foreach (var attachment in result)
+        {
+            var responseDto = new AttachmentResponseDto
+            {
+                Id = attachment.Id,
+                Type = (AttachmentTypeDto)attachment.Type,
+                FileId = attachment.FileId,
+                OwnerId = attachment.OwnerId,
+                OriginalLink = attachment.OriginalLink,
+                ContextId = attachment.ContextId
+            
+            };
+            AttachmentResponse.Add(responseDto);
+        }
+        
 
-        var response = new BaseApiResponse<IEnumerable<Attachment>> { Payload = result };
+        var response = new BaseApiResponse<IEnumerable<AttachmentResponseDto>> { Payload = AttachmentResponse };
         return Ok(response);
     }
 }

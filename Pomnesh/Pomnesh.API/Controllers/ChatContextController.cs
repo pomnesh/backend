@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Pomnesh.API.Dto;
 using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.Services;
-using Pomnesh.Domain.Entity;
 
 namespace Pomnesh.API.Controllers;
 
@@ -27,8 +27,16 @@ public class ChatContextController(ChatContextService service) : ControllerBase
         var result = await _service.Get(id);
         if (result == null)
             return NotFound(new { message = $"Context with ID {id} not found." });
+        
+        var chatContextResponse = new ChatContextResponseDto
+        {
+            Id = result.Id,
+            MessageId = result.MessageId,
+            MessageText = result.MessageText
+        };
+        if (chatContextResponse == null) throw new ArgumentNullException(nameof(chatContextResponse));
 
-        var response = new BaseApiResponse<ChatContext> { Payload = result };
+        var response = new BaseApiResponse<ChatContextResponseDto> { Payload = chatContextResponse };
         return Ok(response);
     }
     
@@ -36,8 +44,21 @@ public class ChatContextController(ChatContextService service) : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var result = await _service.GetAll();
+        
+        List<ChatContextResponseDto> chatContextResponse = new List<ChatContextResponseDto>();
+        foreach (var chatContext in result)
+        {
+            var responseDto = new ChatContextResponseDto
+            {
+                Id = chatContext.Id,
+                MessageId = chatContext.MessageId,
+                MessageText = chatContext.MessageText,
+                MessageDate = chatContext.MessageDate
+            };
+            chatContextResponse.Add(responseDto);
+        }
 
-        var response = new BaseApiResponse<IEnumerable<ChatContext>> { Payload = result };
+        var response = new BaseApiResponse<IEnumerable<ChatContextResponseDto>> { Payload = chatContextResponse };
         return Ok(response);
     }
 }

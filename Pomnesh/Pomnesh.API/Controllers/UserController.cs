@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Pomnesh.API.Dto;
 using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.Services;
-using Pomnesh.Domain.Entity;
 
 namespace Pomnesh.API.Controllers;
 
@@ -27,7 +27,14 @@ public class UserController(UserService service) : ControllerBase
         if (result == null)
             return NotFound(new { message = $"User with ID {id} not found." });
 
-        var response = new BaseApiResponse<User> { Payload = result };
+        var userResponse = new UserResponseDto
+        {
+            Id = result.Id,
+            VkId = result.VkId,
+            VkToken = result.VkToken,
+        };
+
+        var response = new BaseApiResponse<UserResponseDto> { Payload = userResponse };
         return Ok(response);
     }
     
@@ -35,8 +42,19 @@ public class UserController(UserService service) : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var result = await _service.GetAll();
-
-        var response = new BaseApiResponse<IEnumerable<User>> { Payload = result };
+        
+        List<UserResponseDto> userResponse = new List<UserResponseDto>();
+        foreach (var user in result)
+        {
+            var responseDto = new UserResponseDto
+            {
+                Id = user.Id,
+                VkId = user.VkId,
+                VkToken = user.VkToken,
+            };
+            userResponse.Add(responseDto);
+        }
+        var response = new BaseApiResponse<IEnumerable<UserResponseDto>> { Payload = userResponse };
         return Ok(response);
     }
 }
