@@ -1,5 +1,4 @@
 using System.Data;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 
@@ -14,6 +13,10 @@ public class DapperContext : IDisposable
     {
         _configuration = configuration;
         var connectionString = _configuration.GetConnectionString("DefaultConnection");
+        if (connectionString is null)
+        {
+            throw new Exception("No connection string provided");
+        }
         _dataSource = NpgsqlDataSource.Create(connectionString);
     }
 
