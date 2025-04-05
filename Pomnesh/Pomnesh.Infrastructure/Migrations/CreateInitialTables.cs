@@ -8,7 +8,7 @@ public class CreateInitialTables : Migration
     public override void Up()
     {
         // Please find creating schema `public` with running migration
-        
+
         Create.Table("Users")
             .WithColumn("Id").AsInt64().PrimaryKey().Identity()
             .WithColumn("VkId").AsInt64().NotNullable()
@@ -22,9 +22,14 @@ public class CreateInitialTables : Migration
 
         Create.Table("Recollections")
             .WithColumn("Id").AsInt64().PrimaryKey().Identity()
-            .WithColumn("UserId").AsInt64().NotNullable().ForeignKey("Users", "Id")
+            .WithColumn("UserId").AsInt64().NotNullable()
             .WithColumn("CreatedAt").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)
             .WithColumn("DownloadLink").AsString().NotNullable();
+
+        Create.ForeignKey()
+            .FromTable("Recollections").ForeignColumn("UserId")
+            .ToTable("Users").PrimaryColumn("Id")
+            .OnDeleteOrUpdate(System.Data.Rule.Cascade);
 
         Create.Table("Attachments")
             .WithColumn("Id").AsInt64().PrimaryKey().Identity()
@@ -32,7 +37,12 @@ public class CreateInitialTables : Migration
             .WithColumn("FileId").AsInt64().NotNullable()
             .WithColumn("OwnerId").AsInt64().NotNullable()
             .WithColumn("OriginalLink").AsString().Nullable()
-            .WithColumn("ContextId").AsInt64().NotNullable().ForeignKey("ChatContexts", "Id");
+            .WithColumn("ContextId").AsInt64().NotNullable();
+
+        Create.ForeignKey()
+            .FromTable("Attachments").ForeignColumn("ContextId")
+            .ToTable("ChatContexts").PrimaryColumn("Id")
+            .OnDeleteOrUpdate(System.Data.Rule.Cascade);
     }
 
     public override void Down()
