@@ -104,3 +104,5 @@ temp/
 *.orig
 *.rej
 *~
+
+Pomnesh.API/appsettings.json
