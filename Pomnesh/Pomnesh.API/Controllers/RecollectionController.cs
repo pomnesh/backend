@@ -3,16 +3,17 @@ using Pomnesh.API.Dto;
 using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.DTO;
+using Pomnesh.Application.Interfaces;
 using Pomnesh.Application.Services;
 
 namespace Pomnesh.API.Controllers;
 
 [Route("api/v1/Recollection")]
 [ApiController]
-public class RecollectionController(RecollectionService recollectionService, UserService userService) : ControllerBase
+public class RecollectionController(IRecollectionService recollectionService,  IUserService userService) : ControllerBase
 {
-    private readonly RecollectionService _recollectionService = recollectionService;
-    private readonly UserService _userService = userService;
+    private readonly IRecollectionService _recollectionService = recollectionService;
+    private readonly IUserService _userService = userService;
 
     [HttpPost]
     public async Task<IActionResult> CreateRecollection([FromBody] RecollectionCreateDto model)

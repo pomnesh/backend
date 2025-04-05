@@ -4,7 +4,10 @@ using Pomnesh.Infrastructure;
 using Pomnesh.Infrastructure.Interfaces;
 using Pomnesh.Infrastructure.Repositories;
 using FluentMigrator.Runner;
-using Pomnesh.Infrastructure.Migrations;
+using Pomnesh.API.Dto;
+using Pomnesh.Application.Dto;
+using Pomnesh.Application.DTO;
+using Pomnesh.Application.Interfaces;
 using MigrationRunner = Pomnesh.Infrastructure.Migrations.MigrationRunner;
 
 namespace Pomnesh.API;
@@ -26,10 +29,10 @@ public class Program
         builder.Services.AddScoped<IBaseRepository<User>, UserRepository>();
 
         // Backend services
-        builder.Services.AddScoped<AttachmentService>();
-        builder.Services.AddScoped<ChatContextService>();
-        builder.Services.AddScoped<RecollectionService>();
-        builder.Services.AddScoped<UserService>();
+        builder.Services.AddScoped<IAttachmentService, AttachmentService>();
+        builder.Services.AddScoped<IChatContextService, ChatContextService>();
+        builder.Services.AddScoped<IRecollectionService, RecollectionService>();
+        builder.Services.AddScoped<IUserService, UserService>();
         
         // Migrations
         builder.Services.AddFluentMigratorCore()

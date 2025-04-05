@@ -6,7 +6,7 @@ using Pomnesh.Infrastructure.Interfaces;
 
 namespace Pomnesh.Application.Services;
 
-public class RecollectionService(IBaseRepository<Recollection> recollectionRepository) : IBaseService<RecollectionCreateDto, Recollection, RecollectionUpdateDto>
+public class RecollectionService(IBaseRepository<Recollection> recollectionRepository) : IRecollectionService
 {
     public async Task<int> Create(RecollectionCreateDto data)
     {

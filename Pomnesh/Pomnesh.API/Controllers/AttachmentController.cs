@@ -2,16 +2,17 @@ using Microsoft.AspNetCore.Mvc;
 using Pomnesh.API.Dto;
 using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
+using Pomnesh.Application.Interfaces;
 using Pomnesh.Application.Services;
 
 namespace Pomnesh.API.Controllers;
 
 [Route("api/v1/Attachment")]
 [ApiController]
-public class AttachmentController(AttachmentService attachmentService, ChatContextService chatContextService) : ControllerBase
+public class AttachmentController(IAttachmentService attachmentService, IChatContextService chatContextService) : ControllerBase
 {
-    private readonly AttachmentService _attachmentService = attachmentService;
-    private readonly ChatContextService _chatContextService = chatContextService;
+    private readonly IAttachmentService _attachmentService = attachmentService;
+    private readonly IChatContextService _chatContextService = chatContextService;
 
     [HttpPost]
     public async Task<IActionResult> CreateAttachment([FromBody] AttachmentCreateDto model)

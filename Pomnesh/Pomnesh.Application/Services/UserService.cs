@@ -6,7 +6,7 @@ using Pomnesh.Infrastructure.Interfaces;
 
 namespace Pomnesh.Application.Services;
 
-public class UserService(IBaseRepository<User> usersRepository) : IBaseService<UserCreateDto, User, UserUpdateDto>
+public class UserService(IBaseRepository<User> usersRepository) : IUserService
 {
     public async Task<int> Create(UserCreateDto data)
     {

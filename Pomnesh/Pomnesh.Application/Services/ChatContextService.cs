@@ -6,7 +6,7 @@ using Pomnesh.Infrastructure.Interfaces;
 
 namespace Pomnesh.Application.Services;
 
-public class ChatContextService(IBaseRepository<ChatContext> contextRepository) : IBaseService<ChatContextCreateDto, ChatContext, ChatContextUpdateDto>
+public class ChatContextService(IBaseRepository<ChatContext> contextRepository) : IChatContextService
 {
     public async Task<int> Create(ChatContextCreateDto data)
     {

@@ -3,15 +3,16 @@ using Pomnesh.API.Dto;
 using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.DTO;
+using Pomnesh.Application.Interfaces;
 using Pomnesh.Application.Services;
 
 namespace Pomnesh.API.Controllers;
 
 [Route("api/v1/User")]
 [ApiController]
-public class UserController(UserService service) : ControllerBase
+public class UserController(IUserService service) : ControllerBase
 {
-    private readonly UserService _service = service;
+    private readonly IUserService _service = service;
 
     [HttpPost]
     public async Task<IActionResult> CreateUser([FromBody] UserCreateDto model)

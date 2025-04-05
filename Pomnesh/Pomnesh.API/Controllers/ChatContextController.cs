@@ -3,15 +3,16 @@ using Pomnesh.API.Dto;
 using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.DTO;
+using Pomnesh.Application.Interfaces;
 using Pomnesh.Application.Services;
 
 namespace Pomnesh.API.Controllers;
 
 [Route("api/v1/ChatContext")]
 [ApiController]
-public class ChatContextController(ChatContextService service) : ControllerBase
+public class ChatContextController(IChatContextService service) : ControllerBase
 {
-    private readonly ChatContextService _service = service;
+    private readonly IChatContextService _service = service;
 
     [HttpPost]
     public async Task<IActionResult> CreateContext([FromBody] ChatContextCreateDto model)

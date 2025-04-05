@@ -7,7 +7,7 @@ using Pomnesh.Infrastructure.Interfaces;
 
 namespace Pomnesh.Application.Services;
 
-public class AttachmentService(IBaseRepository<Attachment> attachmentRepository) : IBaseService<AttachmentCreateDto, Attachment, AttachmentUpdateDto>
+public class AttachmentService(IBaseRepository<Attachment> attachmentRepository) : IAttachmentService
 {
     public async Task<int> Create(AttachmentCreateDto data)
     {
