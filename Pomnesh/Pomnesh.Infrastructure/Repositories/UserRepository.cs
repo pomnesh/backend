@@ -60,4 +60,19 @@ public class UserRepository : IBaseRepository<User>
             await connection.ExecuteAsync(sql, user);
         }
     }
+    
+    public async Task Delete(long id)
+    {
+        var sql = @"
+        DELETE
+        FROM ""Users""
+        WHERE
+            ""Id"" = @id
+        ";
+        
+        using (var connection = _context.CreateConnection())
+        {
+            await connection.ExecuteAsync(sql, new { id });
+        }
+    }
 }

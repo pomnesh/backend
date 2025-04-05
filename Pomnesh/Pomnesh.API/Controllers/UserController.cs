@@ -70,4 +70,16 @@ public class UserController(UserService service) : ControllerBase
         await _service.Update(model);
         return NoContent();
     }
+    
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUser(long id)
+    {
+        // Check if User exist
+        var user = await _service.Get(id);
+        if (user == null)
+            return NotFound(new { message = $"User with ID {id} not found." });
+
+        await _service.Delete(id);
+        return NoContent();
+    }
 }

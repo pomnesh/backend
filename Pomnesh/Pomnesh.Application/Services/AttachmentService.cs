@@ -50,4 +50,9 @@ public class AttachmentService(IBaseRepository<Attachment> attachmentRepository)
 
         await attachmentRepository.Update(attachment);
     }
+
+    public async Task Delete(long id)
+    {
+        await attachmentRepository.Delete(id);
+    }
 } 

@@ -59,4 +59,19 @@ public class ChatContextRepository : IBaseRepository<ChatContext>
             await connection.ExecuteAsync(sql, chatContext);
         }
     }
+    
+    public async Task Delete(long id)
+    {
+        var sql = @"
+        DELETE
+        FROM ""ChatContexts""
+        WHERE
+            ""Id"" = @id
+        ";
+        
+        using (var connection = _context.CreateConnection())
+        {
+            await connection.ExecuteAsync(sql, new { id });
+        }
+    }
 }

@@ -74,4 +74,16 @@ public class ChatContextController(ChatContextService service) : ControllerBase
         await _service.Update(model);
         return NoContent();
     }
+    
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteChatContext(long id)
+    {
+        // Check if ChatContext exist
+        var chatContext = await _service.Get(id);
+        if (chatContext == null)
+            return NotFound(new { message = $"Context with ID {id} not found." });
+
+        await _service.Delete(id);
+        return NoContent();
+    }
 }

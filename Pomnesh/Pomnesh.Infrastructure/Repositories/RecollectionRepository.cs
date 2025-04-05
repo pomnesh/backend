@@ -60,4 +60,19 @@ public class RecollectionRepository : IBaseRepository<Recollection>
             await connection.ExecuteAsync(sql, recollection);
         }
     }
+
+    public async Task Delete(long id)
+    {
+        var sql = @"
+        DELETE
+        FROM ""Recollections""
+        WHERE
+            ""Id"" = @id
+        ";
+
+        using (var connection = _context.CreateConnection())
+        {
+            await connection.ExecuteAsync(sql, new { id });
+        }
+    }
 }

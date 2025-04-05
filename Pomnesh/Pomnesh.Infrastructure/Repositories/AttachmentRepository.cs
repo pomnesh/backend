@@ -63,4 +63,19 @@ public class AttachmentRepository : IBaseRepository<Attachment>
             await connection.ExecuteAsync(sql, attachment);
         }
     }
+
+    public async Task Delete(long id)
+    {
+        var sql = @"
+        DELETE
+        FROM ""Attachments""
+        WHERE
+            ""Id"" = @id
+        ";
+    
+        using (var connection = _context.CreateConnection())
+        {
+            await connection.ExecuteAsync(sql, new { id });
+        }
+    }
 }

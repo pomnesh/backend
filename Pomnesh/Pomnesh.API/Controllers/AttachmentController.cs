@@ -90,5 +90,17 @@ public class AttachmentController(AttachmentService attachmentService, ChatConte
         await _attachmentService.Update(model);
         return NoContent();
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteAttachment(long id)
+    {
+        // Check if Attachment exist
+        var attachment = await _attachmentService.Get(id);
+        if (attachment == null)
+            return NotFound(new { message = $"Attachment with ID {id} not found." });
+
+        await _attachmentService.Delete(id);
+        return NoContent();
+    }
 }
 

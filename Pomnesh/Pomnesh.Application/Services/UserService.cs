@@ -41,4 +41,9 @@ public class UserService(IBaseRepository<User> usersRepository) : IBaseService<U
         };
         await usersRepository.Update(user);
     }
+
+    public async Task Delete(long id)
+    {
+        await usersRepository.Delete(id);
+    }
 }

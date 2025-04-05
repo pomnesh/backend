@@ -43,4 +43,9 @@ public class ChatContextService(IBaseRepository<ChatContext> contextRepository) 
         };
         await contextRepository.Update(context);
     }
+
+    public async Task Delete(long id)
+    {
+        await contextRepository.Delete(id);
+    }
 }

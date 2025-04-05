@@ -8,4 +8,5 @@ public interface IBaseRepository<T>
     Task<T?> GetById(long id);
     Task<IEnumerable<T>> GetAll();
     Task Update(T entity);
+    Task Delete(long id);
 }

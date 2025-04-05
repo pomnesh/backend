@@ -41,4 +41,9 @@ public class RecollectionService(IBaseRepository<Recollection> recollectionRepos
         };
         await recollectionRepository.Update(recollection);
     }
+
+    public async Task Delete(long id)
+    {
+        await recollectionRepository.Delete(id);
+    }
 }

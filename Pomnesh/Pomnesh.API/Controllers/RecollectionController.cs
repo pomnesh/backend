@@ -83,4 +83,16 @@ public class RecollectionController(RecollectionService recollectionService, Use
         await _recollectionService.Update(model);
         return NoContent();
     }
+    
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteRecollection(long id)
+    {
+        // Check if Recollection exist
+        var recollection = await _recollectionService.Get(id);
+        if (recollection == null)
+            return NotFound(new { message = $"Recollection with ID {id} not found." });
+
+        await _recollectionService.Delete(id);
+        return NoContent();
+    }
 }
