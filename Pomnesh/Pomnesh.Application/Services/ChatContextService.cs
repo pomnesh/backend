@@ -1,11 +1,12 @@
 ﻿using Pomnesh.Application.Dto;
+using Pomnesh.Application.DTO;
 using Pomnesh.Application.Interfaces;
 using Pomnesh.Domain.Entity;
 using Pomnesh.Infrastructure.Interfaces;
 
 namespace Pomnesh.Application.Services;
 
-public class ChatContextService(IBaseRepository<ChatContext> contextRepository) : IBaseService<ChatContextCreateDto, ChatContext>
+public class ChatContextService(IBaseRepository<ChatContext> contextRepository) : IBaseService<ChatContextCreateDto, ChatContext, ChatContextUpdateDto>
 {
     public async Task<int> Create(ChatContextCreateDto data)
     {
@@ -29,5 +30,17 @@ public class ChatContextService(IBaseRepository<ChatContext> contextRepository) 
     {
         var result = await contextRepository.GetAll();
         return result;
+    }
+
+    public async Task Update(ChatContextUpdateDto data)
+    {
+        var context = new ChatContext
+        {
+            Id = data.Id,
+            MessageId = data.MessageId,
+            MessageText = data.MessageText,
+            MessageDate = data.MessageDate,
+        };
+        await contextRepository.Update(context);
     }
 }

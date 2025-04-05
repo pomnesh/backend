@@ -4,6 +4,7 @@ using Microsoft.Data.SqlClient;
 using Pomnesh.Domain.Entity;
 using Pomnesh.Infrastructure.Interfaces;
 
+
 namespace Pomnesh.Infrastructure.Repositories;
 
 public class AttachmentRepository : IBaseRepository<Attachment>
@@ -40,8 +41,26 @@ public class AttachmentRepository : IBaseRepository<Attachment>
         var sql = @"SELECT ""Id"", ""Type"", ""FileId"", ""OwnerId"", ""OriginalLink"", ""ContextId"" FROM ""Attachments""";
         using (var connection = _context.CreateConnection())
         {
-            var a = await connection.QueryAsync<Attachment>(sql);
-            return a;
+            var result = await connection.QueryAsync<Attachment>(sql);
+            return result;
+        }
+    }
+
+    public async Task Update(Attachment attachment)
+    {
+        var sql = @"
+        UPDATE ""Attachments"" 
+        SET
+            ""Type"" = @Type,
+            ""FileId"" = @FileId, 
+            ""OwnerId"" = @OwnerId,
+            ""OriginalLink"" = @OriginalLink,
+            ""ContextId"" = @ContextId
+        WHERE ""Id"" = @Id";
+
+        using (var connection = _context.CreateConnection())
+        {
+            await connection.ExecuteAsync(sql, attachment);
         }
     }
 }

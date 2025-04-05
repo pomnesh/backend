@@ -2,6 +2,7 @@
 using Pomnesh.API.Dto;
 using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
+using Pomnesh.Application.DTO;
 using Pomnesh.Application.Services;
 
 namespace Pomnesh.API.Controllers;
@@ -33,7 +34,7 @@ public class RecollectionController(RecollectionService recollectionService, Use
         if (result == null)
             return NotFound(new { message = $"Recollection with ID {id} not found." });
 
-        var recollectionResponse = new RecollectionResponseDto
+        var recollectionResponse = new RecollectionResponse
         {
             Id = result.Id,
             UserId = result.UserId,
@@ -41,7 +42,7 @@ public class RecollectionController(RecollectionService recollectionService, Use
             DownloadLink = result.DownloadLink
         };
         
-        var response = new BaseApiResponse<RecollectionResponseDto> { Payload = recollectionResponse };
+        var response = new BaseApiResponse<RecollectionResponse> { Payload = recollectionResponse };
         return Ok(response);
     }
     
@@ -49,10 +50,10 @@ public class RecollectionController(RecollectionService recollectionService, Use
     public async Task<IActionResult> GetAll()
     {
         var result = await _recollectionService.GetAll();
-        List<RecollectionResponseDto> recollectionResponse = new List<RecollectionResponseDto>();
+        List<RecollectionResponse> recollectionResponse = new List<RecollectionResponse>();
         foreach (var recollection in result)
         {
-            var responseDto = new RecollectionResponseDto
+            var responseDto = new RecollectionResponse
             {
                 Id = recollection.Id,
                 UserId = recollection.UserId,
@@ -62,7 +63,24 @@ public class RecollectionController(RecollectionService recollectionService, Use
             recollectionResponse.Add(responseDto);
         }
         
-        var response = new BaseApiResponse<IEnumerable<RecollectionResponseDto>> { Payload = recollectionResponse };
+        var response = new BaseApiResponse<IEnumerable<RecollectionResponse>> { Payload = recollectionResponse };
         return Ok(response);
+    }
+    
+    [HttpPut]
+    public async Task<IActionResult> UpdateRecollection([FromBody]  RecollectionUpdateDto model)
+    {
+        // Check if Recollection exist
+        var recollection = await _recollectionService.Get(model.Id);
+        if (recollection == null)
+            return NotFound(new { message = $"Recollection with ID {model.Id} not found." });
+        
+        // Check is User exists
+        var user = await _userService.Get(model.UserId);
+        if (user == null)
+            return NotFound(new { message = $"User with ID {model.UserId} not found." });
+
+        await _recollectionService.Update(model);
+        return NoContent();
     }
 }

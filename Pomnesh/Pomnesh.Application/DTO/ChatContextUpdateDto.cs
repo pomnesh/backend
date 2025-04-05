@@ -1,6 +1,6 @@
-namespace Pomnesh.API.Dto;
+namespace Pomnesh.Application.DTO;
 
-public class ChatContextResponseDto
+public class ChatContextUpdateDto
 {
     public long Id { get; set; }
 

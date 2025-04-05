@@ -1,6 +1,6 @@
-namespace Pomnesh.API.Dto;
+namespace Pomnesh.Application.DTO;
 
-public class RecollectionResponseDto
+public class RecollectionUpdateDto
 {
     public long Id { get; set; }
 

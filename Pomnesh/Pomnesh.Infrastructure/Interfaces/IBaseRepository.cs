@@ -7,4 +7,5 @@ public interface IBaseRepository<T>
     Task<int> Add(T entity);
     Task<T?> GetById(long id);
     Task<IEnumerable<T>> GetAll();
+    Task Update(T entity);
 }

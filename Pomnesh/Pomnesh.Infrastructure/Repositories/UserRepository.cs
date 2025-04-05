@@ -43,4 +43,21 @@ public class UserRepository : IBaseRepository<User>
             return await connection.QueryAsync<User>(sql);
         }
     }
+
+    public async Task Update(User user)
+    {
+        var sql = @"
+        UPDATE ""Users""
+        SET
+            ""VkId"" = @VkId,
+            ""VkToken"" = @VkToken
+        WHERE
+            ""Id"" = @Id
+        ";
+
+        using (var connection = _context.CreateConnection())
+        {
+            await connection.ExecuteAsync(sql, user);
+        }
+    }
 }

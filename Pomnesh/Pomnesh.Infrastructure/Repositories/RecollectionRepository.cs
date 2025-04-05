@@ -42,4 +42,22 @@ public class RecollectionRepository : IBaseRepository<Recollection>
             return await connection.QueryAsync<Recollection>(sql);
         }
     }
+
+    public async Task Update(Recollection recollection)
+    {
+        var sql = @"
+        UPDATE ""Recollections""
+        SET
+            ""UserId"" = @UserId,
+            ""CreatedAt"" = @CreatedAt,
+            ""DownloadLink"" = @DownloadLink
+        WHERE
+            ""Id"" = @Id
+        ";
+
+        using (var connection = _context.CreateConnection())
+        {
+            await connection.ExecuteAsync(sql, recollection);
+        }
+    }
 }

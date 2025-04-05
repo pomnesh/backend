@@ -41,4 +41,22 @@ public class ChatContextRepository : IBaseRepository<ChatContext>
             return await connection.QueryAsync<ChatContext>(sql);
         }
     }
+
+    public async Task Update(ChatContext chatContext)
+    {
+        var sql = @"
+        UPDATE ""ChatContexts""
+        SET
+            ""MessageId"" = @MessageId,
+            ""MessageText"" = @MessageText,
+            ""MessageDate"" = @MessageDate
+        WHERE
+            ""Id"" = @Id
+        ";
+
+        using (var connection = _context.CreateConnection())
+        {
+            await connection.ExecuteAsync(sql, chatContext);
+        }
+    }
 }

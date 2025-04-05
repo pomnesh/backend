@@ -2,6 +2,7 @@
 using Pomnesh.API.Dto;
 using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
+using Pomnesh.Application.DTO;
 using Pomnesh.Application.Services;
 
 namespace Pomnesh.API.Controllers;
@@ -27,14 +28,14 @@ public class UserController(UserService service) : ControllerBase
         if (result == null)
             return NotFound(new { message = $"User with ID {id} not found." });
 
-        var userResponse = new UserResponseDto
+        var userResponse = new UserResponse
         {
             Id = result.Id,
             VkId = result.VkId,
             VkToken = result.VkToken,
         };
 
-        var response = new BaseApiResponse<UserResponseDto> { Payload = userResponse };
+        var response = new BaseApiResponse<UserResponse> { Payload = userResponse };
         return Ok(response);
     }
     
@@ -43,10 +44,10 @@ public class UserController(UserService service) : ControllerBase
     {
         var result = await _service.GetAll();
         
-        List<UserResponseDto> userResponse = new List<UserResponseDto>();
+        List<UserResponse> userResponse = new List<UserResponse>();
         foreach (var user in result)
         {
-            var responseDto = new UserResponseDto
+            var responseDto = new UserResponse
             {
                 Id = user.Id,
                 VkId = user.VkId,
@@ -54,7 +55,19 @@ public class UserController(UserService service) : ControllerBase
             };
             userResponse.Add(responseDto);
         }
-        var response = new BaseApiResponse<IEnumerable<UserResponseDto>> { Payload = userResponse };
+        var response = new BaseApiResponse<IEnumerable<UserResponse>> { Payload = userResponse };
         return Ok(response);
+    }
+    
+    [HttpPut]
+    public async Task<IActionResult> UpdateUser([FromBody]  UserUpdateDto model)
+    {
+        // Check if User exist
+        var user = await _service.Get(model.Id);
+        if (user == null)
+            return NotFound(new { message = $"Attachment with ID {model.Id} not found." });
+
+        await _service.Update(model);
+        return NoContent();
     }
 }

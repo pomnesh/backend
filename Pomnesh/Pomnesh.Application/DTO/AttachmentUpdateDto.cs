@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Pomnesh.API.Dto;
 
-public enum AttachmentTypeDto
+public enum AttachmentUpdateType
 {
     [Display(Name = "Photo")]
     Photo = 0,
@@ -16,11 +16,11 @@ public enum AttachmentTypeDto
     Document = 4,
 }
 
-public class AttachmentResponseDto
+public class AttachmentUpdateDto
 {
     public long Id { get; set; }
 
-    public AttachmentTypeDto Type { get; set; }
+    public AttachmentUpdateType Type { get; set; }
 
     public long FileId { get; set; }
 

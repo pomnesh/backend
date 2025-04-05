@@ -1,11 +1,12 @@
 ﻿using Pomnesh.Application.Dto;
+using Pomnesh.Application.DTO;
 using Pomnesh.Application.Interfaces;
 using Pomnesh.Domain.Entity;
 using Pomnesh.Infrastructure.Interfaces;
 
 namespace Pomnesh.Application.Services;
 
-public class UserService(IBaseRepository<User> usersRepository) : IBaseService<UserCreateDto, User>
+public class UserService(IBaseRepository<User> usersRepository) : IBaseService<UserCreateDto, User, UserUpdateDto>
 {
     public async Task<int> Create(UserCreateDto data)
     {
@@ -28,5 +29,16 @@ public class UserService(IBaseRepository<User> usersRepository) : IBaseService<U
     {
         var result = await usersRepository.GetAll();
         return result;
+    }
+
+    public async Task Update(UserUpdateDto data)
+    {
+        var user = new User
+        {
+            Id = data.Id,
+            VkId = data.VkId,
+            VkToken = data.VkToken
+        };
+        await usersRepository.Update(user);
     }
 }

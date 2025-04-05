@@ -1,6 +1,6 @@
-namespace Pomnesh.API.Dto;
+namespace Pomnesh.Application.DTO;
 
-public class UserResponseDto
+public class UserUpdateDto
 {
     public long Id { get; set; }
 
