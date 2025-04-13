@@ -12,12 +12,12 @@ namespace Pomnesh.API.Controllers;
 [ApiController]
 public class UserController(IUserService service) : ControllerBase
 {
-    private readonly IUserService _service = service;
 
     [HttpPost]
     public async Task<IActionResult> CreateUser([FromBody] UserCreateDto model)
     {
-        int newId = await _service.Create(model);
+        int newId = await service.Create(model);
+
         var response = new BaseApiResponse<int> { Payload = newId };
         return CreatedAtAction(nameof(GetUserInfo), new { id = newId }, response);
     }
@@ -25,62 +25,33 @@ public class UserController(IUserService service) : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUserInfo(long id)
     {
-        var result = await _service.Get(id);
-        if (result == null)
-            return NotFound(new { message = $"User with ID {id} not found." });
-
-        var userResponse = new UserResponse
-        {
-            Id = result.Id,
-            VkId = result.VkId,
-            VkToken = result.VkToken,
-        };
-
-        var response = new BaseApiResponse<UserResponse> { Payload = userResponse };
+        var result = await service.Get(id);
+        
+        var response = new BaseApiResponse<UserResponse> { Payload = result };
         return Ok(response);
     }
     
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var result = await _service.GetAll();
+        var result = await service.GetAll();
         
-        List<UserResponse> userResponse = new List<UserResponse>();
-        foreach (var user in result)
-        {
-            var responseDto = new UserResponse
-            {
-                Id = user.Id,
-                VkId = user.VkId,
-                VkToken = user.VkToken,
-            };
-            userResponse.Add(responseDto);
-        }
-        var response = new BaseApiResponse<IEnumerable<UserResponse>> { Payload = userResponse };
+        var response = new BaseApiResponse<IEnumerable<UserResponse>> { Payload = result };
         return Ok(response);
     }
     
     [HttpPut]
     public async Task<IActionResult> UpdateUser([FromBody]  UserUpdateDto model)
     {
-        // Check if User exist
-        var user = await _service.Get(model.Id);
-        if (user == null)
-            return NotFound(new { message = $"Attachment with ID {model.Id} not found." });
-
-        await _service.Update(model);
+        await service.Update(model);
         return NoContent();
     }
     
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUser(long id)
     {
-        // Check if User exist
-        var user = await _service.Get(id);
-        if (user == null)
-            return NotFound(new { message = $"User with ID {id} not found." });
 
-        await _service.Delete(id);
+        await service.Delete(id);
         return NoContent();
     }
 }

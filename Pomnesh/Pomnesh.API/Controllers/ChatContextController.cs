@@ -12,12 +12,11 @@ namespace Pomnesh.API.Controllers;
 [ApiController]
 public class ChatContextController(IChatContextService service) : ControllerBase
 {
-    private readonly IChatContextService _service = service;
 
     [HttpPost]
     public async Task<IActionResult> CreateContext([FromBody] ChatContextCreateDto model)
     {
-        int newId = await _service.Create(model);
+        int newId = await service.Create(model);
 
         var response = new BaseApiResponse<int> { Payload = newId };
         return CreatedAtAction(nameof(GetContext), new { id = newId }, response);
@@ -26,65 +25,32 @@ public class ChatContextController(IChatContextService service) : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetContext(long id)
     {
-        var result = await _service.Get(id);
-        if (result == null)
-            return NotFound(new { message = $"Context with ID {id} not found." });
-        
-        var chatContextResponse = new ChatContextResponse
-        {
-            Id = result.Id,
-            MessageId = result.MessageId,
-            MessageText = result.MessageText
-        };
-        if (chatContextResponse == null) throw new ArgumentNullException(nameof(chatContextResponse));
+        var result = await service.Get(id);
 
-        var response = new BaseApiResponse<ChatContextResponse> { Payload = chatContextResponse };
+        var response = new BaseApiResponse<ChatContextResponse> { Payload = result };
         return Ok(response);
     }
     
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var result = await _service.GetAll();
-        
-        List<ChatContextResponse> chatContextResponse = new List<ChatContextResponse>();
-        foreach (var chatContext in result)
-        {
-            var responseDto = new ChatContextResponse
-            {
-                Id = chatContext.Id,
-                MessageId = chatContext.MessageId,
-                MessageText = chatContext.MessageText,
-                MessageDate = chatContext.MessageDate
-            };
-            chatContextResponse.Add(responseDto);
-        }
+        var result = await service.GetAll();
 
-        var response = new BaseApiResponse<IEnumerable<ChatContextResponse>> { Payload = chatContextResponse };
+        var response = new BaseApiResponse<IEnumerable<ChatContextResponse>> { Payload = result };
         return Ok(response);
     }
     
     [HttpPut]
     public async Task<IActionResult> UpdateChatContext([FromBody]  ChatContextUpdateDto model)
     {
-        // Check if ChatContext exist
-        var chatContext = await _service.Get(model.Id);
-        if (chatContext == null)
-            return NotFound(new { message = $"Context with ID {model.Id} not found." });
-        
-        await _service.Update(model);
+        await service.Update(model);
         return NoContent();
     }
     
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteChatContext(long id)
     {
-        // Check if ChatContext exist
-        var chatContext = await _service.Get(id);
-        if (chatContext == null)
-            return NotFound(new { message = $"Context with ID {id} not found." });
-
-        await _service.Delete(id);
+        await service.Delete(id);
         return NoContent();
     }
 }

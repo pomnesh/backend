@@ -5,6 +5,7 @@ using Pomnesh.Infrastructure.Interfaces;
 using Pomnesh.Infrastructure.Repositories;
 using FluentMigrator.Runner;
 using Pomnesh.API.Dto;
+using Pomnesh.API.Middlewares;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.DTO;
 using Pomnesh.Application.Interfaces;
@@ -63,6 +64,9 @@ public class Program
 
         app.UseAuthorization();
         app.MapControllers();
+        
+        // Middlewares
+        app.UseMiddleware<ApiExceptionMiddleware>();
         
         // Run Migrations on Startup
         using (var scope = app.Services.CreateScope())

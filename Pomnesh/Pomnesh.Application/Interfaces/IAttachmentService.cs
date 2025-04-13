@@ -4,6 +4,6 @@ using Pomnesh.Domain.Entity;
 
 namespace Pomnesh.Application.Interfaces;
 
-public interface IAttachmentService : IBaseService<AttachmentCreateDto, Attachment, AttachmentUpdateDto>
+public interface IAttachmentService : IBaseService<AttachmentCreateDto, AttachmentUpdateDto, AttachmentResponse>
 {
 }
