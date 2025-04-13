@@ -39,7 +39,7 @@ public class RecollectionService(IBaseRepository<Recollection> recollectionRepos
             DownloadLink = result.DownloadLink
         };
     }
-    
+
     public async Task<IEnumerable<RecollectionResponse>> GetAll()
     {
         var result = await recollectionRepository.GetAll();

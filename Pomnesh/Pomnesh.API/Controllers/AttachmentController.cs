@@ -42,7 +42,6 @@ public class AttachmentController(IAttachmentService attachmentService) : Contro
         return Ok(response);
     }
 
-
     [HttpPut]
     public async Task<IActionResult> UpdateAttachment([FromBody]  AttachmentUpdateDto model)
     {

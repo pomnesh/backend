@@ -35,7 +35,7 @@ public class ChatContextService(IBaseRepository<ChatContext> contextRepository) 
             MessageText = result.MessageText
         };
     }
-    
+
     public async Task<IEnumerable<ChatContextResponse>> GetAll()
     {
         var result = await contextRepository.GetAll();

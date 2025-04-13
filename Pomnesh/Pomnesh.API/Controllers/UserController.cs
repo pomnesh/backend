@@ -4,7 +4,6 @@ using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.DTO;
 using Pomnesh.Application.Interfaces;
-using Pomnesh.Application.Services;
 
 namespace Pomnesh.API.Controllers;
 
@@ -30,7 +29,7 @@ public class UserController(IUserService service) : ControllerBase
         var response = new BaseApiResponse<UserResponse> { Payload = result };
         return Ok(response);
     }
-    
+
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -39,14 +38,14 @@ public class UserController(IUserService service) : ControllerBase
         var response = new BaseApiResponse<IEnumerable<UserResponse>> { Payload = result };
         return Ok(response);
     }
-    
+
     [HttpPut]
     public async Task<IActionResult> UpdateUser([FromBody]  UserUpdateDto model)
     {
         await service.Update(model);
         return NoContent();
     }
-    
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUser(long id)
     {

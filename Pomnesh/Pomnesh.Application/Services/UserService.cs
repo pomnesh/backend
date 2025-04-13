@@ -34,7 +34,7 @@ public class UserService(IBaseRepository<User> usersRepository) : IUserService
             VkToken = result.VkToken,
         };
     }
-    
+
     public async Task<IEnumerable<UserResponse>> GetAll()
     {
         var result = await usersRepository.GetAll();

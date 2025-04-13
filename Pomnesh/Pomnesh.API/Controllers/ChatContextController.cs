@@ -4,7 +4,6 @@ using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.DTO;
 using Pomnesh.Application.Interfaces;
-using Pomnesh.Application.Services;
 
 namespace Pomnesh.API.Controllers;
 
@@ -30,7 +29,7 @@ public class ChatContextController(IChatContextService service) : ControllerBase
         var response = new BaseApiResponse<ChatContextResponse> { Payload = result };
         return Ok(response);
     }
-    
+
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -39,14 +38,14 @@ public class ChatContextController(IChatContextService service) : ControllerBase
         var response = new BaseApiResponse<IEnumerable<ChatContextResponse>> { Payload = result };
         return Ok(response);
     }
-    
+
     [HttpPut]
     public async Task<IActionResult> UpdateChatContext([FromBody]  ChatContextUpdateDto model)
     {
         await service.Update(model);
         return NoContent();
     }
-    
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteChatContext(long id)
     {

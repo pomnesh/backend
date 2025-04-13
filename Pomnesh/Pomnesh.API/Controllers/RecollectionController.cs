@@ -4,7 +4,6 @@ using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.DTO;
 using Pomnesh.Application.Interfaces;
-using Pomnesh.Application.Services;
 
 namespace Pomnesh.API.Controllers;
 
@@ -30,7 +29,7 @@ public class RecollectionController(IRecollectionService recollectionService) : 
         var response = new BaseApiResponse<RecollectionResponse> { Payload = result };
         return Ok(response);
     }
-    
+
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -39,14 +38,14 @@ public class RecollectionController(IRecollectionService recollectionService) : 
         var response = new BaseApiResponse<IEnumerable<RecollectionResponse>> { Payload = result };
         return Ok(response);
     }
-    
+
     [HttpPut]
     public async Task<IActionResult> UpdateRecollection([FromBody]  RecollectionUpdateDto model)
     {
         await recollectionService.Update(model);
         return NoContent();
     }
-    
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteRecollection(long id)
     {

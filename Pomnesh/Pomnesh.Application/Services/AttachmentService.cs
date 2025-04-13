@@ -15,7 +15,7 @@ public class AttachmentService(IBaseRepository<Attachment> attachmentRepository,
         var context = await chatContextRepository.GetById(data.ContextId);
         if (context == null)
             throw new ContextNotFoundError(data.ContextId);
-        
+
         var attachment = new Attachment
         {
             Type = data.Type,
@@ -33,7 +33,7 @@ public class AttachmentService(IBaseRepository<Attachment> attachmentRepository,
         var result = await attachmentRepository.GetById(id);
         if (result == null)
             return null;
-        
+
         return new AttachmentResponse
         {
             Id = result.Id,
@@ -48,7 +48,7 @@ public class AttachmentService(IBaseRepository<Attachment> attachmentRepository,
     public async Task<IEnumerable<AttachmentResponse>> GetAll()
     {
         var result = await attachmentRepository.GetAll();
-        
+
         var attachmentResponse = new List<AttachmentResponse>();
         foreach (var attachment in result)
         {
