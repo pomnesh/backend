@@ -8,7 +8,7 @@ on:
       - '**/*.cs'
       - '**/*.csproj'
       - Dockerfile
-      - .github/workflows/build.yml
+      - .github/workflows/deploy-dev.yml
 
 env:
   IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/pomnesh-backend-dev
