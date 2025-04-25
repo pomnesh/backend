@@ -1,6 +1,6 @@
-namespace Pomnesh.Application.DTO;
+namespace Pomnesh.Application.Models;
 
-public class UserUpdateDto
+public class UserUpdateRequest
 {
     public long Id { get; set; }
 

@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pomnesh.API.Dto;
 using Pomnesh.API.Responses;
-using Pomnesh.Application.Dto;
-using Pomnesh.Application.DTO;
 using Pomnesh.Application.Interfaces;
 using Pomnesh.Application.Models;
 

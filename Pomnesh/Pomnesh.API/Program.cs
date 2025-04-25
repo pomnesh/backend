@@ -4,13 +4,9 @@ using Pomnesh.Infrastructure;
 using Pomnesh.Infrastructure.Interfaces;
 using Pomnesh.Infrastructure.Repositories;
 using FluentMigrator.Runner;
-using Microsoft.AspNetCore.Mvc;
-using Pomnesh.API.Dto;
 using FluentValidation.AspNetCore;
 using Pomnesh.API.Middlewares;
 using Pomnesh.API.Validators;
-using Pomnesh.Application.Dto;
-using Pomnesh.Application.DTO;
 using Pomnesh.Application.Interfaces;
 using MigrationRunner = Pomnesh.Infrastructure.Migrations.MigrationRunner;
 

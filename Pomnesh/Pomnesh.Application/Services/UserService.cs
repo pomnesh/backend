@@ -1,8 +1,7 @@
 ﻿using Pomnesh.API.Dto;
-using Pomnesh.Application.Dto;
-using Pomnesh.Application.DTO;
 using Pomnesh.Application.Exceptions;
 using Pomnesh.Application.Interfaces;
+using Pomnesh.Application.Models;
 using Pomnesh.Domain.Entity;
 using Pomnesh.Infrastructure.Interfaces;
 
@@ -10,12 +9,12 @@ namespace Pomnesh.Application.Services;
 
 public class UserService(IBaseRepository<User> usersRepository) : IUserService
 {
-    public async Task<int> Create(UserCreateDto data)
+    public async Task<int> Create(UserCreateRequest request)
     {
         var newUser = new User
         {
-            VkId = data.VkId,
-            VkToken = data.VkToken
+            VkId = request.VkId,
+            VkToken = request.VkToken
         };
 
         return await usersRepository.Add(newUser);
@@ -54,17 +53,17 @@ public class UserService(IBaseRepository<User> usersRepository) : IUserService
         return userResponse;
     }
 
-    public async Task Update(UserUpdateDto data)
+    public async Task Update(UserUpdateRequest request)
     {
-        var user = await usersRepository.GetById(data.Id);
+        var user = await usersRepository.GetById(request.Id);
         if (user == null)
-            throw new UserNotFoundError(data.Id);
+            throw new UserNotFoundError(request.Id);
         
         var updatedUser = new User
         {
-            Id = data.Id,
-            VkId = data.VkId,
-            VkToken = data.VkToken
+            Id = request.Id,
+            VkId = request.VkId,
+            VkToken = request.VkToken
         };
 
         await usersRepository.Update(updatedUser);

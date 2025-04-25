@@ -1,6 +1,4 @@
 ﻿using Pomnesh.API.Dto;
-using Pomnesh.Application.Dto;
-using Pomnesh.Application.DTO;
 using Pomnesh.Application.Interfaces;
 using Pomnesh.Domain.Entity;
 using Pomnesh.Application.Exceptions;
