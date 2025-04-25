@@ -1,8 +1,7 @@
 ﻿using Pomnesh.API.Dto;
-using Pomnesh.Application.Dto;
-using Pomnesh.Application.DTO;
 using Pomnesh.Application.Exceptions;
 using Pomnesh.Application.Interfaces;
+using Pomnesh.Application.Models;
 using Pomnesh.Domain.Entity;
 using Pomnesh.Infrastructure.Interfaces;
 
@@ -10,16 +9,16 @@ namespace Pomnesh.Application.Services;
 
 public class RecollectionService(IBaseRepository<Recollection> recollectionRepository, IBaseRepository<User> userRepository) : IRecollectionService
 {
-    public async Task<int> Create(RecollectionCreateDto data)
+    public async Task<int> Create(RecollectionCreateRequest request)
     {
-        var user = await userRepository.GetById(data.UserId);
+        var user = await userRepository.GetById(request.UserId);
         if (user == null)
-            throw new UserNotFoundError(data.UserId);
+            throw new UserNotFoundError(request.UserId);
         
         var recollection = new Recollection
         {
-            UserId = data.UserId,
-            DownloadLink = data.DownloadLink
+            UserId = request.UserId,
+            DownloadLink = request.DownloadLink
         };
 
         return await recollectionRepository.Add(recollection);
@@ -60,21 +59,21 @@ public class RecollectionService(IBaseRepository<Recollection> recollectionRepos
         return recollectionResponse;
     }
 
-    public async Task Update(RecollectionUpdateDto data)
+    public async Task Update(RecollectionUpdateRequest request)
     {
-        var recollection = await recollectionRepository.GetById(data.Id);
+        var recollection = await recollectionRepository.GetById(request.Id);
         if (recollection == null)
-            throw new RecollectionNotFoundError(data.Id); 
+            throw new RecollectionNotFoundError(request.Id); 
         
-        var user = await userRepository.GetById(data.UserId);
+        var user = await userRepository.GetById(request.UserId);
         if (user == null)
-            throw new UserNotFoundError(data.UserId);
+            throw new UserNotFoundError(request.UserId);
         
         var updatedRecollection = new Recollection
         {
-            Id = data.Id,
-            UserId = data.UserId,
-            DownloadLink = data.DownloadLink
+            Id = request.Id,
+            UserId = request.UserId,
+            DownloadLink = request.DownloadLink
         };
 
         await recollectionRepository.Update(updatedRecollection);

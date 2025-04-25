@@ -1,10 +1,9 @@
 ﻿using Pomnesh.API.Dto;
-using Pomnesh.Application.Dto;
-using Pomnesh.Application.DTO;
+using Pomnesh.Application.Models;
 
 namespace Pomnesh.Application.Interfaces;
 
-public interface IUserService : IBaseService<UserCreateDto, UserUpdateDto, UserResponse>
+public interface IUserService : IBaseService<UserCreateRequest, UserUpdateRequest, UserResponse>
 {
     
 }

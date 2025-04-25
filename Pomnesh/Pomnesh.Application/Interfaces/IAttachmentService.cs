@@ -1,9 +1,9 @@
 ﻿using Pomnesh.API.Dto;
-using Pomnesh.Application.Dto;
-using Pomnesh.Domain.Entity;
+using Pomnesh.API.Models;
+using Pomnesh.Application.Models;
 
 namespace Pomnesh.Application.Interfaces;
 
-public interface IAttachmentService : IBaseService<AttachmentCreateDto, AttachmentUpdateDto, AttachmentResponse>
+public interface IAttachmentService : IBaseService<AttachmentCreateRequest, AttachmentUpdateRequest, AttachmentResponse>
 {
 }

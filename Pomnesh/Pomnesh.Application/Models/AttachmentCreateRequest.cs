@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Pomnesh.API.Dto;
+namespace Pomnesh.API.Models;
 
-public enum AttachmentUpdateType
+public enum AttachmentCopyType  // TODO: Could i import there a Domain layer with this Enum?
 {
     [Display(Name = "Photo")]
     Photo = 0,
@@ -16,17 +16,11 @@ public enum AttachmentUpdateType
     Document = 4,
 }
 
-public class AttachmentUpdateDto
+public class AttachmentCreateRequest
 {
-    public long Id { get; set; }
-
-    public AttachmentUpdateType Type { get; set; }
-
+    public AttachmentCopyType Type { get; set; }
     public long FileId { get; set; }
-
     public long OwnerId { get; set; }
-
     public string? OriginalLink { get; set; }
-
     public long ContextId { get; set; }
 }
