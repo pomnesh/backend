@@ -14,9 +14,8 @@ public class AttachmentCreateRequestValidator : AbstractValidator<AttachmentCrea
             .GreaterThan(0).WithMessage("OwnerId must be a positive number.");
 
         RuleFor(x => x.ContextId)
-            .GreaterThan(0).WithMessage("ContextId must be a positive number.");
+            .NotNull().WithMessage("ContextId is required for create.");
 
-        // OriginalLink is optional, but if provided, must be a valid URL
         RuleFor(x => x.OriginalLink)
             .Must(uri => 
                 string.IsNullOrEmpty(uri) 
