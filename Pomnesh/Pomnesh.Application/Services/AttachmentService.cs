@@ -3,6 +3,7 @@ using Pomnesh.API.Models;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.Exceptions;
 using Pomnesh.Application.Interfaces;
+using Pomnesh.Application.Models;
 using Pomnesh.Domain.Entity;
 using Pomnesh.Domain.Enum;
 using Pomnesh.Infrastructure.Interfaces;
@@ -69,7 +70,7 @@ public class AttachmentService(IBaseRepository<Attachment> attachmentRepository,
         return attachmentResponse;
     }
 
-    public async Task Update(AttachmentUpdateDto data)
+    public async Task Update(AttachmentUpdateRequest data)
     {  
         var attachment = await attachmentRepository.GetById(data.Id);
         if (attachment == null)

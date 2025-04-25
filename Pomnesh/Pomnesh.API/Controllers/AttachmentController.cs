@@ -5,6 +5,7 @@ using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.Exceptions;
 using Pomnesh.Application.Interfaces;
+using Pomnesh.Application.Models;
 
 namespace Pomnesh.API.Controllers;
 
@@ -22,7 +23,7 @@ public class AttachmentController(IAttachmentService attachmentService) : Contro
         return CreatedAtAction(nameof(GetAttachment), new { id = newId }, response);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:long}")]
     public async Task<IActionResult> GetAttachment(long id)
     {
         var result = await attachmentService.Get(id);
@@ -44,9 +45,9 @@ public class AttachmentController(IAttachmentService attachmentService) : Contro
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateAttachment([FromBody]  AttachmentUpdateDto model)
+    public async Task<IActionResult> UpdateAttachment([FromBody] AttachmentUpdateRequest request)
     {
-        await attachmentService.Update(model);
+        await attachmentService.Update(request);
         return NoContent();
     }
 
