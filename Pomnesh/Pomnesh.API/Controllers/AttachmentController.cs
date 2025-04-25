@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Pomnesh.API.Dto;
+using Pomnesh.API.Models;
 using Pomnesh.API.Responses;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.Exceptions;
@@ -13,9 +14,9 @@ public class AttachmentController(IAttachmentService attachmentService) : Contro
 {
 
     [HttpPost]
-    public async Task<IActionResult> CreateAttachment([FromBody] AttachmentCreateDto model)
+    public async Task<IActionResult> CreateAttachment([FromBody] AttachmentCreateRequest request)
     {
-        int newId = await attachmentService.Create(model);
+        int newId = await attachmentService.Create(request);
 
         var response = new BaseApiResponse<int> { Payload = newId };
         return CreatedAtAction(nameof(GetAttachment), new { id = newId }, response);

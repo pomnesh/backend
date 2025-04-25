@@ -4,8 +4,11 @@ using Pomnesh.Infrastructure;
 using Pomnesh.Infrastructure.Interfaces;
 using Pomnesh.Infrastructure.Repositories;
 using FluentMigrator.Runner;
+using Microsoft.AspNetCore.Mvc;
 using Pomnesh.API.Dto;
+using FluentValidation.AspNetCore;
 using Pomnesh.API.Middlewares;
+using Pomnesh.API.Validators;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.DTO;
 using Pomnesh.Application.Interfaces;
@@ -34,6 +37,17 @@ public class Program
         builder.Services.AddScoped<IChatContextService, ChatContextService>();
         builder.Services.AddScoped<IRecollectionService, RecollectionService>();
         builder.Services.AddScoped<IUserService, UserService>();
+        
+        // Validators
+        builder.Services.AddControllers()
+            .AddFluentValidation(fv =>
+            {
+                // Auto-registers all validators in the same assembly as this one
+                fv.RegisterValidatorsFromAssemblyContaining<AttachmentCreateRequestValidator>();
+
+                // Optional: disable [Required], [MaxLength], etc. if you want full FluentValidation control
+                fv.DisableDataAnnotationsValidation = true;
+            });
         
         // Migrations
         builder.Services.AddFluentMigratorCore()

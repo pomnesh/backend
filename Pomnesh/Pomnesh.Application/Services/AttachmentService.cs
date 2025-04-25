@@ -1,4 +1,5 @@
 using Pomnesh.API.Dto;
+using Pomnesh.API.Models;
 using Pomnesh.Application.Dto;
 using Pomnesh.Application.Exceptions;
 using Pomnesh.Application.Interfaces;
@@ -10,7 +11,7 @@ namespace Pomnesh.Application.Services;
 
 public class AttachmentService(IBaseRepository<Attachment> attachmentRepository, IBaseRepository<ChatContext> chatContextRepository) : IAttachmentService
 {
-    public async Task<int> Create(AttachmentCreateDto data)
+    public async Task<int> Create(AttachmentCreateRequest data)
     {
         var context = await chatContextRepository.GetById(data.ContextId);
         if (context == null)
@@ -18,7 +19,7 @@ public class AttachmentService(IBaseRepository<Attachment> attachmentRepository,
 
         var attachment = new Attachment
         {
-            Type = data.Type,
+            Type = (AttachmentType)data.Type,
             FileId = data.FileId,
             OwnerId = data.OwnerId,
             OriginalLink = data.OriginalLink,
