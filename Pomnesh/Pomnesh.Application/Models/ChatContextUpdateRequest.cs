@@ -1,7 +1,9 @@
-﻿namespace Pomnesh.Application.Dto;
+namespace Pomnesh.Application.Models;
 
-public class ChatContextCreateDto
+public class ChatContextUpdateRequest
 {
+    public long Id { get; set; }
+
     public long MessageId { get; set; }
 
     public string? MessageText { get; set; }

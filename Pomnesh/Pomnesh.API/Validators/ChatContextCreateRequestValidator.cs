@@ -1,0 +1,20 @@
+using FluentValidation;
+using Pomnesh.API.Models;
+using Pomnesh.Application.Models;
+
+namespace Pomnesh.API.Validators;
+
+public class ChatContextCreateRequestValidator : AbstractValidator<ChatContextCreateRequest>
+{
+    public ChatContextCreateRequestValidator()
+    {
+        RuleFor(x => x.MessageId)
+            .GreaterThan(0).WithMessage("MessageId must be a positive number.");
+
+        RuleFor(x => x.MessageText)
+            .NotNull().WithMessage("MessageText must be provided.");
+
+        RuleFor(x => x.MessageDate)
+            .NotNull().WithMessage("MessageDate must be provided.");
+    }
+}
