@@ -12,8 +12,9 @@ using MigrationRunner = Pomnesh.Infrastructure.Migrations.MigrationRunner;
 
 namespace Pomnesh.API;
 
-public class Program
+public abstract class Program
 {
+    [Obsolete("Obsolete")]
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
@@ -51,8 +52,7 @@ public class Program
                 .AddPostgres() 
                 .WithGlobalConnectionString(builder.Configuration.GetConnectionString("DefaultConnection"))
                 .ScanIn(typeof(MigrationRunner).Assembly).For.Migrations());
-        
-        
+
         builder.Services.AddScoped<MigrationRunner>();
         
         builder.Services.AddControllers();
