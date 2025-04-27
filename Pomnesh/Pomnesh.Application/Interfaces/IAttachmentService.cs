@@ -1,5 +1,4 @@
 ﻿using Pomnesh.API.Dto;
-using Pomnesh.API.Models;
 using Pomnesh.Application.Models;
 
 namespace Pomnesh.Application.Interfaces;

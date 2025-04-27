@@ -1,5 +1,4 @@
 using FluentValidation;
-using Pomnesh.API.Models;
 using Pomnesh.Application.Models;
 
 namespace Pomnesh.API.Validators;
