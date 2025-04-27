@@ -40,7 +40,7 @@ public abstract class Program
             .AddFluentValidation(fv =>
             {
                 // Auto-registers all validators in the same assembly as this one
-                fv.RegisterValidatorsFromAssemblyContaining<AttachmentRequestValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<AttachmentCreateRequestValidator>();
 
                 // Optional: disable [Required], [MaxLength], etc. if you want full FluentValidation control
                 fv.DisableDataAnnotationsValidation = true;
