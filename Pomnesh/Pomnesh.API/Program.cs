@@ -54,8 +54,6 @@ public abstract class Program
                 .ScanIn(typeof(MigrationRunner).Assembly).For.Migrations());
 
         builder.Services.AddScoped<MigrationRunner>();
-        
-        builder.Services.AddControllers();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
