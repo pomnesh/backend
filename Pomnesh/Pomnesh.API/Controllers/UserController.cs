@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pomnesh.API.Dto;
 using Pomnesh.API.Responses;
-using Pomnesh.Application.Dto;
-using Pomnesh.Application.DTO;
 using Pomnesh.Application.Interfaces;
+using Pomnesh.Application.Models;
 
 namespace Pomnesh.API.Controllers;
 
@@ -13,9 +12,9 @@ public class UserController(IUserService service) : ControllerBase
 {
 
     [HttpPost]
-    public async Task<IActionResult> CreateUser([FromBody] UserCreateDto model)
+    public async Task<IActionResult> CreateUser([FromBody] UserCreateRequest request)
     {
-        int newId = await service.Create(model);
+        int newId = await service.Create(request);
 
         var response = new BaseApiResponse<int> { Payload = newId };
         return CreatedAtAction(nameof(GetUserInfo), new { id = newId }, response);
@@ -40,9 +39,9 @@ public class UserController(IUserService service) : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateUser([FromBody]  UserUpdateDto model)
+    public async Task<IActionResult> UpdateUser([FromBody] UserUpdateRequest request)
     {
-        await service.Update(model);
+        await service.Update(request);
         return NoContent();
     }
 

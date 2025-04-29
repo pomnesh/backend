@@ -1,22 +1,21 @@
 ﻿using Pomnesh.API.Dto;
-using Pomnesh.Application.Dto;
-using Pomnesh.Application.DTO;
 using Pomnesh.Application.Interfaces;
 using Pomnesh.Domain.Entity;
 using Pomnesh.Application.Exceptions;
+using Pomnesh.Application.Models;
 using Pomnesh.Infrastructure.Interfaces;
 
 namespace Pomnesh.Application.Services;
 
 public class ChatContextService(IBaseRepository<ChatContext> contextRepository) : IChatContextService
 {
-    public async Task<int> Create(ChatContextCreateDto data)
+    public async Task<int> Create(ChatContextCreateRequest request)
     {
         var context = new ChatContext
         {
-            MessageId = data.MessageId,
-            MessageText = data.MessageText,
-            MessageDate = data.MessageDate,
+            MessageId = request.MessageId,
+            MessageText = request.MessageText,
+            MessageDate = request.MessageDate,
         };
 
         return await contextRepository.Add(context);
@@ -56,18 +55,18 @@ public class ChatContextService(IBaseRepository<ChatContext> contextRepository) 
         return chatContextResponse;
     }
 
-    public async Task Update(ChatContextUpdateDto data)
+    public async Task Update(ChatContextUpdateRequest request)
     {
-        var chatContext = await contextRepository.GetById(data.Id);
+        var chatContext = await contextRepository.GetById(request.Id);
         if (chatContext == null)
-            throw new ContextNotFoundError(data.Id);
+            throw new ContextNotFoundError(request.Id);
 
         var updatedChatContext = new ChatContext
         {
-            Id = data.Id,
-            MessageId = data.MessageId,
-            MessageText = data.MessageText,
-            MessageDate = data.MessageDate,
+            Id = request.Id,
+            MessageId = request.MessageId,
+            MessageText = request.MessageText,
+            MessageDate = request.MessageDate,
         };
         await contextRepository.Update(updatedChatContext);
     }

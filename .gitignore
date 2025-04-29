@@ -6,8 +6,6 @@ obj/
 .idea/
 *.sln.iml
 
-Pomnesh/Pomnesh.API
-
 # Visual Studio Code Specific
 .vscode/
 
@@ -105,4 +103,5 @@ temp/
 *.rej
 *~
 
-Pomnesh.API/appsettings.json
+ 
+Pomnesh/Pomnesh.API/appsettings.json

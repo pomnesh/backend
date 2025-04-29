@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pomnesh.API.Dto;
 using Pomnesh.API.Responses;
-using Pomnesh.Application.Dto;
-using Pomnesh.Application.DTO;
 using Pomnesh.Application.Interfaces;
+using Pomnesh.Application.Models;
 
 namespace Pomnesh.API.Controllers;
 
@@ -13,9 +12,9 @@ public class ChatContextController(IChatContextService service) : ControllerBase
 {
 
     [HttpPost]
-    public async Task<IActionResult> CreateContext([FromBody] ChatContextCreateDto model)
+    public async Task<IActionResult> CreateContext([FromBody] ChatContextCreateRequest request)
     {
-        int newId = await service.Create(model);
+        int newId = await service.Create(request);
 
         var response = new BaseApiResponse<int> { Payload = newId };
         return CreatedAtAction(nameof(GetContext), new { id = newId }, response);
@@ -40,9 +39,9 @@ public class ChatContextController(IChatContextService service) : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateChatContext([FromBody]  ChatContextUpdateDto model)
+    public async Task<IActionResult> UpdateChatContext([FromBody] ChatContextUpdateRequest request)
     {
-        await service.Update(model);
+        await service.Update(request);
         return NoContent();
     }
 

@@ -4,17 +4,17 @@ using Pomnesh.Infrastructure;
 using Pomnesh.Infrastructure.Interfaces;
 using Pomnesh.Infrastructure.Repositories;
 using FluentMigrator.Runner;
-using Pomnesh.API.Dto;
+using FluentValidation.AspNetCore;
 using Pomnesh.API.Middlewares;
-using Pomnesh.Application.Dto;
-using Pomnesh.Application.DTO;
+using Pomnesh.API.Validators;
 using Pomnesh.Application.Interfaces;
 using MigrationRunner = Pomnesh.Infrastructure.Migrations.MigrationRunner;
 
 namespace Pomnesh.API;
 
-public class Program
+public abstract class Program
 {
+    [Obsolete("Obsolete")]
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
@@ -35,17 +35,25 @@ public class Program
         builder.Services.AddScoped<IRecollectionService, RecollectionService>();
         builder.Services.AddScoped<IUserService, UserService>();
         
+        // Validators
+        builder.Services.AddControllers()
+            .AddFluentValidation(fv =>
+            {
+                // Auto-registers all validators in the same assembly as this one
+                fv.RegisterValidatorsFromAssemblyContaining<AttachmentCreateRequestValidator>();
+
+                // Optional: disable [Required], [MaxLength], etc. if you want full FluentValidation control
+                fv.DisableDataAnnotationsValidation = true;
+            });
+        
         // Migrations
         builder.Services.AddFluentMigratorCore()
             .ConfigureRunner(rb => rb
                 .AddPostgres() 
                 .WithGlobalConnectionString(builder.Configuration.GetConnectionString("DefaultConnection"))
                 .ScanIn(typeof(MigrationRunner).Assembly).For.Migrations());
-        
-        
+
         builder.Services.AddScoped<MigrationRunner>();
-        
-        builder.Services.AddControllers();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();

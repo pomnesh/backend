@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pomnesh.API.Dto;
 using Pomnesh.API.Responses;
-using Pomnesh.Application.Dto;
-using Pomnesh.Application.DTO;
 using Pomnesh.Application.Interfaces;
+using Pomnesh.Application.Models;
 
 namespace Pomnesh.API.Controllers;
 
@@ -13,9 +12,9 @@ public class RecollectionController(IRecollectionService recollectionService) : 
 {
 
     [HttpPost]
-    public async Task<IActionResult> CreateRecollection([FromBody] RecollectionCreateDto model)
+    public async Task<IActionResult> CreateRecollection([FromBody] RecollectionCreateRequest request)
     {
-        int newId = await recollectionService.Create(model);
+        int newId = await recollectionService.Create(request);
 
         var response = new BaseApiResponse<int> { Payload = newId };
         return CreatedAtAction(nameof(GetRecollection), new { id = newId }, response);
@@ -40,9 +39,9 @@ public class RecollectionController(IRecollectionService recollectionService) : 
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateRecollection([FromBody]  RecollectionUpdateDto model)
+    public async Task<IActionResult> UpdateRecollection([FromBody]  RecollectionUpdateRequest request)
     {
-        await recollectionService.Update(model);
+        await recollectionService.Update(request);
         return NoContent();
     }
 
