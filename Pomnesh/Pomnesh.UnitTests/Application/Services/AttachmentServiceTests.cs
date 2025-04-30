@@ -31,7 +31,7 @@ public class AttachmentServiceTests
         var request = new AttachmentCreateRequest
         {
             Type = AttachmentType.Photo,
-            FileId = "123",
+            FileId = 123,
             OwnerId = 1,
             OriginalLink = "https://example.com/photo.jpg",
             ContextId = 1
