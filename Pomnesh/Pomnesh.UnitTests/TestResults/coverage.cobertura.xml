@@ -1,9 +1,917 @@
 <?xml version="1.0" encoding="utf-8"?>
-<coverage line-rate="0.5312" branch-rate="0.909" version="1.9" timestamp="1746016000" lines-covered="332" lines-valid="625" branches-covered="40" branches-valid="44">
+<coverage line-rate="0.607" branch-rate="0.9285" version="1.9" timestamp="1746019004" lines-covered="533" lines-valid="878" branches-covered="52" branches-valid="56">
   <sources>
     <source>/Users/vsky/code/pomnesh/backend/Pomnesh/</source>
   </sources>
   <packages>
+    <package name="Pomnesh.API" line-rate="0.7944" branch-rate="1" complexity="41">
+      <classes>
+        <class name="Pomnesh.API.Program" filename="Pomnesh.API/Program.cs" line-rate="0" branch-rate="1" complexity="1">
+          <methods>
+            <method name="Main" signature="(System.String[])" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="19" hits="0" branch="False" />
+                <line number="20" hits="0" branch="False" />
+                <line number="23" hits="0" branch="False" />
+                <line number="24" hits="0" branch="False" />
+                <line number="27" hits="0" branch="False" />
+                <line number="28" hits="0" branch="False" />
+                <line number="29" hits="0" branch="False" />
+                <line number="30" hits="0" branch="False" />
+                <line number="33" hits="0" branch="False" />
+                <line number="34" hits="0" branch="False" />
+                <line number="35" hits="0" branch="False" />
+                <line number="36" hits="0" branch="False" />
+                <line number="39" hits="0" branch="False" />
+                <line number="40" hits="0" branch="False" />
+                <line number="41" hits="0" branch="False" />
+                <line number="42" hits="0" branch="False" />
+                <line number="43" hits="0" branch="False" />
+                <line number="44" hits="0" branch="False" />
+                <line number="45" hits="0" branch="False" />
+                <line number="46" hits="0" branch="False" />
+                <line number="47" hits="0" branch="False" />
+                <line number="50" hits="0" branch="False" />
+                <line number="51" hits="0" branch="False" />
+                <line number="52" hits="0" branch="False" />
+                <line number="53" hits="0" branch="False" />
+                <line number="54" hits="0" branch="False" />
+                <line number="56" hits="0" branch="False" />
+                <line number="59" hits="0" branch="False" />
+                <line number="60" hits="0" branch="False" />
+                <line number="62" hits="0" branch="False" />
+                <line number="67" hits="0" branch="False" />
+                <line number="68" hits="0" branch="False" />
+                <line number="71" hits="0" branch="False" />
+                <line number="73" hits="0" branch="False" />
+                <line number="74" hits="0" branch="False" />
+                <line number="77" hits="0" branch="False" />
+                <line number="80" hits="0" branch="False" />
+                <line number="81" hits="0" branch="False" />
+                <line number="82" hits="0" branch="False" />
+                <line number="83" hits="0" branch="False" />
+                <line number="84" hits="0" branch="False" />
+                <line number="86" hits="0" branch="False" />
+                <line number="87" hits="0" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="19" hits="0" branch="False" />
+            <line number="20" hits="0" branch="False" />
+            <line number="23" hits="0" branch="False" />
+            <line number="24" hits="0" branch="False" />
+            <line number="27" hits="0" branch="False" />
+            <line number="28" hits="0" branch="False" />
+            <line number="29" hits="0" branch="False" />
+            <line number="30" hits="0" branch="False" />
+            <line number="33" hits="0" branch="False" />
+            <line number="34" hits="0" branch="False" />
+            <line number="35" hits="0" branch="False" />
+            <line number="36" hits="0" branch="False" />
+            <line number="39" hits="0" branch="False" />
+            <line number="40" hits="0" branch="False" />
+            <line number="41" hits="0" branch="False" />
+            <line number="42" hits="0" branch="False" />
+            <line number="43" hits="0" branch="False" />
+            <line number="44" hits="0" branch="False" />
+            <line number="45" hits="0" branch="False" />
+            <line number="46" hits="0" branch="False" />
+            <line number="47" hits="0" branch="False" />
+            <line number="50" hits="0" branch="False" />
+            <line number="51" hits="0" branch="False" />
+            <line number="52" hits="0" branch="False" />
+            <line number="53" hits="0" branch="False" />
+            <line number="54" hits="0" branch="False" />
+            <line number="56" hits="0" branch="False" />
+            <line number="59" hits="0" branch="False" />
+            <line number="60" hits="0" branch="False" />
+            <line number="62" hits="0" branch="False" />
+            <line number="67" hits="0" branch="False" />
+            <line number="68" hits="0" branch="False" />
+            <line number="71" hits="0" branch="False" />
+            <line number="73" hits="0" branch="False" />
+            <line number="74" hits="0" branch="False" />
+            <line number="77" hits="0" branch="False" />
+            <line number="80" hits="0" branch="False" />
+            <line number="81" hits="0" branch="False" />
+            <line number="82" hits="0" branch="False" />
+            <line number="83" hits="0" branch="False" />
+            <line number="84" hits="0" branch="False" />
+            <line number="86" hits="0" branch="False" />
+            <line number="87" hits="0" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Validators.AttachmentCreateRequestValidator" filename="Pomnesh.API/Validators/AttachmentRequestValidator.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name=".ctor" signature="()" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="8" hits="9" branch="False" />
+                <line number="9" hits="9" branch="False" />
+                <line number="10" hits="9" branch="False" />
+                <line number="11" hits="9" branch="False" />
+                <line number="13" hits="9" branch="False" />
+                <line number="14" hits="9" branch="False" />
+                <line number="16" hits="9" branch="False" />
+                <line number="17" hits="9" branch="False" />
+                <line number="18" hits="9" branch="False" />
+                <line number="20" hits="9" branch="False" />
+                <line number="21" hits="9" branch="False" />
+                <line number="22" hits="5" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="6" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="23" hits="5" branch="False" />
+                <line number="24" hits="9" branch="False" />
+                <line number="26" hits="9" branch="False" />
+                <line number="27" hits="9" branch="False" />
+                <line number="28" hits="9" branch="False" />
+                <line number="29" hits="9" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="8" hits="9" branch="False" />
+            <line number="9" hits="9" branch="False" />
+            <line number="10" hits="9" branch="False" />
+            <line number="11" hits="9" branch="False" />
+            <line number="13" hits="9" branch="False" />
+            <line number="14" hits="9" branch="False" />
+            <line number="16" hits="9" branch="False" />
+            <line number="17" hits="9" branch="False" />
+            <line number="18" hits="9" branch="False" />
+            <line number="20" hits="9" branch="False" />
+            <line number="21" hits="9" branch="False" />
+            <line number="22" hits="5" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="6" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="23" hits="5" branch="False" />
+            <line number="24" hits="9" branch="False" />
+            <line number="26" hits="9" branch="False" />
+            <line number="27" hits="9" branch="False" />
+            <line number="28" hits="9" branch="False" />
+            <line number="29" hits="9" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Validators.AttachmentUpdateRequestValidator" filename="Pomnesh.API/Validators/AttachmentRequestValidator.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name=".ctor" signature="()" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="34" hits="9" branch="False" />
+                <line number="35" hits="9" branch="False" />
+                <line number="36" hits="9" branch="False" />
+                <line number="37" hits="9" branch="False" />
+                <line number="39" hits="9" branch="False" />
+                <line number="40" hits="9" branch="False" />
+                <line number="42" hits="9" branch="False" />
+                <line number="43" hits="9" branch="False" />
+                <line number="45" hits="9" branch="False" />
+                <line number="46" hits="9" branch="False" />
+                <line number="49" hits="9" branch="False" />
+                <line number="50" hits="9" branch="False" />
+                <line number="51" hits="4" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="6" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="52" hits="4" branch="False" />
+                <line number="53" hits="9" branch="False" />
+                <line number="55" hits="9" branch="False" />
+                <line number="56" hits="9" branch="False" />
+                <line number="57" hits="9" branch="False" />
+                <line number="58" hits="9" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="34" hits="9" branch="False" />
+            <line number="35" hits="9" branch="False" />
+            <line number="36" hits="9" branch="False" />
+            <line number="37" hits="9" branch="False" />
+            <line number="39" hits="9" branch="False" />
+            <line number="40" hits="9" branch="False" />
+            <line number="42" hits="9" branch="False" />
+            <line number="43" hits="9" branch="False" />
+            <line number="45" hits="9" branch="False" />
+            <line number="46" hits="9" branch="False" />
+            <line number="49" hits="9" branch="False" />
+            <line number="50" hits="9" branch="False" />
+            <line number="51" hits="4" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="6" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="52" hits="4" branch="False" />
+            <line number="53" hits="9" branch="False" />
+            <line number="55" hits="9" branch="False" />
+            <line number="56" hits="9" branch="False" />
+            <line number="57" hits="9" branch="False" />
+            <line number="58" hits="9" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Validators.ChatContextCreateRequestValidator" filename="Pomnesh.API/Validators/ChatContextRequestValidator.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="8" hits="9" branch="False" />
+                <line number="9" hits="9" branch="False" />
+                <line number="10" hits="9" branch="False" />
+                <line number="11" hits="9" branch="False" />
+                <line number="13" hits="9" branch="False" />
+                <line number="14" hits="9" branch="False" />
+                <line number="16" hits="9" branch="False" />
+                <line number="17" hits="13" branch="False" />
+                <line number="18" hits="9" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="8" hits="9" branch="False" />
+            <line number="9" hits="9" branch="False" />
+            <line number="10" hits="9" branch="False" />
+            <line number="11" hits="9" branch="False" />
+            <line number="13" hits="9" branch="False" />
+            <line number="14" hits="9" branch="False" />
+            <line number="16" hits="9" branch="False" />
+            <line number="17" hits="13" branch="False" />
+            <line number="18" hits="9" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Validators.ChatContextUpdateRequestValidator" filename="Pomnesh.API/Validators/ChatContextRequestValidator.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="23" hits="9" branch="False" />
+                <line number="24" hits="9" branch="False" />
+                <line number="25" hits="9" branch="False" />
+                <line number="26" hits="9" branch="False" />
+                <line number="28" hits="9" branch="False" />
+                <line number="29" hits="9" branch="False" />
+                <line number="31" hits="9" branch="False" />
+                <line number="32" hits="9" branch="False" />
+                <line number="34" hits="9" branch="False" />
+                <line number="35" hits="14" branch="False" />
+                <line number="36" hits="9" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="23" hits="9" branch="False" />
+            <line number="24" hits="9" branch="False" />
+            <line number="25" hits="9" branch="False" />
+            <line number="26" hits="9" branch="False" />
+            <line number="28" hits="9" branch="False" />
+            <line number="29" hits="9" branch="False" />
+            <line number="31" hits="9" branch="False" />
+            <line number="32" hits="9" branch="False" />
+            <line number="34" hits="9" branch="False" />
+            <line number="35" hits="14" branch="False" />
+            <line number="36" hits="9" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Validators.RecollectionCreateRequestValidator" filename="Pomnesh.API/Validators/RecollectionRequestValidator.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="8" hits="9" branch="False" />
+                <line number="9" hits="9" branch="False" />
+                <line number="10" hits="9" branch="False" />
+                <line number="11" hits="9" branch="False" />
+                <line number="12" hits="9" branch="False" />
+                <line number="14" hits="9" branch="False" />
+                <line number="15" hits="9" branch="False" />
+                <line number="16" hits="9" branch="False" />
+                <line number="17" hits="13" branch="False" />
+                <line number="18" hits="9" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="8" hits="9" branch="False" />
+            <line number="9" hits="9" branch="False" />
+            <line number="10" hits="9" branch="False" />
+            <line number="11" hits="9" branch="False" />
+            <line number="12" hits="9" branch="False" />
+            <line number="14" hits="9" branch="False" />
+            <line number="15" hits="9" branch="False" />
+            <line number="16" hits="9" branch="False" />
+            <line number="17" hits="13" branch="False" />
+            <line number="18" hits="9" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Validators.RecollectionUpdateRequestValidator" filename="Pomnesh.API/Validators/RecollectionRequestValidator.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="23" hits="9" branch="False" />
+                <line number="24" hits="9" branch="False" />
+                <line number="25" hits="9" branch="False" />
+                <line number="26" hits="9" branch="False" />
+                <line number="28" hits="9" branch="False" />
+                <line number="29" hits="9" branch="False" />
+                <line number="30" hits="14" branch="False" />
+                <line number="32" hits="9" branch="False" />
+                <line number="33" hits="9" branch="False" />
+                <line number="34" hits="9" branch="False" />
+                <line number="35" hits="14" branch="False" />
+                <line number="36" hits="9" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="23" hits="9" branch="False" />
+            <line number="24" hits="9" branch="False" />
+            <line number="25" hits="9" branch="False" />
+            <line number="26" hits="9" branch="False" />
+            <line number="28" hits="9" branch="False" />
+            <line number="29" hits="9" branch="False" />
+            <line number="30" hits="14" branch="False" />
+            <line number="32" hits="9" branch="False" />
+            <line number="33" hits="9" branch="False" />
+            <line number="34" hits="9" branch="False" />
+            <line number="35" hits="14" branch="False" />
+            <line number="36" hits="9" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Validators.UserCreateRequestValidator" filename="Pomnesh.API/Validators/UserRequestValidator.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="8" hits="5" branch="False" />
+                <line number="9" hits="5" branch="False" />
+                <line number="10" hits="5" branch="False" />
+                <line number="11" hits="5" branch="False" />
+                <line number="12" hits="5" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="8" hits="5" branch="False" />
+            <line number="9" hits="5" branch="False" />
+            <line number="10" hits="5" branch="False" />
+            <line number="11" hits="5" branch="False" />
+            <line number="12" hits="5" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Validators.UserUpdateRequestValidator" filename="Pomnesh.API/Validators/UserRequestValidator.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="5" branch="False" />
+                <line number="18" hits="5" branch="False" />
+                <line number="19" hits="5" branch="False" />
+                <line number="20" hits="5" branch="False" />
+                <line number="22" hits="5" branch="False" />
+                <line number="23" hits="5" branch="False" />
+                <line number="24" hits="5" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="17" hits="5" branch="False" />
+            <line number="18" hits="5" branch="False" />
+            <line number="19" hits="5" branch="False" />
+            <line number="20" hits="5" branch="False" />
+            <line number="22" hits="5" branch="False" />
+            <line number="23" hits="5" branch="False" />
+            <line number="24" hits="5" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Middlewares.ApiExceptionMiddleware" filename="Pomnesh.API/Middlewares/ApiExceptionMiddleware.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(Microsoft.AspNetCore.Http.RequestDelegate)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="9" hits="4" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="9" hits="4" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Middlewares.ApiExceptionMiddleware/&lt;InvokeAsync&gt;d__2" filename="Pomnesh.API/Middlewares/ApiExceptionMiddleware.cs" line-rate="0.35710000000000003" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="0.35710000000000003" branch-rate="1" complexity="1">
+              <lines>
+                <line number="12" hits="2" branch="False" />
+                <line number="14" hits="2" branch="False" />
+                <line number="15" hits="2" branch="False" />
+                <line number="16" hits="1" branch="False" />
+                <line number="17" hits="0" branch="False" />
+                <line number="18" hits="0" branch="False" />
+                <line number="19" hits="0" branch="False" />
+                <line number="20" hits="0" branch="False" />
+                <line number="21" hits="0" branch="False" />
+                <line number="22" hits="0" branch="False" />
+                <line number="23" hits="0" branch="False" />
+                <line number="24" hits="0" branch="False" />
+                <line number="25" hits="0" branch="False" />
+                <line number="26" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="12" hits="2" branch="False" />
+            <line number="14" hits="2" branch="False" />
+            <line number="15" hits="2" branch="False" />
+            <line number="16" hits="1" branch="False" />
+            <line number="17" hits="0" branch="False" />
+            <line number="18" hits="0" branch="False" />
+            <line number="19" hits="0" branch="False" />
+            <line number="20" hits="0" branch="False" />
+            <line number="21" hits="0" branch="False" />
+            <line number="22" hits="0" branch="False" />
+            <line number="23" hits="0" branch="False" />
+            <line number="24" hits="0" branch="False" />
+            <line number="25" hits="0" branch="False" />
+            <line number="26" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.AttachmentController" filename="Pomnesh.API/Controllers/AttachmentController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(Pomnesh.Application.Interfaces.IAttachmentService)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="12" hits="6" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="12" hits="6" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.AttachmentController/&lt;CreateAttachment&gt;d__2" filename="Pomnesh.API/Controllers/AttachmentController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="1" branch="False" />
+                <line number="18" hits="1" branch="False" />
+                <line number="20" hits="1" branch="False" />
+                <line number="21" hits="1" branch="False" />
+                <line number="22" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="17" hits="1" branch="False" />
+            <line number="18" hits="1" branch="False" />
+            <line number="20" hits="1" branch="False" />
+            <line number="21" hits="1" branch="False" />
+            <line number="22" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.AttachmentController/&lt;DeleteAttachment&gt;d__6" filename="Pomnesh.API/Controllers/AttachmentController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="54" hits="1" branch="False" />
+                <line number="55" hits="1" branch="False" />
+                <line number="56" hits="1" branch="False" />
+                <line number="57" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="54" hits="1" branch="False" />
+            <line number="55" hits="1" branch="False" />
+            <line number="56" hits="1" branch="False" />
+            <line number="57" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.AttachmentController/&lt;GetAll&gt;d__4" filename="Pomnesh.API/Controllers/AttachmentController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="38" hits="1" branch="False" />
+                <line number="39" hits="1" branch="False" />
+                <line number="41" hits="1" branch="False" />
+                <line number="42" hits="1" branch="False" />
+                <line number="43" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="38" hits="1" branch="False" />
+            <line number="39" hits="1" branch="False" />
+            <line number="41" hits="1" branch="False" />
+            <line number="42" hits="1" branch="False" />
+            <line number="43" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.AttachmentController/&lt;GetAttachment&gt;d__3" filename="Pomnesh.API/Controllers/AttachmentController.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="26" hits="2" branch="False" />
+                <line number="27" hits="2" branch="False" />
+                <line number="28" hits="2" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="164" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="29" hits="1" branch="False" />
+                <line number="32" hits="1" branch="False" />
+                <line number="33" hits="1" branch="False" />
+                <line number="34" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="26" hits="2" branch="False" />
+            <line number="27" hits="2" branch="False" />
+            <line number="28" hits="2" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="164" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="29" hits="1" branch="False" />
+            <line number="32" hits="1" branch="False" />
+            <line number="33" hits="1" branch="False" />
+            <line number="34" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.AttachmentController/&lt;UpdateAttachment&gt;d__5" filename="Pomnesh.API/Controllers/AttachmentController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="47" hits="1" branch="False" />
+                <line number="48" hits="1" branch="False" />
+                <line number="49" hits="1" branch="False" />
+                <line number="50" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="47" hits="1" branch="False" />
+            <line number="48" hits="1" branch="False" />
+            <line number="49" hits="1" branch="False" />
+            <line number="50" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.ChatContextController" filename="Pomnesh.API/Controllers/ChatContextController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(Pomnesh.Application.Interfaces.IChatContextService)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="12" hits="6" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="12" hits="6" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.ChatContextController/&lt;CreateContext&gt;d__2" filename="Pomnesh.API/Controllers/ChatContextController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="1" branch="False" />
+                <line number="18" hits="1" branch="False" />
+                <line number="20" hits="1" branch="False" />
+                <line number="21" hits="1" branch="False" />
+                <line number="22" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="17" hits="1" branch="False" />
+            <line number="18" hits="1" branch="False" />
+            <line number="20" hits="1" branch="False" />
+            <line number="21" hits="1" branch="False" />
+            <line number="22" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.ChatContextController/&lt;DeleteChatContext&gt;d__6" filename="Pomnesh.API/Controllers/ChatContextController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="53" hits="1" branch="False" />
+                <line number="54" hits="1" branch="False" />
+                <line number="55" hits="1" branch="False" />
+                <line number="56" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="53" hits="1" branch="False" />
+            <line number="54" hits="1" branch="False" />
+            <line number="55" hits="1" branch="False" />
+            <line number="56" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.ChatContextController/&lt;GetAll&gt;d__4" filename="Pomnesh.API/Controllers/ChatContextController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="37" hits="1" branch="False" />
+                <line number="38" hits="1" branch="False" />
+                <line number="40" hits="1" branch="False" />
+                <line number="41" hits="1" branch="False" />
+                <line number="42" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="37" hits="1" branch="False" />
+            <line number="38" hits="1" branch="False" />
+            <line number="40" hits="1" branch="False" />
+            <line number="41" hits="1" branch="False" />
+            <line number="42" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.ChatContextController/&lt;GetContext&gt;d__3" filename="Pomnesh.API/Controllers/ChatContextController.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="26" hits="2" branch="False" />
+                <line number="27" hits="2" branch="False" />
+                <line number="28" hits="2" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="164" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="29" hits="1" branch="False" />
+                <line number="31" hits="1" branch="False" />
+                <line number="32" hits="1" branch="False" />
+                <line number="33" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="26" hits="2" branch="False" />
+            <line number="27" hits="2" branch="False" />
+            <line number="28" hits="2" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="164" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="29" hits="1" branch="False" />
+            <line number="31" hits="1" branch="False" />
+            <line number="32" hits="1" branch="False" />
+            <line number="33" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.ChatContextController/&lt;UpdateChatContext&gt;d__5" filename="Pomnesh.API/Controllers/ChatContextController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="46" hits="1" branch="False" />
+                <line number="47" hits="1" branch="False" />
+                <line number="48" hits="1" branch="False" />
+                <line number="49" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="46" hits="1" branch="False" />
+            <line number="47" hits="1" branch="False" />
+            <line number="48" hits="1" branch="False" />
+            <line number="49" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.RecollectionController" filename="Pomnesh.API/Controllers/RecollectionController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(Pomnesh.Application.Interfaces.IRecollectionService)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="12" hits="6" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="12" hits="6" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.RecollectionController/&lt;CreateRecollection&gt;d__2" filename="Pomnesh.API/Controllers/RecollectionController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="1" branch="False" />
+                <line number="18" hits="1" branch="False" />
+                <line number="20" hits="1" branch="False" />
+                <line number="21" hits="1" branch="False" />
+                <line number="22" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="17" hits="1" branch="False" />
+            <line number="18" hits="1" branch="False" />
+            <line number="20" hits="1" branch="False" />
+            <line number="21" hits="1" branch="False" />
+            <line number="22" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.RecollectionController/&lt;DeleteRecollection&gt;d__6" filename="Pomnesh.API/Controllers/RecollectionController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="53" hits="1" branch="False" />
+                <line number="54" hits="1" branch="False" />
+                <line number="55" hits="1" branch="False" />
+                <line number="56" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="53" hits="1" branch="False" />
+            <line number="54" hits="1" branch="False" />
+            <line number="55" hits="1" branch="False" />
+            <line number="56" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.RecollectionController/&lt;GetAll&gt;d__4" filename="Pomnesh.API/Controllers/RecollectionController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="37" hits="1" branch="False" />
+                <line number="38" hits="1" branch="False" />
+                <line number="40" hits="1" branch="False" />
+                <line number="41" hits="1" branch="False" />
+                <line number="42" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="37" hits="1" branch="False" />
+            <line number="38" hits="1" branch="False" />
+            <line number="40" hits="1" branch="False" />
+            <line number="41" hits="1" branch="False" />
+            <line number="42" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.RecollectionController/&lt;GetRecollection&gt;d__3" filename="Pomnesh.API/Controllers/RecollectionController.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="26" hits="2" branch="False" />
+                <line number="27" hits="2" branch="False" />
+                <line number="28" hits="2" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="164" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="29" hits="1" branch="False" />
+                <line number="31" hits="1" branch="False" />
+                <line number="32" hits="1" branch="False" />
+                <line number="33" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="26" hits="2" branch="False" />
+            <line number="27" hits="2" branch="False" />
+            <line number="28" hits="2" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="164" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="29" hits="1" branch="False" />
+            <line number="31" hits="1" branch="False" />
+            <line number="32" hits="1" branch="False" />
+            <line number="33" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.RecollectionController/&lt;UpdateRecollection&gt;d__5" filename="Pomnesh.API/Controllers/RecollectionController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="46" hits="1" branch="False" />
+                <line number="47" hits="1" branch="False" />
+                <line number="48" hits="1" branch="False" />
+                <line number="49" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="46" hits="1" branch="False" />
+            <line number="47" hits="1" branch="False" />
+            <line number="48" hits="1" branch="False" />
+            <line number="49" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.UserController" filename="Pomnesh.API/Controllers/UserController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(Pomnesh.Application.Interfaces.IUserService)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="12" hits="6" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="12" hits="6" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.UserController/&lt;CreateUser&gt;d__2" filename="Pomnesh.API/Controllers/UserController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="1" branch="False" />
+                <line number="18" hits="1" branch="False" />
+                <line number="20" hits="1" branch="False" />
+                <line number="21" hits="1" branch="False" />
+                <line number="22" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="17" hits="1" branch="False" />
+            <line number="18" hits="1" branch="False" />
+            <line number="20" hits="1" branch="False" />
+            <line number="21" hits="1" branch="False" />
+            <line number="22" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.UserController/&lt;DeleteUser&gt;d__6" filename="Pomnesh.API/Controllers/UserController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="53" hits="1" branch="False" />
+                <line number="55" hits="1" branch="False" />
+                <line number="56" hits="1" branch="False" />
+                <line number="57" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="53" hits="1" branch="False" />
+            <line number="55" hits="1" branch="False" />
+            <line number="56" hits="1" branch="False" />
+            <line number="57" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.UserController/&lt;GetAll&gt;d__4" filename="Pomnesh.API/Controllers/UserController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="37" hits="1" branch="False" />
+                <line number="38" hits="1" branch="False" />
+                <line number="40" hits="1" branch="False" />
+                <line number="41" hits="1" branch="False" />
+                <line number="42" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="37" hits="1" branch="False" />
+            <line number="38" hits="1" branch="False" />
+            <line number="40" hits="1" branch="False" />
+            <line number="41" hits="1" branch="False" />
+            <line number="42" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.UserController/&lt;GetUserInfo&gt;d__3" filename="Pomnesh.API/Controllers/UserController.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="26" hits="2" branch="False" />
+                <line number="27" hits="2" branch="False" />
+                <line number="28" hits="2" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="164" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="29" hits="1" branch="False" />
+                <line number="31" hits="1" branch="False" />
+                <line number="32" hits="1" branch="False" />
+                <line number="33" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="26" hits="2" branch="False" />
+            <line number="27" hits="2" branch="False" />
+            <line number="28" hits="2" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="164" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="29" hits="1" branch="False" />
+            <line number="31" hits="1" branch="False" />
+            <line number="32" hits="1" branch="False" />
+            <line number="33" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.API.Controllers.UserController/&lt;UpdateUser&gt;d__5" filename="Pomnesh.API/Controllers/UserController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="46" hits="1" branch="False" />
+                <line number="47" hits="1" branch="False" />
+                <line number="48" hits="1" branch="False" />
+                <line number="49" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="46" hits="1" branch="False" />
+            <line number="47" hits="1" branch="False" />
+            <line number="48" hits="1" branch="False" />
+            <line number="49" hits="1" branch="False" />
+          </lines>
+        </class>
+      </classes>
+    </package>
     <package name="Pomnesh.Domain" line-rate="1" branch-rate="1" complexity="17">
       <classes>
         <class name="Pomnesh.Domain.Entity.Attachment" filename="Pomnesh.Domain/Entity/Attachment.cs" line-rate="1" branch-rate="1" complexity="6">
@@ -140,12 +1048,12 @@
           <methods>
             <method name="get_Payload" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="5" hits="17" branch="False" />
+                <line number="5" hits="41" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="5" hits="17" branch="False" />
+            <line number="5" hits="41" branch="False" />
           </lines>
         </class>
         <class name="Pomnesh.API.Dto.AttachmentResponse" filename="Pomnesh.Application/Responses/AttachmentResponse.cs" line-rate="1" branch-rate="1" complexity="6">
@@ -224,12 +1132,12 @@
           <methods>
             <method name="get_Id" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="5" hits="14" branch="False" />
+                <line number="5" hits="16" branch="False" />
               </lines>
             </method>
             <method name="get_UserId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="7" hits="14" branch="False" />
+                <line number="7" hits="16" branch="False" />
               </lines>
             </method>
             <method name="get_CreatedAt" signature="()" line-rate="1" branch-rate="1" complexity="1">
@@ -239,15 +1147,15 @@
             </method>
             <method name="get_DownloadLink" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="11" hits="20" branch="False" />
+                <line number="11" hits="22" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="5" hits="14" branch="False" />
-            <line number="7" hits="14" branch="False" />
+            <line number="5" hits="16" branch="False" />
+            <line number="7" hits="16" branch="False" />
             <line number="9" hits="14" branch="False" />
-            <line number="11" hits="20" branch="False" />
+            <line number="11" hits="22" branch="False" />
           </lines>
         </class>
         <class name="Pomnesh.API.Dto.UserResponse" filename="Pomnesh.Application/Responses/UserResponse.cs" line-rate="1" branch-rate="1" complexity="3">
@@ -1166,181 +2074,181 @@
           <methods>
             <method name="get_Type" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="8" hits="7" branch="False" />
+                <line number="8" hits="18" branch="False" />
               </lines>
             </method>
             <method name="get_FileId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="9" hits="7" branch="False" />
+                <line number="9" hits="18" branch="False" />
               </lines>
             </method>
             <method name="get_OwnerId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="10" hits="8" branch="False" />
+                <line number="10" hits="18" branch="False" />
               </lines>
             </method>
             <method name="get_OriginalLink" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="11" hits="11" branch="False" />
+                <line number="11" hits="18" branch="False" />
               </lines>
             </method>
             <method name="get_ContextId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="12" hits="17" branch="False" />
+                <line number="12" hits="27" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="8" hits="7" branch="False" />
-            <line number="9" hits="7" branch="False" />
-            <line number="10" hits="8" branch="False" />
-            <line number="11" hits="11" branch="False" />
-            <line number="12" hits="17" branch="False" />
+            <line number="8" hits="18" branch="False" />
+            <line number="9" hits="18" branch="False" />
+            <line number="10" hits="18" branch="False" />
+            <line number="11" hits="18" branch="False" />
+            <line number="12" hits="27" branch="False" />
           </lines>
         </class>
         <class name="Pomnesh.Application.Models.AttachmentUpdateRequest" filename="Pomnesh.Application/Models/AttachmentUpdateRequest.cs" line-rate="1" branch-rate="1" complexity="6">
           <methods>
             <method name="get_Id" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="7" hits="25" branch="False" />
+                <line number="7" hits="33" branch="False" />
               </lines>
             </method>
             <method name="get_Type" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="8" hits="7" branch="False" />
+                <line number="8" hits="15" branch="False" />
               </lines>
             </method>
             <method name="get_FileId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="9" hits="8" branch="False" />
+                <line number="9" hits="16" branch="False" />
               </lines>
             </method>
             <method name="get_OwnerId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="10" hits="8" branch="False" />
+                <line number="10" hits="16" branch="False" />
               </lines>
             </method>
             <method name="get_OriginalLink" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="11" hits="11" branch="False" />
+                <line number="11" hits="16" branch="False" />
               </lines>
             </method>
             <method name="get_ContextId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="12" hits="18" branch="False" />
+                <line number="12" hits="26" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="7" hits="25" branch="False" />
-            <line number="8" hits="7" branch="False" />
-            <line number="9" hits="8" branch="False" />
-            <line number="10" hits="8" branch="False" />
-            <line number="11" hits="11" branch="False" />
-            <line number="12" hits="18" branch="False" />
+            <line number="7" hits="33" branch="False" />
+            <line number="8" hits="15" branch="False" />
+            <line number="9" hits="16" branch="False" />
+            <line number="10" hits="16" branch="False" />
+            <line number="11" hits="16" branch="False" />
+            <line number="12" hits="26" branch="False" />
           </lines>
         </class>
         <class name="Pomnesh.Application.Models.ChatContextCreateRequest" filename="Pomnesh.Application/Models/ChatContextCreateRequest.cs" line-rate="1" branch-rate="1" complexity="3">
           <methods>
             <method name="get_MessageId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="5" hits="8" branch="False" />
+                <line number="5" hits="16" branch="False" />
               </lines>
             </method>
             <method name="get_MessageText" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="7" hits="11" branch="False" />
+                <line number="7" hits="19" branch="False" />
               </lines>
             </method>
             <method name="get_MessageDate" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="9" hits="8" branch="False" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="5" hits="8" branch="False" />
-            <line number="7" hits="11" branch="False" />
-            <line number="9" hits="8" branch="False" />
-          </lines>
-        </class>
-        <class name="Pomnesh.Application.Models.ChatContextUpdateRequest" filename="Pomnesh.Application/Models/ChatContextUpdateRequest.cs" line-rate="1" branch-rate="1" complexity="4">
-          <methods>
-            <method name="get_Id" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="5" hits="20" branch="False" />
-              </lines>
-            </method>
-            <method name="get_MessageId" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="7" hits="8" branch="False" />
-              </lines>
-            </method>
-            <method name="get_MessageText" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="9" hits="11" branch="False" />
-              </lines>
-            </method>
-            <method name="get_MessageDate" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="11" hits="8" branch="False" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="5" hits="20" branch="False" />
-            <line number="7" hits="8" branch="False" />
-            <line number="9" hits="11" branch="False" />
-            <line number="11" hits="8" branch="False" />
-          </lines>
-        </class>
-        <class name="Pomnesh.Application.Models.RecollectionCreateRequest" filename="Pomnesh.Application/Models/RecollectionCreateRequest.cs" line-rate="1" branch-rate="1" complexity="2">
-          <methods>
-            <method name="get_UserId" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="5" hits="17" branch="False" />
-              </lines>
-            </method>
-            <method name="get_DownloadLink" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="7" hits="14" branch="False" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="5" hits="17" branch="False" />
-            <line number="7" hits="14" branch="False" />
-          </lines>
-        </class>
-        <class name="Pomnesh.Application.Models.RecollectionUpdateRequest" filename="Pomnesh.Application/Models/RecollectionUpdateRequest.cs" line-rate="1" branch-rate="1" complexity="3">
-          <methods>
-            <method name="get_Id" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="5" hits="25" branch="False" />
-              </lines>
-            </method>
-            <method name="get_UserId" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="7" hits="18" branch="False" />
-              </lines>
-            </method>
-            <method name="get_DownloadLink" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
                 <line number="9" hits="16" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="5" hits="25" branch="False" />
-            <line number="7" hits="18" branch="False" />
+            <line number="5" hits="16" branch="False" />
+            <line number="7" hits="19" branch="False" />
             <line number="9" hits="16" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.Application.Models.ChatContextUpdateRequest" filename="Pomnesh.Application/Models/ChatContextUpdateRequest.cs" line-rate="1" branch-rate="1" complexity="4">
+          <methods>
+            <method name="get_Id" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="30" branch="False" />
+              </lines>
+            </method>
+            <method name="get_MessageId" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="7" hits="18" branch="False" />
+              </lines>
+            </method>
+            <method name="get_MessageText" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="9" hits="21" branch="False" />
+              </lines>
+            </method>
+            <method name="get_MessageDate" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="11" hits="18" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="30" branch="False" />
+            <line number="7" hits="18" branch="False" />
+            <line number="9" hits="21" branch="False" />
+            <line number="11" hits="18" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.Application.Models.RecollectionCreateRequest" filename="Pomnesh.Application/Models/RecollectionCreateRequest.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name="get_UserId" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="26" branch="False" />
+              </lines>
+            </method>
+            <method name="get_DownloadLink" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="7" hits="23" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="26" branch="False" />
+            <line number="7" hits="23" branch="False" />
+          </lines>
+        </class>
+        <class name="Pomnesh.Application.Models.RecollectionUpdateRequest" filename="Pomnesh.Application/Models/RecollectionUpdateRequest.cs" line-rate="1" branch-rate="1" complexity="3">
+          <methods>
+            <method name="get_Id" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="36" branch="False" />
+              </lines>
+            </method>
+            <method name="get_UserId" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="7" hits="29" branch="False" />
+              </lines>
+            </method>
+            <method name="get_DownloadLink" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="9" hits="27" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="36" branch="False" />
+            <line number="7" hits="29" branch="False" />
+            <line number="9" hits="27" branch="False" />
           </lines>
         </class>
         <class name="Pomnesh.Application.Models.UserCreateRequest" filename="Pomnesh.Application/Models/UserCreateRequest.cs" line-rate="1" branch-rate="1" complexity="2">
           <methods>
             <method name="get_VkId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="5" hits="8" branch="False" />
+                <line number="5" hits="12" branch="False" />
               </lines>
             </method>
             <method name="get_VkToken" signature="()" line-rate="1" branch-rate="1" complexity="1">
@@ -1350,7 +2258,7 @@
             </method>
           </methods>
           <lines>
-            <line number="5" hits="8" branch="False" />
+            <line number="5" hits="12" branch="False" />
             <line number="7" hits="11" branch="False" />
           </lines>
         </class>
@@ -1358,12 +2266,12 @@
           <methods>
             <method name="get_Id" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="5" hits="20" branch="False" />
+                <line number="5" hits="26" branch="False" />
               </lines>
             </method>
             <method name="get_VkId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="7" hits="8" branch="False" />
+                <line number="7" hits="14" branch="False" />
               </lines>
             </method>
             <method name="get_VkToken" signature="()" line-rate="1" branch-rate="1" complexity="1">
@@ -1373,8 +2281,8 @@
             </method>
           </methods>
           <lines>
-            <line number="5" hits="20" branch="False" />
-            <line number="7" hits="8" branch="False" />
+            <line number="5" hits="26" branch="False" />
+            <line number="7" hits="14" branch="False" />
             <line number="9" hits="11" branch="False" />
           </lines>
         </class>
@@ -1402,12 +2310,12 @@
             </method>
             <method name="get_AttachmentId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="16" hits="11" branch="False" />
+                <line number="16" hits="12" branch="False" />
               </lines>
             </method>
             <method name=".ctor" signature="(System.Int64)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="3" hits="9" branch="False" />
+                <line number="3" hits="10" branch="False" />
               </lines>
             </method>
           </methods>
@@ -1416,20 +2324,20 @@
             <line number="8" hits="1" branch="False" />
             <line number="13" hits="1" branch="False" />
             <line number="14" hits="1" branch="False" />
-            <line number="16" hits="11" branch="False" />
-            <line number="3" hits="9" branch="False" />
+            <line number="16" hits="12" branch="False" />
+            <line number="3" hits="10" branch="False" />
           </lines>
         </class>
         <class name="Pomnesh.Application.Exceptions.BaseApiException" filename="Pomnesh.Application/Exceptions/BaseApiException.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name=".ctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="8" hits="102" branch="False" />
+                <line number="8" hits="114" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="8" hits="102" branch="False" />
+            <line number="8" hits="114" branch="False" />
           </lines>
         </class>
         <class name="Pomnesh.Application.Exceptions.ContextNotFoundError" filename="Pomnesh.Application/Exceptions/ContextErrors.cs" line-rate="1" branch-rate="1" complexity="6">
@@ -1456,12 +2364,12 @@
             </method>
             <method name="get_ContextId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="16" hits="12" branch="False" />
+                <line number="16" hits="13" branch="False" />
               </lines>
             </method>
             <method name=".ctor" signature="(System.Int64)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="3" hits="9" branch="False" />
+                <line number="3" hits="10" branch="False" />
               </lines>
             </method>
           </methods>
@@ -1470,8 +2378,8 @@
             <line number="8" hits="1" branch="False" />
             <line number="13" hits="1" branch="False" />
             <line number="14" hits="1" branch="False" />
-            <line number="16" hits="12" branch="False" />
-            <line number="3" hits="9" branch="False" />
+            <line number="16" hits="13" branch="False" />
+            <line number="3" hits="10" branch="False" />
           </lines>
         </class>
         <class name="Pomnesh.Application.Exceptions.RecollectionNotFoundError" filename="Pomnesh.Application/Exceptions/RecollectionErros.cs" line-rate="1" branch-rate="1" complexity="6">
@@ -1498,12 +2406,12 @@
             </method>
             <method name="get_RecollectionId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="16" hits="10" branch="False" />
+                <line number="16" hits="11" branch="False" />
               </lines>
             </method>
             <method name=".ctor" signature="(System.Int64)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="3" hits="7" branch="False" />
+                <line number="3" hits="8" branch="False" />
               </lines>
             </method>
           </methods>
@@ -1512,8 +2420,8 @@
             <line number="8" hits="1" branch="False" />
             <line number="13" hits="1" branch="False" />
             <line number="14" hits="1" branch="False" />
-            <line number="16" hits="10" branch="False" />
-            <line number="3" hits="7" branch="False" />
+            <line number="16" hits="11" branch="False" />
+            <line number="3" hits="8" branch="False" />
           </lines>
         </class>
         <class name="Pomnesh.Application.Exceptions.UserNotFoundError" filename="Pomnesh.Application/Exceptions/UserErrors.cs" line-rate="1" branch-rate="1" complexity="6">
@@ -1540,12 +2448,12 @@
             </method>
             <method name="get_UserId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="16" hits="12" branch="False" />
+                <line number="16" hits="13" branch="False" />
               </lines>
             </method>
             <method name=".ctor" signature="(System.Int64)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="3" hits="9" branch="False" />
+                <line number="3" hits="10" branch="False" />
               </lines>
             </method>
           </methods>
@@ -1554,8 +2462,8 @@
             <line number="8" hits="1" branch="False" />
             <line number="13" hits="1" branch="False" />
             <line number="14" hits="1" branch="False" />
-            <line number="16" hits="12" branch="False" />
-            <line number="3" hits="9" branch="False" />
+            <line number="16" hits="13" branch="False" />
+            <line number="3" hits="10" branch="False" />
           </lines>
         </class>
       </classes>

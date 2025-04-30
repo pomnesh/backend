@@ -14,7 +14,7 @@ public class ChatContextCreateRequestValidator : AbstractValidator<ChatContextCr
             .NotNull().WithMessage("MessageText must be provided.");
 
         RuleFor(x => x.MessageDate)
-            .NotNull().WithMessage("MessageDate must be provided.");
+            .Must(date => date != default(DateTime)).WithMessage("MessageDate must be provided.");
     }
 }
 
@@ -32,6 +32,6 @@ public class ChatContextUpdateRequestValidator : AbstractValidator<ChatContextUp
             .NotNull().WithMessage("MessageText must be provided.");
 
         RuleFor(x => x.MessageDate)
-            .NotNull().WithMessage("MessageDate must be provided.");
+            .Must(date => date != default(DateTime)).WithMessage("MessageDate must be provided.");
     }
 }

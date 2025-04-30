@@ -8,10 +8,13 @@ public class RecollectionCreateRequestValidator : AbstractValidator<Recollection
     public RecollectionCreateRequestValidator()
     {
         RuleFor(x => x.UserId)
-            .NotNull().WithMessage("UserId is required for update.");
+            .NotNull().WithMessage("UserId is required for update.")
+            .GreaterThan(0).WithMessage("User ID must be a positive number.");
 
         RuleFor(x => x.DownloadLink)
-            .NotNull().WithMessage("DownloadLink must be provided.");
+            .NotNull().WithMessage("DownloadLink must be provided.")
+            .NotEmpty().WithMessage("Download link is required.")
+            .Must(uri => Uri.TryCreate(uri, UriKind.Absolute, out _)).WithMessage("Download link must be a valid URL.");
     }
 }
 
@@ -20,12 +23,15 @@ public class RecollectionUpdateRequestValidator : AbstractValidator<Recollection
     public RecollectionUpdateRequestValidator()
     {
         RuleFor(x => x.Id)
-            .GreaterThan(0).WithMessage("Id is required for update.");
+            .GreaterThan(0).WithMessage("ID must be a positive number.");
 
         RuleFor(x => x.UserId)
-            .NotNull().WithMessage("UserId is required for update.");
+            .NotNull().WithMessage("UserId is required for update.")
+            .Must(x => x > 0).WithMessage("User ID must be a positive number.");
 
         RuleFor(x => x.DownloadLink)
-            .NotNull().WithMessage("DownloadLink must be provided.");
+            .NotNull().WithMessage("DownloadLink must be provided.")
+            .NotEmpty().WithMessage("Download link is required.")
+            .Must(uri => Uri.TryCreate(uri, UriKind.Absolute, out _)).WithMessage("Download link must be a valid URL.");
     }
 }
