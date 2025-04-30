@@ -19,7 +19,7 @@ public class AttachmentService(IBaseRepository<Attachment> attachmentRepository,
         var attachment = new Attachment
         {
             Type = (AttachmentType)data.Type,
-            FileId = data.FileId,
+            FileId = (long)Convert.ToDouble(data.FileId),
             OwnerId = data.OwnerId,
             OriginalLink = data.OriginalLink,
             ContextId = data.ContextId
