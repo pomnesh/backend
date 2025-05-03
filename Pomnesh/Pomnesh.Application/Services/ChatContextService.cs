@@ -31,7 +31,8 @@ public class ChatContextService(IBaseRepository<ChatContext> contextRepository) 
         {
             Id = result.Id,
             MessageId = result.MessageId,
-            MessageText = result.MessageText
+            MessageText = result.MessageText,
+            MessageDate = result.MessageDate
         };
     }
 

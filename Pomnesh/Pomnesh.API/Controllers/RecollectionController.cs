@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pomnesh.API.Dto;
 using Pomnesh.API.Responses;
+using Pomnesh.Application.Exceptions;
 using Pomnesh.Application.Interfaces;
 using Pomnesh.Application.Models;
 
@@ -24,6 +25,8 @@ public class RecollectionController(IRecollectionService recollectionService) : 
     public async Task<IActionResult> GetRecollection(long id)
     {
         var result = await recollectionService.Get(id);
+        if (result == null)
+            throw new RecollectionNotFoundError(id);
         
         var response = new BaseApiResponse<RecollectionResponse> { Payload = result };
         return Ok(response);

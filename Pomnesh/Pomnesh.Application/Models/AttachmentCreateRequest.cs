@@ -1,3 +1,5 @@
+using Pomnesh.API.Dto;
+
 namespace Pomnesh.Application.Models;
 using Pomnesh.Domain.Enum;
 

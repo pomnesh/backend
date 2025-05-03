@@ -3,6 +3,7 @@ using Pomnesh.API.Dto;
 using Pomnesh.API.Responses;
 using Pomnesh.Application.Interfaces;
 using Pomnesh.Application.Models;
+using Pomnesh.Application.Exceptions;
 
 namespace Pomnesh.API.Controllers;
 
@@ -24,6 +25,8 @@ public class UserController(IUserService service) : ControllerBase
     public async Task<IActionResult> GetUserInfo(long id)
     {
         var result = await service.Get(id);
+        if (result == null)
+            throw new UserNotFoundError(id);
         
         var response = new BaseApiResponse<UserResponse> { Payload = result };
         return Ok(response);
