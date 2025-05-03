@@ -89,10 +89,11 @@ public abstract class Program
 
             app.UseAuthorization();
             app.MapControllers();
-            
+
             // Middlewares
+            app.UseMiddleware<PerformanceMiddleware>();
             app.UseMiddleware<ApiExceptionMiddleware>();
-            
+
             // Run Migrations on Startup
             using (var scope = app.Services.CreateScope())
             {
@@ -100,12 +101,7 @@ public abstract class Program
                 migrationRunner.Run();
             }
             
-            var urls = builder.Configuration["ASPNETCORE_URLS"]?.Split(';') ?? new[] { "http://localhost:5000" };
-            foreach (var url in urls)
-            {
-                Log.Information("Application started at {Url}", url);
-            }
-            
+            Log.Information("Web application started");
             app.Run();
             
         }
