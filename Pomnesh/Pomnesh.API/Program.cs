@@ -92,7 +92,6 @@ public abstract class Program
 
             // Middlewares
             app.UseSerilogRequestLogging();
-            //app.UseMiddleware<PerformanceMiddleware>();
             app.UseMiddleware<ApiExceptionMiddleware>();
 
             // Run Migrations on Startup
