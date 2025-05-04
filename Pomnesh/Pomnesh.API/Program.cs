@@ -91,7 +91,8 @@ public abstract class Program
             app.MapControllers();
 
             // Middlewares
-            app.UseMiddleware<PerformanceMiddleware>();
+            app.UseSerilogRequestLogging();
+            //app.UseMiddleware<PerformanceMiddleware>();
             app.UseMiddleware<ApiExceptionMiddleware>();
 
             // Run Migrations on Startup
