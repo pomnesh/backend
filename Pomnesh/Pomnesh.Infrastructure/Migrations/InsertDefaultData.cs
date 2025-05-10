@@ -7,8 +7,8 @@ public class InsertDefaultData : Migration
 {
     public override void Up()
     {
-        Insert.IntoTable("Users").Row(new { VkId = 123456789, VkToken = "default_token" });
-        
+        var hashedPassword = BCrypt.Net.BCrypt.HashPassword("123");
+        Insert.IntoTable("Users").Row(new { VkId = 123456789, VkToken = "default_token", Email="vsky@mail.ru", PasswordHash = hashedPassword, Username="vsky_admin" });
         Insert.IntoTable("ChatContexts").Row(new 
         {
             MessageId = 1,
@@ -38,6 +38,5 @@ public class InsertDefaultData : Migration
         Delete.FromTable("Attachments").AllRows();
         Delete.FromTable("Recollections").AllRows();
         Delete.FromTable("ChatContexts").AllRows();
-        Delete.FromTable("Users").AllRows();
     }
 }

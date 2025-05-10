@@ -11,6 +11,10 @@ using Pomnesh.Application.Interfaces;
 using MigrationRunner = Pomnesh.Infrastructure.Migrations.MigrationRunner;
 using Serilog;
 using Serilog.Events;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.OpenApi.Models;
 
 namespace Pomnesh.API;
 
@@ -40,6 +44,29 @@ public abstract class Program
             builder.Services.AddAuthorization();
             builder.Services.AddSingleton<DapperContext>();
 
+            // Add JWT Authentication
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? 
+                            Environment.GetEnvironmentVariable("JWT_KEY") ?? 
+                            throw new InvalidOperationException("JWT Key not found in configuration or environment variables")))
+                };
+            });
+
             // Database repos
             builder.Services.AddScoped<IBaseRepository<Attachment>, AttachmentRepository>();
             builder.Services.AddScoped<IBaseRepository<ChatContext>, ChatContextRepository>();
@@ -51,6 +78,7 @@ public abstract class Program
             builder.Services.AddScoped<IChatContextService, ChatContextService>();
             builder.Services.AddScoped<IRecollectionService, RecollectionService>();
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
             
             // Validators
             builder.Services.AddControllers()
@@ -74,7 +102,32 @@ public abstract class Program
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
+            });
 
             var app = builder.Build();
 
@@ -87,6 +140,8 @@ public abstract class Program
 
             app.UseHttpsRedirection();
 
+            // Add authentication middleware before authorization
+            app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
 
