@@ -3,6 +3,8 @@ using Pomnesh.Application.Interfaces;
 using Pomnesh.Application.Models;
 using Pomnesh.API.Responses;
 using Swashbuckle.AspNetCore.Annotations;
+using AspNetCoreRateLimit;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace Pomnesh.API.Controllers;
 
@@ -18,6 +20,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
+    [EnableRateLimiting("login")] // 5 requests per minute
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         var response = await _authService.LoginAsync(request);
@@ -26,6 +29,7 @@ public class AuthController : ControllerBase
 
     [HttpPost("register")]
     [Obsolete("This endpoint is deprecated. Admin use only.")]
+    [EnableRateLimiting("register")] // 3 requests per minute
     public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     {
         var response = await _authService.RegisterAsync(request);
@@ -33,6 +37,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("validate")]
+    [EnableRateLimiting("validate")] // 30 requests per minute
     public async Task<IActionResult> ValidateToken([FromHeader(Name = "Authorization")] string token)
     {
         if (string.IsNullOrEmpty(token) || !token.StartsWith("Bearer "))

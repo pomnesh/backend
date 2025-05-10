@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using AspNetCoreRateLimit;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Pomnesh.API;
 
@@ -39,6 +41,16 @@ public abstract class Program
 
             // Add Serilog to the builder
             builder.Host.UseSerilog();
+
+            // Add rate limiting services
+            builder.Services.AddMemoryCache();
+            builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
+            builder.Services.Configure<IpRateLimitPolicies>(builder.Configuration.GetSection("IpRateLimitPolicies"));
+            builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+            builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+            builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+            builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+            builder.Services.AddInMemoryRateLimiting();
 
             // Add services to the container.
             builder.Services.AddAuthorization();
@@ -139,6 +151,9 @@ public abstract class Program
             // }
 
             app.UseHttpsRedirection();
+
+            // Add rate limiting middleware
+            app.UseIpRateLimiting();
 
             // Add authentication middleware before authorization
             app.UseAuthentication();
