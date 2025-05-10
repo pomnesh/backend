@@ -5,7 +5,7 @@ public class AuthenticationError : BaseApiException
     public override int StatusCode
     {
         get => 401;
-        set => throw new NotImplementedException();
+        set { }
     }
 
     public override string Description { get; set; }
