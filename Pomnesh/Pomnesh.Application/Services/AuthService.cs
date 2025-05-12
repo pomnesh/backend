@@ -14,11 +14,11 @@ namespace Pomnesh.Application.Services;
 
 public class AuthService : IAuthService
 {
-    private readonly IBaseRepository<User> _userRepository;
+    private readonly IUserRepository _userRepository;
     private readonly IConfiguration _configuration;
     private readonly ILogger _logger;
 
-    public AuthService(IBaseRepository<User> userRepository, IConfiguration configuration)
+    public AuthService(IUserRepository userRepository, IConfiguration configuration)
     {
         _userRepository = userRepository;
         _configuration = configuration;
@@ -29,8 +29,7 @@ public class AuthService : IAuthService
     {
         _logger.Information("Attempting login for user: {Username}", request.Username);
 
-        var users = await _userRepository.GetAll();
-        var user = users.FirstOrDefault(u => u.Username == request.Username);
+        var user = await _userRepository.GetByUsername(request.Username);
 
         if (user == null)
         {
@@ -62,14 +61,15 @@ public class AuthService : IAuthService
     {
         _logger.Information("Attempting registration for user: {Username}", request.Username);
 
-        var users = await _userRepository.GetAll();
-        if (users.Any(u => u.Username == request.Username))
+        var existingUser = await _userRepository.GetByUsername(request.Username);
+        if (existingUser != null)
         {
             _logger.Warning("Registration failed: Username {Username} already exists", request.Username);
             throw new AuthenticationError("Username already exists");
         }
 
-        if (users.Any(u => u.Email == request.Email))
+        var existingEmail = await _userRepository.GetByEmail(request.Email);
+        if (existingEmail != null)
         {
             _logger.Warning("Registration failed: Email {Email} already exists", request.Email);
             throw new AuthenticationError("Email already exists");

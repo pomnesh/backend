@@ -46,6 +46,7 @@ public abstract class Program
             // Add rate limiting services
             builder.Services.AddRateLimiter(options =>
             {
+                // Global rate limiter
                 options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
                     RateLimitPartition.GetFixedWindowLimiter(
                         partitionKey: context.User.Identity?.Name ?? context.Request.Headers.Host.ToString(),
@@ -53,6 +54,39 @@ public abstract class Program
                         {
                             AutoReplenishment = true,
                             PermitLimit = 100,
+                            Window = TimeSpan.FromMinutes(1)
+                        }));
+
+                // Login endpoint rate limiter
+                options.AddPolicy("login", httpContext =>
+                    RateLimitPartition.GetFixedWindowLimiter(
+                        partitionKey: httpContext.Request.Headers.Host.ToString(),
+                        factory: _ => new FixedWindowRateLimiterOptions
+                        {
+                            AutoReplenishment = true,
+                            PermitLimit = 5,
+                            Window = TimeSpan.FromMinutes(1)
+                        }));
+
+                // Register endpoint rate limiter
+                options.AddPolicy("register", httpContext =>
+                    RateLimitPartition.GetFixedWindowLimiter(
+                        partitionKey: httpContext.Request.Headers.Host.ToString(),
+                        factory: _ => new FixedWindowRateLimiterOptions
+                        {
+                            AutoReplenishment = true,
+                            PermitLimit = 3,
+                            Window = TimeSpan.FromMinutes(1)
+                        }));
+
+                // Validate token endpoint rate limiter
+                options.AddPolicy("validate", httpContext =>
+                    RateLimitPartition.GetFixedWindowLimiter(
+                        partitionKey: httpContext.Request.Headers.Host.ToString(),
+                        factory: _ => new FixedWindowRateLimiterOptions
+                        {
+                            AutoReplenishment = true,
+                            PermitLimit = 30,
                             Window = TimeSpan.FromMinutes(1)
                         }));
 
@@ -94,7 +128,8 @@ public abstract class Program
             builder.Services.AddScoped<IBaseRepository<Attachment>, AttachmentRepository>();
             builder.Services.AddScoped<IBaseRepository<ChatContext>, ChatContextRepository>();
             builder.Services.AddScoped<IBaseRepository<Recollection>, RecollectionRepository>();
-            builder.Services.AddScoped<IBaseRepository<User>, UserRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IBaseRepository<User>>(sp => sp.GetRequiredService<IUserRepository>());
 
             // Backend services
             builder.Services.AddScoped<IAttachmentService, AttachmentService>();

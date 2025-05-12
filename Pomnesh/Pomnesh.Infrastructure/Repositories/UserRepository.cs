@@ -5,7 +5,7 @@ using Serilog;
 
 namespace Pomnesh.Infrastructure.Repositories;
 
-public class UserRepository : IBaseRepository<User>
+public class UserRepository : IUserRepository
 {
     private readonly DapperContext _context;
     private readonly ILogger _logger;
@@ -139,6 +139,68 @@ public class UserRepository : IBaseRepository<User>
         catch (Exception ex)
         {
             _logger.Error(ex, "Failed to delete user with Id: {Id}", id);
+            throw;
+        }
+    }
+
+    public async Task<User?> GetByEmail(string email)
+    {
+        _logger.Debug("Retrieving user with Email: {Email}", email);
+        var sql = @"
+            SELECT ""Id"", ""Username"", ""Email"", ""PasswordHash"", ""VkId"", ""VkToken"", ""CreatedAt"", ""LastLoginAt"" 
+            FROM ""Users"" 
+            WHERE ""Email"" = @email";
+        
+        try
+        {
+            using (var connection = _context.CreateConnection())
+            {
+                var result = await connection.QueryFirstOrDefaultAsync<User>(sql, new { email });
+                if (result == null)
+                {
+                    _logger.Warning("User with Email: {Email} not found", email);
+                }
+                else
+                {
+                    _logger.Debug("Successfully retrieved user with Email: {Email}", email);
+                }
+                return result;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.Error(ex, "Failed to retrieve user with Email: {Email}", email);
+            throw;
+        }
+    }
+
+    public async Task<User?> GetByUsername(string username)
+    {
+        _logger.Debug("Retrieving user with Username: {Username}", username);
+        var sql = @"
+            SELECT ""Id"", ""Username"", ""Email"", ""PasswordHash"", ""VkId"", ""VkToken"", ""CreatedAt"", ""LastLoginAt"" 
+            FROM ""Users"" 
+            WHERE ""Username"" = @username";
+        
+        try
+        {
+            using (var connection = _context.CreateConnection())
+            {
+                var result = await connection.QueryFirstOrDefaultAsync<User>(sql, new { username });
+                if (result == null)
+                {
+                    _logger.Warning("User with Username: {Username} not found", username);
+                }
+                else
+                {
+                    _logger.Debug("Successfully retrieved user with Username: {Username}", username);
+                }
+                return result;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.Error(ex, "Failed to retrieve user with Username: {Username}", username);
             throw;
         }
     }
