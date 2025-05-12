@@ -5,6 +5,7 @@ using Pomnesh.API.Responses;
 using Swashbuckle.AspNetCore.Annotations;
 using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Pomnesh.API.Controllers;
 
@@ -36,23 +37,11 @@ public class AuthController : ControllerBase
         return Ok(new BaseApiResponse<AuthResponse> { Payload = response });
     }
 
-    [HttpPost("validate")]
+    [HttpGet("validate")]
+    [Authorize]
     [EnableRateLimiting("validate")] // 30 requests per minute
-    public async Task<IActionResult> ValidateToken([FromHeader(Name = "Authorization")] string token)
+    public IActionResult ValidateToken()
     {
-        if (string.IsNullOrEmpty(token) || !token.StartsWith("Bearer "))
-        {
-            return Unauthorized(new BaseApiResponse<string> { Error = "Invalid token format" });
-        }
-
-        var tokenValue = token.Substring("Bearer ".Length);
-        var isValid = await _authService.ValidateTokenAsync(tokenValue);
-        
-        if (!isValid)
-        {
-            return Unauthorized(new BaseApiResponse<string> { Error = "Invalid token" });
-        }
-
         return Ok(new BaseApiResponse<bool> { Payload = true });
     }
 }
