@@ -15,7 +15,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
-using AspNetCoreRateLimit;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Pomnesh.API;
@@ -43,14 +44,24 @@ public abstract class Program
             builder.Host.UseSerilog();
 
             // Add rate limiting services
-            builder.Services.AddMemoryCache();
-            builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
-            builder.Services.Configure<IpRateLimitPolicies>(builder.Configuration.GetSection("IpRateLimitPolicies"));
-            builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
-            builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
-            builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
-            builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
-            builder.Services.AddInMemoryRateLimiting();
+            builder.Services.AddRateLimiter(options =>
+            {
+                options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
+                    RateLimitPartition.GetFixedWindowLimiter(
+                        partitionKey: context.User.Identity?.Name ?? context.Request.Headers.Host.ToString(),
+                        factory: partition => new FixedWindowRateLimiterOptions
+                        {
+                            AutoReplenishment = true,
+                            PermitLimit = 100,
+                            Window = TimeSpan.FromMinutes(1)
+                        }));
+
+                options.OnRejected = async (context, token) =>
+                {
+                    context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+                    await context.HttpContext.Response.WriteAsync("Too many requests. Please try again later.", token);
+                };
+            });
 
             // Add services to the container.
             builder.Services.AddAuthorization();
@@ -153,7 +164,7 @@ public abstract class Program
             app.UseHttpsRedirection();
 
             // Add rate limiting middleware
-            app.UseIpRateLimiting();
+            app.UseRateLimiter();
 
             // Add authentication middleware before authorization
             app.UseAuthentication();
