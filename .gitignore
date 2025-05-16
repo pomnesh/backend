@@ -105,3 +105,4 @@ temp/
 
  
 Pomnesh/Pomnesh.API/appsettings.json
+Pomnesh/Pomnesh.API/logs/*

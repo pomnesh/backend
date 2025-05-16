@@ -13,6 +13,21 @@ public class CreateInitialTables : Migration
             .WithColumn("Id").AsInt64().PrimaryKey().Identity()
             .WithColumn("VkId").AsInt64().NotNullable()
             .WithColumn("VkToken").AsString().Nullable();
+        
+        Alter.Table("Users")
+            .AddColumn("Username").AsString(50).NotNullable().WithDefaultValue("")
+            .AddColumn("Email").AsString(100).NotNullable().WithDefaultValue("")
+            .AddColumn("PasswordHash").AsString(100).NotNullable().WithDefaultValue("")
+            .AddColumn("CreatedAt").AsDateTime().NotNullable().WithDefaultValue(SystemMethods.CurrentUTCDateTime)
+            .AddColumn("LastLoginAt").AsDateTime().Nullable();
+        
+        Create.UniqueConstraint("UQ_Users_Username")
+            .OnTable("Users")
+            .Column("Username");
+
+        Create.UniqueConstraint("UQ_Users_Email")
+            .OnTable("Users")
+            .Column("Email");
 
         Create.Table("ChatContexts")
             .WithColumn("Id").AsInt64().PrimaryKey().Identity()
@@ -50,6 +65,8 @@ public class CreateInitialTables : Migration
         Delete.Table("Attachments");
         Delete.Table("Recollections");
         Delete.Table("ChatContexts");
+        Delete.UniqueConstraint("UQ_Users_Username").FromTable("Users");
+        Delete.UniqueConstraint("UQ_Users_Email").FromTable("Users");
         Delete.Table("Users");
     }
 }
