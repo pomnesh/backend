@@ -60,6 +60,6 @@ jobs:
           
             docker run -d \
               --name pomnesh-backend \
-              -p 80:8080 \
+              -p 8080:8080 \
               -v $PWD/appsettings.json:/app/appsettings.json \
               ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
