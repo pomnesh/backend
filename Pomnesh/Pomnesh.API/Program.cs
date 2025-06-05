@@ -207,10 +207,10 @@ public abstract class Program
             app.UseSwaggerUI();
             // }
 
-            app.UseHttpsRedirection();
-
-            // Enable CORS
+            // Enable CORS - must be before other middleware
             app.UseCors();
+
+            app.UseHttpsRedirection();
 
             // Add rate limiting middleware
             app.UseRateLimiter();
