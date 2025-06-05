@@ -43,6 +43,17 @@ public abstract class Program
             // Add Serilog to the builder
             builder.Host.UseSerilog();
 
+            // Add CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+            });
+
             // Add rate limiting services
             builder.Services.AddRateLimiter(options =>
             {
@@ -197,6 +208,9 @@ public abstract class Program
             // }
 
             app.UseHttpsRedirection();
+
+            // Enable CORS
+            app.UseCors();
 
             // Add rate limiting middleware
             app.UseRateLimiter();
