@@ -13,6 +13,8 @@ using Newtonsoft.Json;
 using VkNet.Utils;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using Pomnesh.Domain.Enum;
+using Microsoft.Extensions.Logging;
 
 namespace Pomnesh.API.Controllers;
 
@@ -22,12 +24,14 @@ namespace Pomnesh.API.Controllers;
 public class VkController : ControllerBase
 {
     private readonly IUserService _userService;
+    private readonly ILogger<VkController> _logger;
     private const int DefaultCount = 20;
     private const int MaxCount = 200;
 
-    public VkController(IUserService userService)
+    public VkController(IUserService userService, ILogger<VkController> logger)
     {
         _userService = userService;
+        _logger = logger;
     }
 
     [HttpGet("getUserChats")]
@@ -149,6 +153,233 @@ public class VkController : ControllerBase
         }
         catch (System.Exception ex)
         {
+            return BadRequest(new BaseApiResponse<string> { Error = $"Error: {ex.Message}" });
+        }
+    }
+
+    [HttpGet("getAttachments")]
+    public async Task<IActionResult> GetAttachments(
+        [FromQuery] long? peerId = null,
+        [FromQuery] int? offset = null,
+        [FromQuery] int? count = null,
+        [FromQuery] AttachmentType[] types = null,
+        [FromQuery] bool includeForwards = true)
+    {
+        if (!peerId.HasValue)
+        {
+            return BadRequest(new BaseApiResponse<string> { Error = "Parameter 'peerId' is required" });
+        }
+
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrEmpty(userId))
+        {
+            return Unauthorized(new BaseApiResponse<string> { Error = "User not found" });
+        }
+
+        var user = await _userService.Get(long.Parse(userId));
+        if (user == null || string.IsNullOrEmpty(user.VkToken))
+        {
+            return BadRequest(new BaseApiResponse<string> { Error = "VkToken not found" });
+        }
+
+        try
+        {
+            var api = new VkApi();
+            await api.AuthorizeAsync(new ApiAuthParams { AccessToken = user.VkToken });
+
+            var parameters = new VkParameters
+            {
+                { "peer_id", peerId.Value },
+                { "count", Math.Min(count ?? DefaultCount, MaxCount) },
+                { "offset", offset ?? 0 },
+                { "start_from", "" },
+                { "max_forwards_level", includeForwards ? 45 : 0 }
+            };
+
+            if (types != null && types.Length > 0)
+            {
+                var mediaTypes = new List<string>();
+                foreach (var type in types)
+                {
+                    switch (type)
+                    {
+                        case AttachmentType.Photo:
+                            mediaTypes.Add("photo");
+                            break;
+                        case AttachmentType.Video:
+                            mediaTypes.Add("video");
+                            break;
+                        case AttachmentType.Audio:
+                            mediaTypes.Add("audio");
+                            break;
+                        case AttachmentType.AudioMessage:
+                            mediaTypes.Add("audio_message");
+                            break;
+                        case AttachmentType.Document:
+                            mediaTypes.Add("doc");
+                            break;
+                    }
+                }
+                if (mediaTypes.Count > 0)
+                {
+                    parameters.Add("media_type", string.Join(",", mediaTypes));
+                }
+            }
+
+            var response = await api.CallAsync("messages.getHistoryAttachments", parameters);
+            
+            if (response == null || string.IsNullOrEmpty(response.RawJson))
+            {
+                return Ok(new BaseApiResponse<object> { 
+                    Payload = new {
+                        Items = Array.Empty<object>(),
+                        TotalCount = 0,
+                        Offset = offset ?? 0,
+                        Count = Math.Min(count ?? DefaultCount, MaxCount)
+                    }
+                });
+            }
+
+            var responseData = JsonConvert.DeserializeObject<JObject>(response.RawJson);
+            if (responseData == null || !responseData.ContainsKey("response"))
+            {
+                return Ok(new BaseApiResponse<object> { 
+                    Payload = new {
+                        Items = Array.Empty<object>(),
+                        TotalCount = 0,
+                        Offset = offset ?? 0,
+                        Count = Math.Min(count ?? DefaultCount, MaxCount)
+                    }
+                });
+            }
+
+            var responseObj = responseData["response"] as JObject;
+            if (responseObj == null || !responseObj.ContainsKey("items"))
+            {
+                return Ok(new BaseApiResponse<object> { 
+                    Payload = new {
+                        Items = Array.Empty<object>(),
+                        TotalCount = 0,
+                        Offset = offset ?? 0,
+                        Count = Math.Min(count ?? DefaultCount, MaxCount)
+                    }
+                });
+            }
+
+            var items = responseObj["items"] as JArray;
+            if (items == null)
+            {
+                return Ok(new BaseApiResponse<object> { 
+                    Payload = new {
+                        Items = Array.Empty<object>(),
+                        TotalCount = 0,
+                        Offset = offset ?? 0,
+                        Count = Math.Min(count ?? DefaultCount, MaxCount)
+                    }
+                });
+            }
+
+            var totalCount = responseObj["count"]?.Value<int>() ?? 0;
+            
+            var result = items.Select(item => {
+                var attachment = item["attachment"] as JObject;
+                var message = item["message"] as JObject;
+                
+                var type = attachment?["type"]?.Value<string>();
+                var attachmentData = attachment?[type] as JObject;
+                
+                object attachmentInfo = null;
+                switch (type)
+                {
+                    case "photo":
+                        var sizes = attachmentData?["sizes"] as JArray;
+                        var maxSize = sizes?.OrderByDescending(s => s["width"].Value<int>()).FirstOrDefault() as JObject;
+                        attachmentInfo = new {
+                            Url = maxSize?["url"]?.Value<string>(),
+                            Width = maxSize?["width"]?.Value<int>(),
+                            Height = maxSize?["height"]?.Value<int>(),
+                            Id = attachmentData?["id"]?.Value<long>(),
+                            OwnerId = attachmentData?["owner_id"]?.Value<long>(),
+                            AccessKey = attachmentData?["access_key"]?.Value<string>()
+                        };
+                        break;
+                    case "video":
+                        attachmentInfo = new {
+                            Title = attachmentData?["title"]?.Value<string>(),
+                            Description = attachmentData?["description"]?.Value<string>(),
+                            Duration = attachmentData?["duration"]?.Value<int>(),
+                            PhotoUrl = attachmentData?["photo_320"]?.Value<string>(),
+                            Id = attachmentData?["id"]?.Value<long>(),
+                            OwnerId = attachmentData?["owner_id"]?.Value<long>(),
+                            AccessKey = attachmentData?["access_key"]?.Value<string>()
+                        };
+                        break;
+                    case "audio":
+                        attachmentInfo = new {
+                            Artist = attachmentData?["artist"]?.Value<string>(),
+                            Title = attachmentData?["title"]?.Value<string>(),
+                            Duration = attachmentData?["duration"]?.Value<int>(),
+                            Url = attachmentData?["url"]?.Value<string>(),
+                            Id = attachmentData?["id"]?.Value<long>(),
+                            OwnerId = attachmentData?["owner_id"]?.Value<long>()
+                        };
+                        break;
+                    case "audio_message":
+                        attachmentInfo = new {
+                            Duration = attachmentData?["duration"]?.Value<int>(),
+                            Waveform = attachmentData?["waveform"]?.Value<int[]>(),
+                            LinkOgg = attachmentData?["link_ogg"]?.Value<string>(),
+                            LinkMp3 = attachmentData?["link_mp3"]?.Value<string>(),
+                            Id = attachmentData?["id"]?.Value<long>(),
+                            OwnerId = attachmentData?["owner_id"]?.Value<long>(),
+                            AccessKey = attachmentData?["access_key"]?.Value<string>()
+                        };
+                        break;
+                    case "doc":
+                        attachmentInfo = new {
+                            Title = attachmentData?["title"]?.Value<string>(),
+                            Size = attachmentData?["size"]?.Value<long>(),
+                            Ext = attachmentData?["ext"]?.Value<string>(),
+                            Url = attachmentData?["url"]?.Value<string>(),
+                            Id = attachmentData?["id"]?.Value<long>(),
+                            OwnerId = attachmentData?["owner_id"]?.Value<long>(),
+                            AccessKey = attachmentData?["access_key"]?.Value<string>()
+                        };
+                        break;
+                }
+                
+                return new {
+                    Type = type,
+                    AttachmentInfo = attachmentInfo,
+                    MessageId = message?["id"]?.Value<long>(),
+                    FromId = message?["from_id"]?.Value<long>(),
+                    Date = message?["date"]?.Value<long>(),
+                    IsForwarded = message?["fwd_messages"] != null && (message["fwd_messages"] as JArray)?.Count > 0
+                };
+            });
+
+            return Ok(new BaseApiResponse<object> { 
+                Payload = new {
+                    Items = result,
+                    TotalCount = totalCount,
+                    Offset = offset ?? 0,
+                    Count = Math.Min(count ?? DefaultCount, MaxCount)
+                }
+            });
+        }
+        catch (VkApiException ex)
+        {
+            _logger.LogError(ex, "VK API error occurred");
+            return BadRequest(new BaseApiResponse<string> { Error = $"VK API error: {ex.Message}" });
+        }
+        catch (JsonReaderException ex)
+        {
+            _logger.LogError(ex, "Error parsing VK response");
+            return BadRequest(new BaseApiResponse<string> { Error = $"Error parsing VK response: {ex.Message}" });
+        }
+        catch (System.Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected error occurred");
             return BadRequest(new BaseApiResponse<string> { Error = $"Error: {ex.Message}" });
         }
     }
