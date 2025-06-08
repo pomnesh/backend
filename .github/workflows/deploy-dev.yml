@@ -12,7 +12,6 @@ on:
 
 env:
   IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/pomnesh-backend-dev
-  IMAGE_TAG: latest
 
 jobs:
   build:
@@ -37,9 +36,9 @@ jobs:
         with:
           context: .
           push: true
-          no-cache: false # можно оставить true на время отладки, потом убрать
-          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-          provenance: false # чтобы не ломался buildx на некоторых версиях GitHub Runner'ов
+          no-cache: false
+          tags: ${{ env.IMAGE_NAME }}:${{ github.sha }}
+          provenance: false
 
   deploy:
     needs: [build]
@@ -58,7 +57,7 @@ jobs:
             echo '${{ secrets.DEV_APPSETTINGS }}' > appsettings.json
 
             echo "Deploying container..."
-            docker pull ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+            docker pull ${{ secrets.DOCKER_USERNAME }}/pomnesh-backend-dev:${{ github.sha }}
             docker stop pomnesh-backend || true
             docker rm pomnesh-backend || true
             
@@ -66,4 +65,4 @@ jobs:
               --name pomnesh-backend \
               -p 8080:8080 \
               -v $PWD/appsettings.json:/app/appsettings.json \
-              ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+              ${{ secrets.DOCKER_USERNAME }}/pomnesh-backend-dev:${{ github.sha }}
