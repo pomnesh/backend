@@ -42,7 +42,6 @@ public abstract class Program
 
             builder.Host.UseSerilog();
 
-            // ✅ Add CORS
             builder.Services.AddCors(options =>
             {
                 options.AddDefaultPolicy(policy =>
