@@ -47,11 +47,13 @@ public class AuthService : IAuthService
         await _userRepository.Update(user);
 
         var token = GenerateJwtToken(user);
+        var refreshToken = GenerateRefreshToken(user);
         _logger.Information("Login successful for user: {Username}", request.Username);
 
         return new AuthResponse
         {
             Token = token,
+            RefreshToken = refreshToken,
             Username = user.Username,
             Email = user.Email
         };
@@ -85,11 +87,13 @@ public class AuthService : IAuthService
 
         await _userRepository.Add(user);
         var token = GenerateJwtToken(user);
+        var refreshToken = GenerateRefreshToken(user);
         _logger.Information("Registration successful for user: {Username}", request.Username);
 
         return new AuthResponse
         {
             Token = token,
+            RefreshToken = refreshToken,
             Username = user.Username,
             Email = user.Email
         };
@@ -122,6 +126,88 @@ public class AuthService : IAuthService
         }
     }
 
+    public async Task<AuthResponse> RefreshTokenAsync(string refreshToken)
+    {
+        _logger.Information("Attempting to refresh token");
+
+        try
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key not found in configuration"));
+            
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = true,
+                ValidIssuer = _configuration["Jwt:Issuer"],
+                ValidateAudience = true,
+                ValidAudience = _configuration["Jwt:Audience"],
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            var principal = tokenHandler.ValidateToken(refreshToken, tokenValidationParameters, out var validatedToken);
+            
+            if (validatedToken is not JwtSecurityToken jwtToken)
+            {
+                _logger.Warning("Token refresh failed: Invalid token format");
+                throw new AuthenticationError("Invalid token format");
+            }
+
+
+            if (jwtToken.ValidTo < DateTime.UtcNow)
+            {
+                _logger.Warning("Token refresh failed: Token has expired");
+                throw new AuthenticationError("Refresh token has expired");
+            }
+
+            var tokenType = jwtToken.Claims.FirstOrDefault(c => c.Type == "token_type")?.Value;
+            if (tokenType != "refresh")
+            {
+                _logger.Warning("Token refresh failed: Invalid token type. Refresh token expected.");
+                throw new AuthenticationError("Invalid token type. Refresh token expected.");
+            }
+
+            var userId = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                _logger.Warning("Token refresh failed: User ID not found in token");
+                throw new AuthenticationError("Invalid refresh token");
+            }
+
+            var user = await _userRepository.GetById(int.Parse(userId));
+            if (user == null)
+            {
+                _logger.Warning("Token refresh failed: User {UserId} not found", userId);
+                throw new AuthenticationError("User not found");
+            }
+
+            var newToken = GenerateJwtToken(user);
+            var newRefreshToken = GenerateRefreshToken(user);
+            _logger.Information("Token refresh successful for user: {Username}", user.Username);
+
+            return new AuthResponse
+            {
+                Token = newToken,
+                RefreshToken = newRefreshToken,
+                Username = user.Username,
+                Email = user.Email
+            };
+        }
+        catch (SecurityTokenExpiredException)
+        {
+            _logger.Warning("Token refresh failed: Token has expired");
+            throw new AuthenticationError("Refresh token has expired");
+        }
+        catch (Exception ex)
+        {
+            _logger.Warning(ex, "Token refresh failed");
+            throw new AuthenticationError("Invalid refresh token");
+        }
+    }
+
     private string GenerateJwtToken(User user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -133,9 +219,34 @@ public class AuthService : IAuthService
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim("token_type", "access")
             }),
-            Expires = DateTime.UtcNow.AddDays(7),
+            Expires = DateTime.UtcNow.AddHours(2),
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+            Issuer = _configuration["Jwt:Issuer"],
+            Audience = _configuration["Jwt:Audience"]
+        };
+
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        return tokenHandler.WriteToken(token);
+    }
+
+    private string GenerateRefreshToken(User user)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key not found in configuration"));
+        
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim("token_type", "refresh")
+            }),
+            Expires = DateTime.UtcNow.AddMonths(3),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
             Issuer = _configuration["Jwt:Issuer"],
             Audience = _configuration["Jwt:Audience"]

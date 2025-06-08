@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using Pomnesh.Application.Services;
 using Pomnesh.Domain.Entity;
 using Pomnesh.Infrastructure;
@@ -101,6 +102,17 @@ public abstract class Program
                             Window = TimeSpan.FromMinutes(1)
                         }));
 
+                // Refresh token endpoint rate limiter
+                options.AddPolicy("refresh", httpContext =>
+                    RateLimitPartition.GetFixedWindowLimiter(
+                        partitionKey: httpContext.Request.Headers.Host.ToString(),
+                        factory: _ => new FixedWindowRateLimiterOptions
+                        {
+                            AutoReplenishment = true,
+                            PermitLimit = 10,
+                            Window = TimeSpan.FromMinutes(1)
+                        }));
+
                 options.OnRejected = async (context, token) =>
                 {
                     context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
@@ -131,7 +143,8 @@ public abstract class Program
                     IssuerSigningKey = new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? 
                             Environment.GetEnvironmentVariable("JWT_KEY") ?? 
-                            throw new InvalidOperationException("JWT Key not found in configuration or environment variables")))
+                            throw new InvalidOperationException("JWT Key not found in configuration or environment variables"))),
+                    ClockSkew = TimeSpan.Zero
                 };
             });
 
@@ -207,13 +220,16 @@ public abstract class Program
             app.UseSwaggerUI();
             // }
 
+            app.UseHttpsRedirection();
+
             // Enable CORS - must be before other middleware
             app.UseCors();
 
-            app.UseHttpsRedirection();
-
             // Add rate limiting middleware
             app.UseRateLimiter();
+
+            // Add JWT middleware before authentication
+            app.UseMiddleware<JwtMiddleware>();
 
             // Add authentication middleware before authorization
             app.UseAuthentication();
