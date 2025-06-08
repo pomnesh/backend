@@ -160,7 +160,7 @@ public class VkController : ControllerBase
     [HttpGet("getAttachments")]
     public async Task<IActionResult> GetAttachments(
         [FromQuery] long? peerId = null,
-        [FromQuery] int? offset = null,
+        [FromQuery] string startFrom = null,
         [FromQuery] int? count = null,
         [FromQuery] AttachmentType[] types = null,
         [FromQuery] bool includeForwards = true)
@@ -191,10 +191,13 @@ public class VkController : ControllerBase
             {
                 { "peer_id", peerId.Value },
                 { "count", Math.Min(count ?? DefaultCount, MaxCount) },
-                { "offset", offset ?? 0 },
-                { "start_from", "" },
                 { "max_forwards_level", includeForwards ? 45 : 0 }
             };
+
+            if (!string.IsNullOrEmpty(startFrom))
+            {
+                parameters.Add("start_from", startFrom);
+            }
 
             if (types != null && types.Length > 0)
             {
@@ -234,7 +237,7 @@ public class VkController : ControllerBase
                     Payload = new {
                         Items = Array.Empty<object>(),
                         TotalCount = 0,
-                        Offset = offset ?? 0,
+                        NextFrom = "",
                         Count = Math.Min(count ?? DefaultCount, MaxCount)
                     }
                 });
@@ -247,7 +250,7 @@ public class VkController : ControllerBase
                     Payload = new {
                         Items = Array.Empty<object>(),
                         TotalCount = 0,
-                        Offset = offset ?? 0,
+                        NextFrom = "",
                         Count = Math.Min(count ?? DefaultCount, MaxCount)
                     }
                 });
@@ -260,7 +263,7 @@ public class VkController : ControllerBase
                     Payload = new {
                         Items = Array.Empty<object>(),
                         TotalCount = 0,
-                        Offset = offset ?? 0,
+                        NextFrom = "",
                         Count = Math.Min(count ?? DefaultCount, MaxCount)
                     }
                 });
@@ -273,13 +276,14 @@ public class VkController : ControllerBase
                     Payload = new {
                         Items = Array.Empty<object>(),
                         TotalCount = 0,
-                        Offset = offset ?? 0,
+                        NextFrom = "",
                         Count = Math.Min(count ?? DefaultCount, MaxCount)
                     }
                 });
             }
 
             var totalCount = responseObj["count"]?.Value<int>() ?? 0;
+            var nextFrom = responseObj["next_from"]?.Value<string>() ?? "";
             
             var result = items.Select(item => {
                 var attachment = item["attachment"] as JObject;
@@ -362,7 +366,7 @@ public class VkController : ControllerBase
                 Payload = new {
                     Items = result,
                     TotalCount = totalCount,
-                    Offset = offset ?? 0,
+                    NextFrom = nextFrom,
                     Count = Math.Min(count ?? DefaultCount, MaxCount)
                 }
             });
