@@ -27,7 +27,6 @@ public abstract class Program
     [Obsolete("Obsolete")]
     public static void Main(string[] args)
     {
-        // Configure Serilog
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
@@ -41,10 +40,9 @@ public abstract class Program
             Log.Information("Starting web application");
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add Serilog to the builder
             builder.Host.UseSerilog();
 
-            // Add CORS
+            // ✅ Add CORS
             builder.Services.AddCors(options =>
             {
                 options.AddDefaultPolicy(policy =>
@@ -61,21 +59,18 @@ public abstract class Program
                 });
             });
 
-            // Add rate limiting services
             builder.Services.AddRateLimiter(options =>
             {
-                // Global rate limiter
                 options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
                     RateLimitPartition.GetFixedWindowLimiter(
                         partitionKey: context.User.Identity?.Name ?? context.Request.Headers.Host.ToString(),
-                        factory: partition => new FixedWindowRateLimiterOptions
+                        factory: _ => new FixedWindowRateLimiterOptions
                         {
                             AutoReplenishment = true,
                             PermitLimit = 100,
                             Window = TimeSpan.FromMinutes(1)
                         }));
 
-                // Login endpoint rate limiter
                 options.AddPolicy("login", httpContext =>
                     RateLimitPartition.GetFixedWindowLimiter(
                         partitionKey: httpContext.Request.Headers.Host.ToString(),
@@ -86,7 +81,6 @@ public abstract class Program
                             Window = TimeSpan.FromMinutes(1)
                         }));
 
-                // Register endpoint rate limiter
                 options.AddPolicy("register", httpContext =>
                     RateLimitPartition.GetFixedWindowLimiter(
                         partitionKey: httpContext.Request.Headers.Host.ToString(),
@@ -97,7 +91,6 @@ public abstract class Program
                             Window = TimeSpan.FromMinutes(1)
                         }));
 
-                // Validate token endpoint rate limiter
                 options.AddPolicy("validate", httpContext =>
                     RateLimitPartition.GetFixedWindowLimiter(
                         partitionKey: httpContext.Request.Headers.Host.ToString(),
@@ -108,7 +101,6 @@ public abstract class Program
                             Window = TimeSpan.FromMinutes(1)
                         }));
 
-                // Refresh token endpoint rate limiter
                 options.AddPolicy("refresh", httpContext =>
                     RateLimitPartition.GetFixedWindowLimiter(
                         partitionKey: httpContext.Request.Headers.Host.ToString(),
@@ -126,11 +118,9 @@ public abstract class Program
                 };
             });
 
-            // Add services to the container.
             builder.Services.AddAuthorization();
             builder.Services.AddSingleton<DapperContext>();
 
-            // Add JWT Authentication
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -147,48 +137,40 @@ public abstract class Program
                     ValidIssuer = builder.Configuration["Jwt:Issuer"],
                     ValidAudience = builder.Configuration["Jwt:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? 
-                            Environment.GetEnvironmentVariable("JWT_KEY") ?? 
-                            throw new InvalidOperationException("JWT Key not found in configuration or environment variables"))),
+                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ??
+                                               Environment.GetEnvironmentVariable("JWT_KEY") ??
+                                               throw new InvalidOperationException("JWT Key not found in configuration or environment variables"))),
                     ClockSkew = TimeSpan.Zero
                 };
             });
 
-            // Database repos
             builder.Services.AddScoped<IBaseRepository<Attachment>, AttachmentRepository>();
             builder.Services.AddScoped<IBaseRepository<ChatContext>, ChatContextRepository>();
             builder.Services.AddScoped<IBaseRepository<Recollection>, RecollectionRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IBaseRepository<User>>(sp => sp.GetRequiredService<IUserRepository>());
 
-            // Backend services
             builder.Services.AddScoped<IAttachmentService, AttachmentService>();
             builder.Services.AddScoped<IChatContextService, ChatContextService>();
             builder.Services.AddScoped<IRecollectionService, RecollectionService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
-            
-            // Validators
+
             builder.Services.AddControllers()
                 .AddFluentValidation(fv =>
                 {
-                    // Auto-registers all validators in the same assembly as this one
                     fv.RegisterValidatorsFromAssemblyContaining<AttachmentCreateRequestValidator>();
-
-                    // Optional: disable [Required], [MaxLength], etc. if you want full FluentValidation control
                     fv.DisableDataAnnotationsValidation = true;
                 });
-            
-            // Migrations
+
             builder.Services.AddFluentMigratorCore()
                 .ConfigureRunner(rb => rb
-                    .AddPostgres() 
+                    .AddPostgres()
                     .WithGlobalConnectionString(builder.Configuration.GetConnectionString("DefaultConnection"))
                     .ScanIn(typeof(MigrationRunner).Assembly).For.Migrations());
 
             builder.Services.AddScoped<MigrationRunner>();
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
@@ -219,44 +201,31 @@ public abstract class Program
 
             var app = builder.Build();
 
+            // ✅ CORS должен быть до всего
             app.UseCors();
 
-            // Configure the HTTP request pipeline.
-            // if (app.Environment.IsDevelopment())
-            // {
+            app.UseSerilogRequestLogging();
             app.UseSwagger();
             app.UseSwaggerUI();
-            // }
-
-            
 
             app.UseHttpsRedirection();
-
-            // Add rate limiting middleware
             app.UseRateLimiter();
-
-            // Add JWT middleware before authentication
             app.UseMiddleware<JwtMiddleware>();
-
-            // Add authentication middleware before authorization
             app.UseAuthentication();
             app.UseAuthorization();
+
             app.MapControllers();
 
-            // Middlewares
-            app.UseSerilogRequestLogging();
             app.UseMiddleware<ApiExceptionMiddleware>();
 
-            // Run Migrations on Startup
             using (var scope = app.Services.CreateScope())
             {
                 var migrationRunner = scope.ServiceProvider.GetRequiredService<MigrationRunner>();
                 migrationRunner.Run();
             }
-            
+
             Log.Information("Web application started");
             app.Run();
-            
         }
         catch (Exception ex)
         {
