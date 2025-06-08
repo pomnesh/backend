@@ -1,4 +1,4 @@
-﻿name: Build docker for dev
+﻿name: Build and Deploy Docker (dev)
 
 on:
   push:
@@ -37,11 +37,15 @@ jobs:
         with:
           context: .
           push: true
+          no-cache: false # можно оставить true на время отладки, потом убрать
           tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          provenance: false # чтобы не ломался buildx на некоторых версиях GitHub Runner'ов
+
   deploy:
-    needs: [ build ]
+    needs: [build]
     runs-on: ubuntu-latest
     environment: Dev
+
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -50,14 +54,14 @@ jobs:
           username: ${{ secrets.DEV_SERVER_USER }}
           key: ${{ secrets.DEV_SERVER_SSH_KEY }}
           script: |
-            echo "Writing appsettings.Production.json..."
+            echo "Writing appsettings.json..."
             echo '${{ secrets.DEV_APPSETTINGS }}' > appsettings.json
 
             echo "Deploying container..."
             docker pull ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
             docker stop pomnesh-backend || true
             docker rm pomnesh-backend || true
-          
+            
             docker run -d \
               --name pomnesh-backend \
               -p 8080:8080 \
