@@ -7,7 +7,7 @@ COPY Pomnesh/Pomnesh.API/Pomnesh.API.csproj Pomnesh/Pomnesh.API/
 COPY Pomnesh/Pomnesh.Application/Pomnesh.Application.csproj Pomnesh/Pomnesh.Application/
 COPY Pomnesh/Pomnesh.Infrastructure/Pomnesh.Infrastructure.csproj Pomnesh/Pomnesh.Infrastructure/
 COPY Pomnesh/Pomnesh.Domain/Pomnesh.Domain.csproj Pomnesh/Pomnesh.Domain/
-COPY Pomnesh.sln .
+COPY Pomnesh/Pomnesh.sln .
 
 # Restore dependencies
 RUN dotnet restore "Pomnesh/Pomnesh.API/Pomnesh.API.csproj"
