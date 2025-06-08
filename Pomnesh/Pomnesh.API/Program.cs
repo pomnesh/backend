@@ -49,9 +49,10 @@ public abstract class Program
             {
                 options.AddDefaultPolicy(policy =>
                 {
-                    policy.AllowAnyOrigin()
+                    policy.SetIsOriginAllowed(_ => true)
                           .AllowAnyMethod()
-                          .AllowAnyHeader();
+                          .AllowAnyHeader()
+                          .AllowCredentials();
                 });
             });
 
@@ -219,7 +220,6 @@ public abstract class Program
             app.UseSwagger();
             app.UseSwaggerUI();
             // }
-
 
             // Enable CORS - must be before other middleware
             app.UseCors();
