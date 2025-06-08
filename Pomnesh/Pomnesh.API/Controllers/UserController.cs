@@ -46,7 +46,19 @@ public class UserController(IUserService service) : ControllerBase
     [HttpPut]
     public async Task<IActionResult> UpdateUser([FromBody] UserUpdateRequest request)
     {
-        await service.Update(request);
+        var currentUser = await service.Get(request.Id);
+        if (currentUser == null)
+            throw new UserNotFoundError(request.Id);
+
+        var updateRequest = new UserUpdateRequest
+        {
+            Id = request.Id,
+            Username = request.Username ?? currentUser.Username,
+            Email = request.Email ?? currentUser.Email,
+            VkToken = request.VkToken ?? currentUser.VkToken
+        };
+
+        await service.Update(updateRequest);
         return NoContent();
     }
 

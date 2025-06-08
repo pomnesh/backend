@@ -31,6 +31,8 @@ public class UserService(IBaseRepository<User> usersRepository) : IUserService
             Id = result.Id,
             VkId = result.VkId,
             VkToken = result.VkToken,
+            Username = result.Username,
+            Email = result.Email
         };
     }
 
@@ -46,6 +48,8 @@ public class UserService(IBaseRepository<User> usersRepository) : IUserService
                 Id = user.Id,
                 VkId = user.VkId,
                 VkToken = user.VkToken,
+                Username = user.Username,
+                Email = user.Email
             };
             userResponse.Add(responseDto);
         }
@@ -63,7 +67,12 @@ public class UserService(IBaseRepository<User> usersRepository) : IUserService
         {
             Id = request.Id,
             VkId = request.VkId,
-            VkToken = request.VkToken
+            VkToken = request.VkToken,
+            Username = request.Username ?? user.Username,
+            Email = request.Email ?? user.Email,
+            PasswordHash = user.PasswordHash,
+            CreatedAt = user.CreatedAt,
+            LastLoginAt = user.LastLoginAt
         };
 
         await usersRepository.Update(updatedUser);
