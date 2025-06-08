@@ -30,7 +30,6 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    [Obsolete("This endpoint is deprecated. Admin use only.")]
     [EnableRateLimiting("register")] // 3 requests per minute
     public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     {
