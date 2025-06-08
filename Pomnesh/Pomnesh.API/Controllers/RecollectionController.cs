@@ -4,11 +4,13 @@ using Pomnesh.API.Responses;
 using Pomnesh.Application.Exceptions;
 using Pomnesh.Application.Interfaces;
 using Pomnesh.Application.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Pomnesh.API.Controllers;
 
 [Route("api/v1/Recollection")]
 [ApiController]
+[Authorize]
 public class RecollectionController(IRecollectionService recollectionService) : ControllerBase
 {
 

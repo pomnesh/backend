@@ -7,6 +7,8 @@ using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.Authorization;
 using Pomnesh.API.Attributes;
+using System.Security.Claims;
+using Pomnesh.API.Dto;
 
 namespace Pomnesh.API.Controllers;
 
@@ -15,10 +17,12 @@ namespace Pomnesh.API.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
+    private readonly IUserService _userService;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IAuthService authService, IUserService userService)
     {
         _authService = authService;
+        _userService = userService;
     }
 
     [HttpPost("login")]
@@ -58,5 +62,20 @@ public class AuthController : ControllerBase
         var tokenValue = token.Substring("Bearer ".Length);
         var response = await _authService.RefreshTokenAsync(tokenValue);
         return Ok(new BaseApiResponse<AuthResponse> { Payload = response });
+    }
+
+    [HttpGet("me")]
+    [Authorize]
+    [EnableRateLimiting("validate")]
+    public async Task<IActionResult> GetMe()
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrEmpty(userId))
+        {
+            return Unauthorized(new BaseApiResponse<string> { Error = "User not found" });
+        }
+
+        var user = await _userService.Get(long.Parse(userId));
+        return Ok(new BaseApiResponse<UserResponse> { Payload = user });
     }
 }

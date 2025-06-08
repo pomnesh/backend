@@ -4,11 +4,13 @@ using Pomnesh.API.Responses;
 using Pomnesh.Application.Interfaces;
 using Pomnesh.Application.Models;
 using Pomnesh.Application.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Pomnesh.API.Controllers;
 
 [Route("api/v1/ChatContext")]
 [ApiController]
+[Authorize]
 public class ChatContextController(IChatContextService service) : ControllerBase
 {
 
