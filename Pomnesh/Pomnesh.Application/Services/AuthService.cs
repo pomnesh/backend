@@ -55,7 +55,8 @@ public class AuthService : IAuthService
             Token = token,
             RefreshToken = refreshToken,
             Username = user.Username,
-            Email = user.Email
+            Email = user.Email,
+            Id = user.Id
         };
     }
 
@@ -95,7 +96,8 @@ public class AuthService : IAuthService
             Token = token,
             RefreshToken = refreshToken,
             Username = user.Username,
-            Email = user.Email
+            Email = user.Email,
+            Id = user.Id
         };
     }
 
@@ -193,7 +195,8 @@ public class AuthService : IAuthService
                 Token = newToken,
                 RefreshToken = newRefreshToken,
                 Username = user.Username,
-                Email = user.Email
+                Email = user.Email,
+                Id = user.Id
             };
         }
         catch (SecurityTokenExpiredException)
