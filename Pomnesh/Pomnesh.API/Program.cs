@@ -49,10 +49,15 @@ public abstract class Program
             {
                 options.AddDefaultPolicy(policy =>
                 {
-                    policy.SetIsOriginAllowed(_ => true)
-                          .AllowAnyMethod()
-                          .AllowAnyHeader()
-                          .AllowCredentials();
+                    policy.WithOrigins(
+                        "https://localhost:3000", 
+                        "http://localhost:3000", 
+                        "https://pomnesh.hps-2.ru", 
+                        "http://pomnesh.hps-2.ru"
+                        )
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
                 });
             });
 
@@ -214,6 +219,8 @@ public abstract class Program
 
             var app = builder.Build();
 
+            app.UseCors();
+
             // Configure the HTTP request pipeline.
             // if (app.Environment.IsDevelopment())
             // {
@@ -221,8 +228,7 @@ public abstract class Program
             app.UseSwaggerUI();
             // }
 
-            // Enable CORS - must be before other middleware
-            app.UseCors();
+            
 
             app.UseHttpsRedirection();
 
