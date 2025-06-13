@@ -46,13 +46,13 @@ public abstract class Program
             {
                 options.AddDefaultPolicy(policy =>
                 {
-                    policy.WithOrigins(
-                        "https://localhost:3000", 
-                        "http://localhost:3000", 
-                        "https://pomnesh.hps-2.ru", 
-                        "http://pomnesh.hps-2.ru",
-                        "https://*.pages-ac.vk-apps.com"
-                        )
+                    policy.SetIsOriginAllowed(origin => 
+                        origin.StartsWith("https://localhost:") ||
+                        origin.StartsWith("http://localhost:") ||
+                        origin == "https://pomnesh.hps-2.ru" ||
+                        origin == "http://pomnesh.hps-2.ru" ||
+                        origin == "https://prod-app53200850-da895392cd3f.pages-ac.vk-apps.com" ||
+                        origin.EndsWith(".pages-ac.vk-apps.com"))
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials();
