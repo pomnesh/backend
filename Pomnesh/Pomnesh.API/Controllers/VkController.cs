@@ -191,7 +191,8 @@ public class VkController : ControllerBase
             {
                 { "peer_id", peerId.Value },
                 { "count", Math.Min(count ?? DefaultCount, MaxCount) },
-                { "max_forwards_level", includeForwards ? 45 : 0 }
+                { "max_forwards_level", includeForwards ? 45 : 0 },
+                { "extended", 1 }
             };
 
             if (!string.IsNullOrEmpty(startFrom))
@@ -282,13 +283,10 @@ public class VkController : ControllerBase
                 });
             }
 
-            var totalCount = responseObj["count"]?.Value<int>() ?? 0;
             var nextFrom = responseObj["next_from"]?.Value<string>() ?? "";
             
             var result = items.Select(item => {
                 var attachment = item["attachment"] as JObject;
-                var message = item["message"] as JObject;
-                
                 var type = attachment?["type"]?.Value<string>();
                 var attachmentData = attachment?[type] as JObject;
                 
@@ -355,17 +353,15 @@ public class VkController : ControllerBase
                 return new {
                     Type = type,
                     AttachmentInfo = attachmentInfo,
-                    MessageId = message?["id"]?.Value<long>(),
-                    FromId = message?["from_id"]?.Value<long>(),
-                    Date = message?["date"]?.Value<long>(),
-                    IsForwarded = message?["fwd_messages"] != null && (message["fwd_messages"] as JArray)?.Count > 0
+                    MessageId = item["message_id"]?.Value<long>(),
+                    FromId = item["from_id"]?.Value<long>(),
+                    Date = item["date"]?.Value<long>()
                 };
             });
 
             return Ok(new BaseApiResponse<object> { 
                 Payload = new {
                     Items = result,
-                    TotalCount = totalCount,
                     NextFrom = nextFrom,
                     Count = Math.Min(count ?? DefaultCount, MaxCount)
                 }
