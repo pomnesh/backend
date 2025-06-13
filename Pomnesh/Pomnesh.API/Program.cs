@@ -50,7 +50,8 @@ public abstract class Program
                         "https://localhost:3000", 
                         "http://localhost:3000", 
                         "https://pomnesh.hps-2.ru", 
-                        "http://pomnesh.hps-2.ru"
+                        "http://pomnesh.hps-2.ru",
+                        "https://*.pages-ac.vk-apps.com"
                         )
                         .AllowAnyMethod()
                         .AllowAnyHeader()
